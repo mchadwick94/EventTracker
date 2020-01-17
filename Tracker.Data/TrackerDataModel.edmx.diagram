@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b5d6ea635224f9483ffcdc237ad6a00" Name="Diagram1">
+        <EntityTypeShape EntityType="EventTrackerModel.tbl_artisthistory" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventTrackerModel.tbl_artists" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventTrackerModel.tbl_eventhistory" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventTrackerModel.tbl_eventlineup" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventTrackerModel.tbl_events" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventTrackerModel.tbl_users" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="EventTrackerModel.tbl_artisthistory_tbl_artisthistory_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="EventTrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="EventTrackerModel.tbl_eventhistory_tbl_eventhistory_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="EventTrackerModel.tbl_eventhistory_tbl_eventhistory_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="EventTrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
