@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="ArtistHistory_ID" />
           </Key>
-          <Property Name="ArtistHistory_ID" Type="int" Nullable="false" />
+          <Property Name="ArtistHistory_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventLineup_ID" Type="int" Nullable="false" />
           <Property Name="Artist_ID" Type="int" Nullable="false" />
         </EntityType>
@@ -17,14 +17,14 @@
           <Key>
             <PropertyRef Name="Artist_ID" />
           </Key>
-          <Property Name="Artist_ID" Type="int" Nullable="false" />
+          <Property Name="Artist_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Artist_Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_eventhistory">
           <Key>
             <PropertyRef Name="History_ID" />
           </Key>
-          <Property Name="History_ID" Type="int" Nullable="false" />
+          <Property Name="History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
           <Property Name="Event_ID" Type="int" Nullable="false" />
         </EntityType>
@@ -32,7 +32,7 @@
           <Key>
             <PropertyRef Name="Lineup_ID" />
           </Key>
-          <Property Name="Lineup_ID" Type="int" Nullable="false" />
+          <Property Name="Lineup_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Event_ID" Type="int" Nullable="false" />
           <Property Name="Artist_ID" Type="int" Nullable="false" />
         </EntityType>
@@ -40,16 +40,17 @@
           <Key>
             <PropertyRef Name="Event_ID" />
           </Key>
-          <Property Name="Event_ID" Type="int" Nullable="false" />
-          <Property Name="Event_Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Event_Date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Event_Name" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Event_Date" Type="date" Nullable="false" />
           <Property Name="Event_Location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Upcoming" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_users">
           <Key>
             <PropertyRef Name="User_ID" />
           </Key>
-          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_Username" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <Association Name="tbl_artisthistory$tbl_artisthistory_ibfk_1">
@@ -149,7 +150,7 @@
           <Key>
             <PropertyRef Name="ArtistHistory_ID" />
           </Key>
-          <Property Name="ArtistHistory_ID" Type="Int32" Nullable="false" />
+          <Property Name="ArtistHistory_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventLineup_ID" Type="Int32" Nullable="false" />
           <Property Name="Artist_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_eventlineup" Relationship="Self.tbl_artisthistory_tbl_artisthistory_ibfk_1" FromRole="tbl_artisthistory" ToRole="tbl_eventlineup" />
@@ -158,7 +159,7 @@
           <Key>
             <PropertyRef Name="Artist_ID" />
           </Key>
-          <Property Name="Artist_ID" Type="Int32" Nullable="false" />
+          <Property Name="Artist_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Artist_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tbl_eventlineup" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_2" FromRole="tbl_artists" ToRole="tbl_eventlineup" />
         </EntityType>
@@ -166,7 +167,7 @@
           <Key>
             <PropertyRef Name="History_ID" />
           </Key>
-          <Property Name="History_ID" Type="Int32" Nullable="false" />
+          <Property Name="History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="Event_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_users" Relationship="Self.tbl_eventhistory_tbl_eventhistory_ibfk_1" FromRole="tbl_eventhistory" ToRole="tbl_users" />
@@ -176,7 +177,7 @@
           <Key>
             <PropertyRef Name="Lineup_ID" />
           </Key>
-          <Property Name="Lineup_ID" Type="Int32" Nullable="false" />
+          <Property Name="Lineup_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Event_ID" Type="Int32" Nullable="false" />
           <Property Name="Artist_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_artisthistory" Relationship="Self.tbl_artisthistory_tbl_artisthistory_ibfk_1" FromRole="tbl_eventlineup" ToRole="tbl_artisthistory" />
@@ -187,10 +188,11 @@
           <Key>
             <PropertyRef Name="Event_ID" />
           </Key>
-          <Property Name="Event_ID" Type="Int32" Nullable="false" />
-          <Property Name="Event_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Event_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Event_Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Event_Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Upcoming" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tbl_eventhistory" Relationship="Self.tbl_eventhistory_tbl_eventhistory_ibfk_2" FromRole="tbl_events" ToRole="tbl_eventhistory" />
           <NavigationProperty Name="tbl_eventlineup" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_events" ToRole="tbl_eventlineup" />
         </EntityType>
@@ -198,7 +200,7 @@
           <Key>
             <PropertyRef Name="User_ID" />
           </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_Username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tbl_eventhistory" Relationship="Self.tbl_eventhistory_tbl_eventhistory_ibfk_1" FromRole="tbl_users" ToRole="tbl_eventhistory" />
         </EntityType>
@@ -262,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EventTrackerEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TrackerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" />
           <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" />
           <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" />
@@ -295,7 +297,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EventTrackerModelStoreContainer" CdmEntityContainer="EventTrackerEntities">
+        <EntityContainerMapping StorageEntityContainer="EventTrackerModelStoreContainer" CdmEntityContainer="TrackerEntities">
           <EntitySetMapping Name="tbl_artisthistory">
             <EntityTypeMapping TypeName="EventTrackerModel.tbl_artisthistory">
               <MappingFragment StoreEntitySet="tbl_artisthistory">
@@ -338,6 +340,7 @@
                 <ScalarProperty Name="Event_Name" ColumnName="Event_Name" />
                 <ScalarProperty Name="Event_Date" ColumnName="Event_Date" />
                 <ScalarProperty Name="Event_Location" ColumnName="Event_Location" />
+                <ScalarProperty Name="Upcoming" ColumnName="Upcoming" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

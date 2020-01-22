@@ -9,10 +9,10 @@ namespace Tracker.Data.DAO
 {
     public class TrackerDAO :ITrackerDAO
     {
-        private EventTrackerEntities _context;
+        private TrackerEntities _context;
         public TrackerDAO()
         {
-            _context = new EventTrackerEntities();
+            _context = new TrackerEntities();
         }
 
         public IList<tbl_events> GetEvents()

@@ -13,10 +13,10 @@ namespace Tracker.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EventTrackerEntities : DbContext
+    public partial class TrackerEntities : DbContext
     {
-        public EventTrackerEntities()
-            : base("name=EventTrackerEntities")
+        public TrackerEntities()
+            : base("name=TrackerEntities")
         {
         }
     
