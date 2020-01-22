@@ -22,14 +22,13 @@ namespace Tracker.Data.DAO
             return _events.ToList<tbl_events>();
         }
 
+        //Used to select the Event History of a specific user. Selects the Event_ID from tbl_usereventhistory, which is then to be used to display the records from tbl_events.
         public IList<tbl_eventhistory> GetUserEvents(int User_ID)
         {
             IQueryable<tbl_eventhistory> _eventHistory;
             _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == User_ID select tbl_eventhistory;
             return _eventHistory.ToList<tbl_eventhistory>();
-            /* IQueryable < tbl_events > _userEvents;
-            _userEvents = from tbl_events in _context.tbl_events where tbl_events.Event_ID == Event_ID select tbl_events;
-            return _event.ToList<tbl_events>();*/
+            
         }
 
 

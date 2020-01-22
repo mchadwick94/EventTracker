@@ -18,7 +18,7 @@ namespace EventTracker.Controllers
         {
             return View(_trackerService.GetEvents());
         }
-
+        // GET: Displays the full list of events for a specific user.
         public ActionResult GetUserEvents(int User_ID)
         {
             return View(_trackerService.GetUserEvents(User_ID));
