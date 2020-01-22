@@ -22,6 +22,12 @@ namespace Tracker.Services.Service
         {
             return _TrackerDAO.GetEvents();
         }
+
+        public IList<tbl_eventhistory> GetUserEvents(int User_ID)
+        {
+            return _TrackerDAO.GetUserEvents(User_ID);
+        }
+
         public IList<tbl_artists> GetArtists()
         {
             return _TrackerDAO.GetArtists();
@@ -30,5 +36,7 @@ namespace Tracker.Services.Service
         {
             return _TrackerDAO.GetUsers();
         }
+
+        
     }
 }

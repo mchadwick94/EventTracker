@@ -16,7 +16,7 @@ namespace EventTracker
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Event", action = "GetEvents", id = UrlParameter.Optional }
+                defaults: new { controller = "User", action = "GetUsers", id = UrlParameter.Optional }
             );
         }
     }

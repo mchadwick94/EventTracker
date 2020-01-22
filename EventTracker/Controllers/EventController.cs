@@ -13,11 +13,18 @@ namespace EventTracker.Controllers
         {
             _trackerService = new Tracker.Services.Service.TrackerService();
         }
-        // GET: Event
+        // GET: Complete Event List
         public ActionResult GetEvents()
         {
             return View(_trackerService.GetEvents());
         }
+
+        public ActionResult GetUserEvents(int User_ID)
+        {
+            return View(_trackerService.GetUserEvents(User_ID));
+        }
+
+       
 
         // GET: Event/Details/5
         public ActionResult Details(int id)

@@ -21,6 +21,21 @@ namespace Tracker.Data.DAO
             _events = from tbl_events in _context.tbl_events select tbl_events;
             return _events.ToList<tbl_events>();
         }
+
+        public IList<tbl_eventhistory> GetUserEvents(int User_ID)
+        {
+            IQueryable<tbl_eventhistory> _eventHistory;
+            _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == User_ID select tbl_eventhistory;
+            return _eventHistory.ToList<tbl_eventhistory>();
+            /* IQueryable < tbl_events > _userEvents;
+            _userEvents = from tbl_events in _context.tbl_events where tbl_events.Event_ID == Event_ID select tbl_events;
+            return _event.ToList<tbl_events>();*/
+        }
+
+
+
+
+
         public IList<tbl_artists> GetArtists()
         {
             IQueryable <tbl_artists> _artists;
@@ -33,5 +48,7 @@ namespace Tracker.Data.DAO
             _users = from tbl_users in _context.tbl_users select tbl_users;
             return _users.ToList<tbl_users>();
         }
+
+        
     }
 }

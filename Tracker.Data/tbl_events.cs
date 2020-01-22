@@ -23,6 +23,7 @@ namespace Tracker.Data
     
         public int Event_ID { get; set; }
         public string Event_Name { get; set; }
+
         public System.DateTime Event_Date { get; set; }
         public string Event_Location { get; set; }
         public bool Upcoming { get; set; }
