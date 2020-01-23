@@ -24,6 +24,13 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetUserEvents(User_ID));
         }
 
+
+        //Get an events Lineup
+        public ActionResult GetLineUp(int Event_ID)
+        {
+            return View(_trackerService.GetLineUp(Event_ID));
+        }
+
        
 
         // GET: Event/Details/5

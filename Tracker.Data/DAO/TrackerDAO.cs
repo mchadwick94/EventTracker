@@ -22,6 +22,17 @@ namespace Tracker.Data.DAO
             return _events.ToList<tbl_events>();
         }
 
+        public IList<tbl_eventlineup> GetLineUp(int Event_ID)
+        {
+            IQueryable<tbl_eventlineup> _lineup;
+            _lineup = from tbl_eventlineup in _context.tbl_eventlineup where tbl_eventlineup.Event_ID == Event_ID select tbl_eventlineup;
+            return _lineup.ToList<tbl_eventlineup>();
+        }
+
+
+
+
+
         //Used to select the Event History of a specific user. Selects the Event_ID from tbl_usereventhistory, which is then to be used to display the records from tbl_events.
         public IList<tbl_eventhistory> GetUserEvents(int User_ID)
         {

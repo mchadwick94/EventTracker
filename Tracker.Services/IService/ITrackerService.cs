@@ -10,6 +10,8 @@ namespace Tracker.Services.IService
     {
         IList<Tracker.Data.tbl_events> GetEvents();
 
+        IList<Tracker.Data.tbl_eventlineup> GetLineUp(int Event_ID);
+
         IList<Tracker.Data.tbl_eventhistory> GetUserEvents(int User_ID);
 
 

@@ -33,7 +33,7 @@
         @Html.DisplayFor(modelItem => item.Event_Name)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Event_Date)
+        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.Event_Location)
@@ -43,11 +43,12 @@
     </td>
 
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Event_ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })
-    </td>
-</tr>
-}
+        @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
+        @*@Html.ActionLink("Details", "Details", new { id = item.Event_ID }) |*@
+        @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
+        @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+            </td>
+        </tr>
+        }
 
-</table>
+        </table>

@@ -24,6 +24,13 @@ namespace Tracker.Services.Service
         }
 
 
+        public IList<tbl_eventlineup> GetLineUp(int Event_ID)
+        {
+            return _TrackerDAO.GetLineUp(Event_ID);
+        }
+
+
+
         //Displays the full list of events for a specific user.
         public IList<tbl_eventhistory> GetUserEvents(int User_ID)
         {
