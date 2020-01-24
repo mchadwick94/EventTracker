@@ -31,7 +31,7 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.OrderByDescending(m => m.tbl_events.Event_Date  )) { @*This orders the records by Event Date in descending order, rather than it being done within the model.*@
 <tr>
     @*<td>
             @Html.DisplayFor(modelItem => item.tbl_users.User_Username)

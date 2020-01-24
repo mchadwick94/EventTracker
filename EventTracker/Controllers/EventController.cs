@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tracker.Data;
 
 namespace EventTracker.Controllers
 {
@@ -24,6 +25,48 @@ namespace EventTracker.Controllers
         {
             return View(_trackerService.GetEventDetails(Event_ID));
         }
+
+        //CREATE a new event
+        [HttpGet]
+        public ActionResult CreateEvent()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateEvent(tbl_events _event)
+        {
+            try
+            {
+                _trackerService.CreateEvent(_event);
+                return RedirectToAction("GetEvents");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        //GET: EDIT AN EVENT
+        [HttpGet] //Retrieves the details of the event being edited
+        public ActionResult EditEvent(int Event_ID)
+        {
+            return View(_trackerService.GetEventDetails(Event_ID));
+        }
+        [HttpPost]
+        public ActionResult EditEvent(int Event_ID, tbl_events _event)
+        {
+            try
+            {
+                _trackerService.EditEvent(_event);
+                return RedirectToAction("GetEvents");
+            }
+            catch
+            {
+                return View(_trackerService.GetEventDetails(Event_ID));
+            }
+        }
+
 
 
 

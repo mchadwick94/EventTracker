@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tracker.Data;
 
 namespace Tracker.Services.IService
 {
@@ -14,6 +15,14 @@ namespace Tracker.Services.IService
 
         //Returns the details of a specific event.
         Tracker.Data.tbl_events GetEventDetails(int Event_ID);
+
+        //Create a new Event
+        void CreateEvent(tbl_events _event);
+
+
+        //Edits the details of a specific event.
+        void EditEvent(tbl_events _events);
+
 
         //Returns a list of an events lineup.
         IList<Tracker.Data.tbl_eventlineup> GetLineUp(int Event_ID);

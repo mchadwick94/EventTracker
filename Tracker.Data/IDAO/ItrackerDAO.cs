@@ -16,10 +16,16 @@ namespace Tracker.Data.IDAO
         //Returns the details of a specific event.        
         Tracker.Data.tbl_events GetEventDetails(int Event_ID);
 
+        //Creates an event
+        void CreateEvent(tbl_events _event);
+
+        //Edits a specific events details.
+        void EditEvent(tbl_events _events);
+
         //Returns a list of an events lineup.
         IList<Tracker.Data.tbl_eventlineup> GetLineUp(int Event_ID);
 
-        //void EditEvent(int Event_ID);
+        
 
         //-----------------------------------------------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
@@ -31,6 +37,7 @@ namespace Tracker.Data.IDAO
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.
         IList<Tracker.Data.tbl_artists> GetArtists();
+        //Returns the details of a specific artist.
         Tracker.Data.tbl_artists GetArtistDetails(int Artist_ID);
         //-----------------------------------------------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS

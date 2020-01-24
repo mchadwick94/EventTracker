@@ -177,6 +177,8 @@
     <Content Include="Views\Event\GetLineUp.cshtml" />
     <Content Include="Views\Event\GetEventDetails.cshtml" />
     <Content Include="Views\Artist\GetArtistDetails.cshtml" />
+    <Content Include="Views\Event\EditEvent.cshtml" />
+    <Content Include="Views\Event\CreateEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

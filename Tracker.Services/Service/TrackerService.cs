@@ -31,6 +31,18 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetEventDetails(Event_ID);
         }
 
+        //Create a new Event
+        public void CreateEvent(tbl_events _event)
+        {
+            _TrackerDAO.CreateEvent(_event);
+        }
+
+        //Edits the details of a specific event.
+        public void EditEvent(tbl_events _events)
+        {
+             _TrackerDAO.EditEvent(_events);
+        }
+
         //Returns a list of an events lineup.
         public IList<tbl_eventlineup> GetLineUp(int Event_ID)
         {
