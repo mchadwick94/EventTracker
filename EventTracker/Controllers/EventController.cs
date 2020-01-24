@@ -18,6 +18,15 @@ namespace EventTracker.Controllers
         {
             return View(_trackerService.GetEvents());
         }
+
+        //Returns the details of a specific event.
+        public ActionResult GetEventDetails(int Event_ID)
+        {
+            return View(_trackerService.GetEventDetails(Event_ID));
+        }
+
+
+
         // GET: Displays the full list of events for a specific user.
         public ActionResult GetUserEvents(int User_ID)
         {
@@ -33,11 +42,10 @@ namespace EventTracker.Controllers
 
        
 
-        // GET: Event/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+
+
+
+
 
         // GET: Event/Create
         public ActionResult Create()

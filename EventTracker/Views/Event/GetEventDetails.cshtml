@@ -1,0 +1,50 @@
+﻿@model Tracker.Data.tbl_events
+
+@{
+    ViewBag.Title = "GetEventDetails";
+}
+
+<h2>GetEventDetails</h2>
+
+<div>
+    <h4>tbl_events</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Event_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event_Date)
+        </dt>
+
+        <dd>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event_Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event_Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Upcoming)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Upcoming)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Event_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

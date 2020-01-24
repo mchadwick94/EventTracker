@@ -20,9 +20,9 @@ namespace EventTracker.Controllers
         }
 
         // GET: Artist/Details/5
-        public ActionResult Details(int id)
+        public ActionResult GetArtistDetails(int Artist_ID)
         {
-            return View();
+            return View(_trackerService.GetArtistDetails(Artist_ID));
         }
 
         // GET: Artist/Create
