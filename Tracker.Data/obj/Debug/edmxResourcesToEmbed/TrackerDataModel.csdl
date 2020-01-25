@@ -22,7 +22,7 @@
       <PropertyRef Name="History_ID" />
     </Key>
     <Property Name="History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="User_ID" Type="Int32" Nullable="false" />
+    <Property Name="User_ID" Type="String" Nullable="false" />
     <Property Name="Event_ID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tbl_users" Relationship="Self.tbl_eventhistory_tbl_eventhistory_ibfk_1" FromRole="tbl_eventhistory" ToRole="tbl_users" />
     <NavigationProperty Name="tbl_events" Relationship="Self.tbl_eventhistory_tbl_eventhistory_ibfk_2" FromRole="tbl_eventhistory" ToRole="tbl_events" />
@@ -42,7 +42,7 @@
     <Key>
       <PropertyRef Name="Event_ID" />
     </Key>
-    <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Event_ID" Type="String" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Event_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Event_Date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Event_Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -54,7 +54,7 @@
     <Key>
       <PropertyRef Name="User_ID" />
     </Key>
-    <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_ID" Type="String" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="User_Username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="tbl_eventhistory" Relationship="Self.tbl_eventhistory_tbl_eventhistory_ibfk_1" FromRole="tbl_users" ToRole="tbl_eventhistory" />
   </EntityType>

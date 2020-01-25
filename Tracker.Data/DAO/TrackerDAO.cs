@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tracker.Data.IDAO;
+using Tracker.Data;
 
 namespace Tracker.Data.DAO
 {
     public class TrackerDAO :ITrackerDAO
     {
-        private TrackerEntities _context;
+        private EventTrackerEntities _context;
         public TrackerDAO()
         {
-            _context = new TrackerEntities();
+            _context = new EventTrackerEntities(); 
         }
 
         //EVENT RELATED FUNCTIONS
@@ -62,10 +63,11 @@ namespace Tracker.Data.DAO
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Used to select the Event History of a specific user. Selects the Event_ID from tbl_usereventhistory, which is then to be used to display the records from tbl_events.
-        public IList<tbl_eventhistory> GetUserEvents(int User_ID)
+        public IList<tbl_eventhistory> GetUserEvents(string Id)
         {
+
             IQueryable<tbl_eventhistory> _eventHistory;
-            _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == User_ID select tbl_eventhistory;
+            _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == Id select tbl_eventhistory;
             return _eventHistory.ToList<tbl_eventhistory>();
 
             

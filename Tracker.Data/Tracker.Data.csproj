@@ -54,63 +54,63 @@
     <Compile Include="IDAO\ITrackerDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tbl_artisthistory.cs">
-      <DependentUpon>TrackerDataModel.tt</DependentUpon>
+      <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_artists.cs">
-      <DependentUpon>TrackerDataModel.tt</DependentUpon>
+      <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_eventhistory.cs">
-      <DependentUpon>TrackerDataModel.tt</DependentUpon>
+      <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_eventlineup.cs">
-      <DependentUpon>TrackerDataModel.tt</DependentUpon>
+      <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_events.cs">
-      <DependentUpon>TrackerDataModel.tt</DependentUpon>
+      <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_users.cs">
-      <DependentUpon>TrackerDataModel.tt</DependentUpon>
+      <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TrackerDataModel.Context.cs">
+    <Compile Include="TrackerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TrackerDataModel.Context.tt</DependentUpon>
+      <DependentUpon>TrackerModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="TrackerDataModel.cs">
+    <Compile Include="TrackerModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TrackerDataModel.tt</DependentUpon>
+      <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TrackerDataModel.Designer.cs">
+    <Compile Include="TrackerModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TrackerDataModel.edmx</DependentUpon>
+      <DependentUpon>TrackerModel.edmx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
-    <EntityDeploy Include="TrackerDataModel.edmx">
+    <EntityDeploy Include="TrackerModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TrackerDataModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>TrackerModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="TrackerDataModel.edmx.diagram">
-      <DependentUpon>TrackerDataModel.edmx</DependentUpon>
+    <None Include="TrackerModel.edmx.diagram">
+      <DependentUpon>TrackerModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TrackerDataModel.Context.tt">
+    <Content Include="TrackerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TrackerDataModel.edmx</DependentUpon>
-      <LastGenOutput>TrackerDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>TrackerModel.edmx</DependentUpon>
+      <LastGenOutput>TrackerModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="TrackerDataModel.tt">
+    <Content Include="TrackerModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TrackerDataModel.edmx</DependentUpon>
-      <LastGenOutput>TrackerDataModel.cs</LastGenOutput>
+      <DependentUpon>TrackerModel.edmx</DependentUpon>
+      <LastGenOutput>TrackerModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

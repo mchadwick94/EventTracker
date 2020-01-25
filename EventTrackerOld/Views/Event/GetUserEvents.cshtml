@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Tracker.Data.tbl_eventhistory>
+
+@{
+    ViewBag.Title = "GetUserEvents";
+}
+
+<h2>GetUserEvents</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.tbl_users.User_Username)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_events.Event_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_events.Event_Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_events.Event_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_events.Upcoming)
+        </th>
+    </tr>
+
+@foreach (var item in Model.OrderByDescending(m => m.tbl_events.Event_Date  )) { @*This orders the records by Event Date in descending order, rather than it being done within the model.*@
+<tr>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.tbl_users.User_Username)
+        </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tbl_events.Event_Location)
+    </td>
+    <td>
+        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tbl_events.Upcoming)
+    </td>
+    <td>
+        @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
+        @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
+        @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
+        @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+    </td>
+</tr>
+}
+
+</table>

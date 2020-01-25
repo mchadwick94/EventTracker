@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Tracker.Data.tbl_users>
+
+@{
+    ViewBag.Title = "GetUsers";
+}
+
+<h2>GetUsers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Username)
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Username)
+        </td>
+        
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.User_ID }) |*@
+            @*@Html.ActionLink("Details", "Details", new { id = item.User_ID, }) |*@
+            @Html.ActionLink("Event History", "../Event/GetUserEvents", new { User_ID = item.User_ID }) |
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.User_ID })*@
+
+        </td>
+    </tr>
+}
+
+</table>

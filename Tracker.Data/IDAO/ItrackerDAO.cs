@@ -30,7 +30,7 @@ namespace Tracker.Data.IDAO
         //-----------------------------------------------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         // Returns a list of all the events for a specific user.
-        IList<Tracker.Data.tbl_eventhistory> GetUserEvents(int Event_ID);
+        IList<Tracker.Data.tbl_eventhistory> GetUserEvents(string Id);
 
 
         //-----------------------------------------------------------------------------------------------------------------------

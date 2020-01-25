@@ -16,7 +16,7 @@ namespace Tracker.Data
     {
         public int ArtistHistory_ID { get; set; }
         public int EventLineup_ID { get; set; }
-        public int Artist_ID { get; set; }
+        public int User_ID { get; set; }
     
         public virtual tbl_eventlineup tbl_eventlineup { get; set; }
     }

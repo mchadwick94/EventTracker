@@ -14,16 +14,7 @@ namespace Tracker.Data
     
     public partial class tbl_users
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_users()
-        {
-            this.tbl_eventhistory = new HashSet<tbl_eventhistory>();
-        }
-    
         public int User_ID { get; set; }
         public string User_Username { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_eventhistory> tbl_eventhistory { get; set; }
     }
 }
