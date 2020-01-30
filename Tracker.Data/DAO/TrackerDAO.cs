@@ -10,10 +10,10 @@ namespace Tracker.Data.DAO
 {
     public class TrackerDAO :ITrackerDAO
     {
-        private EventTrackerEntities _context;
+        private TrackerEntities _context;
         public TrackerDAO()
         {
-            _context = new EventTrackerEntities(); 
+            _context = new TrackerEntities(); 
         }
 
         //EVENT RELATED FUNCTIONS
@@ -22,7 +22,7 @@ namespace Tracker.Data.DAO
         {
             IQueryable<tbl_events> _events;
             _events = from tbl_events in _context.tbl_events select tbl_events;
-            return _events.OrderBy(x => x.Event_Date).ToList<tbl_events>() ;
+            return _events.OrderByDescending(x => x.Event_Date).ToList<tbl_events>() ;
         }
         //Returns the details of a specific event.
         public tbl_events GetEventDetails(int Event_ID)
@@ -63,11 +63,11 @@ namespace Tracker.Data.DAO
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Used to select the Event History of a specific user. Selects the Event_ID from tbl_usereventhistory, which is then to be used to display the records from tbl_events.
-        public IList<tbl_eventhistory> GetUserEvents(string Id)
+        public IList<tbl_eventhistory> GetUserEvents(string User_ID)
         {
 
             IQueryable<tbl_eventhistory> _eventHistory;
-            _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == Id select tbl_eventhistory;
+            _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == User_ID select tbl_eventhistory;
             return _eventHistory.ToList<tbl_eventhistory>();
 
             
@@ -100,6 +100,10 @@ namespace Tracker.Data.DAO
             return _users.ToList<tbl_users>();
         }
 
-        
+        public void AddToUser(tbl_eventhistory _event)
+        {
+            _context.tbl_eventhistory.Add(_event);
+            _context.SaveChanges();
+        }
     }
 }

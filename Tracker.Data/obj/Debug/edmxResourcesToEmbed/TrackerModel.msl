@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EventTrackerModelStoreContainer" CdmEntityContainer="EventTrackerEntities">
+  <EntityContainerMapping StorageEntityContainer="EventTrackerModelStoreContainer" CdmEntityContainer="TrackerEntities">
     <EntitySetMapping Name="tbl_artisthistory">
       <EntityTypeMapping TypeName="EventTrackerModel.tbl_artisthistory">
         <MappingFragment StoreEntitySet="tbl_artisthistory">

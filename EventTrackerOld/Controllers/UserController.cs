@@ -13,6 +13,9 @@ namespace EventTracker.Controllers
         {
             _trackerService = new Tracker.Services.Service.TrackerService();
         }
+
+        
+
         // GET: User
         public ActionResult GetUsers()
         {

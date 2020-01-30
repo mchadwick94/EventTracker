@@ -8,7 +8,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C4C9DAA1-9266-4F89-8511-0A9F1838B5FC}</ProjectGuid>
+    <ProjectGuid>{3943F768-7C16-4895-8185-07A78C36A6EA}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -287,6 +288,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="obj\Debug\EventTracker.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\EventTracker.dll" />
+    <Content Include="obj\Debug\EventTracker.pdb" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="bin\EventTracker.dll.config" />
@@ -301,6 +305,10 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="bin\Tracker.Data.dll.config" />
+    <Content Include="obj\Debug\build.force" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\EventTracker.csproj.CopyComplete" />
+    <Content Include="obj\Debug\EventTracker.csprojAssemblyReference.cache" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -353,11 +361,14 @@
     <Content Include="Views\Event\GetEventDetails.cshtml" />
     <Content Include="Views\Event\GetEvents.cshtml" />
     <Content Include="Views\Event\GetLineUp.cshtml" />
-    <Content Include="Views\User\GetUsers.cshtml" />
     <Content Include="Views\Event\GetUserEvents.cshtml" />
+    <Content Include="Views\User\GetUsers.cshtml" />
+    <Content Include="Views\Admin\GetUsers.cshtml" />
+    <Content Include="Views\Event\AddToUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -398,7 +409,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5557</DevelopmentServerPort>
+          <DevelopmentServerPort>2857</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44368/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

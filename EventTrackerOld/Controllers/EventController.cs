@@ -10,9 +10,11 @@ namespace EventTracker.Controllers
     public class EventController : Controller
     {
         private Tracker.Services.IService.ITrackerService _trackerService;
+
         public EventController()
         {
             _trackerService = new Tracker.Services.Service.TrackerService();
+
         }
         // GET: Complete Event List
         public ActionResult GetEvents()
@@ -71,9 +73,9 @@ namespace EventTracker.Controllers
 
 
         // GET: Displays the full list of events for a specific user.
-        public ActionResult GetUserEvents(int User_ID)
+        public ActionResult GetUserEvents(string Id)
         {
-            return View(_trackerService.GetUserEvents(User_ID));
+            return View(_trackerService.GetUserEvents(Id));
         }
 
 

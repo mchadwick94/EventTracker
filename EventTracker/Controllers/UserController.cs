@@ -9,11 +9,9 @@ namespace EventTracker.Controllers
     public class UserController : Controller
     {
         private Tracker.Services.IService.ITrackerService _trackerService;
-        private Models.ApplicationDbContext _context;
         public UserController()
         {
             _trackerService = new Tracker.Services.Service.TrackerService();
-            _context = new Models.ApplicationDbContext();
         }
 
         
@@ -21,7 +19,7 @@ namespace EventTracker.Controllers
         // GET: User
         public ActionResult GetUsers()
         {
-            return View(_context.Users.ToList());
+            return View(_trackerService.GetUsers());
         }
 
         // GET: User/Details/5

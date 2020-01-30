@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -20,10 +21,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @*<li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID =  HttpContext.Current.User.UserName })</li>*@
+                    <li>@Html.ActionLink("Events List", "GetEvents", "Event")</li>
+                    <li>@Html.ActionLink("Artists", "GetArtists", "Artist")</li>
                 </ul>
+                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>

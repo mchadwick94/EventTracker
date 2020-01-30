@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Tracker.Data.tbl_eventlineup>
+
+@{
+    ViewBag.Title = "GetLineUp";
+}
+
+<h2>GetLineUp</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Lineup_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Lineup_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Lineup_ID })
+        </td>
+    </tr>
+} 
+
+</table>

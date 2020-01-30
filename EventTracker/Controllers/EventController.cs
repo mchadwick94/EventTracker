@@ -10,12 +10,10 @@ namespace EventTracker.Controllers
     public class EventController : Controller
     {
         private Tracker.Services.IService.ITrackerService _trackerService;
-        private Models.ApplicationDbContext _context;
 
         public EventController()
         {
             _trackerService = new Tracker.Services.Service.TrackerService();
-            _context = new Models.ApplicationDbContext();
 
         }
         // GET: Complete Event List
@@ -51,6 +49,26 @@ namespace EventTracker.Controllers
         }
 
 
+        //ADD EVENT TO A USERS HISTORY
+        [HttpGet]
+        public ActionResult AddToUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddToUser(tbl_eventhistory _event)
+        {
+            try
+            {
+                _trackerService.AddToUser(_event);
+                return RedirectToAction("GetEvents");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         //GET: EDIT AN EVENT
         [HttpGet] //Retrieves the details of the event being edited
         public ActionResult EditEvent(int Event_ID)
@@ -75,9 +93,9 @@ namespace EventTracker.Controllers
 
 
         // GET: Displays the full list of events for a specific user.
-        public ActionResult GetUserEvents(string Id)
+        public ActionResult GetUserEvents(string User_ID)
         {
-            return View(_trackerService.GetUserEvents(Id));
+            return View(_trackerService.GetUserEvents(User_ID));
         }
 
 

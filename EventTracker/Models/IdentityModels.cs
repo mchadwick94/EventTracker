@@ -29,6 +29,5 @@ namespace EventTracker.Models
         {
             return new ApplicationDbContext();
         }
-
     }
 }

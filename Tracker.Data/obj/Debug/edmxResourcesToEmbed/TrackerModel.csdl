@@ -118,7 +118,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="EventTrackerEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="TrackerEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" />
     <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" />
     <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" />

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Tracker.Data.tbl_events>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<Tracker.Data.tbl_events>
 
 @{
     ViewBag.Title = "GetEvents";
@@ -12,6 +13,8 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Event_ID)
+        </th><th>
             @Html.DisplayNameFor(model => model.Event_Name)
         </th>
         <th>
@@ -27,8 +30,14 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+
+
 <tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Event_ID)
+    </td>
     <td>
         @Html.DisplayFor(modelItem => item.Event_Name)
     </td>
@@ -46,9 +55,12 @@
         @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
         @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
         @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-        @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
-            </td>
-        </tr>
-        }
+        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        {@*Checks to see if there is a current user*@
+        @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = item.Event_ID })}
+    @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+    </td>
+</tr>
+    }
 
-        </table>
+</table>

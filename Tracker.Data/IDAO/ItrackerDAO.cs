@@ -25,12 +25,14 @@ namespace Tracker.Data.IDAO
         //Returns a list of an events lineup.
         IList<Tracker.Data.tbl_eventlineup> GetLineUp(int Event_ID);
 
+        void AddToUser(tbl_eventhistory _event);
+
         
 
         //-----------------------------------------------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         // Returns a list of all the events for a specific user.
-        IList<Tracker.Data.tbl_eventhistory> GetUserEvents(string Id);
+        IList<Tracker.Data.tbl_eventhistory> GetUserEvents(string User_ID);
 
 
         //-----------------------------------------------------------------------------------------------------------------------

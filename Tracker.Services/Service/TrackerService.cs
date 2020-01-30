@@ -51,9 +51,9 @@ namespace Tracker.Services.Service
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Displays the full list of events for a specific user.
-        public IList<tbl_eventhistory> GetUserEvents(string Id)
+        public IList<tbl_eventhistory> GetUserEvents(string User_ID)
         {
-            return _TrackerDAO.GetUserEvents(Id);
+            return _TrackerDAO.GetUserEvents(User_ID);
         }
 
         //-------------------------------------------------------------------------------
@@ -78,6 +78,9 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetUsers();
         }
 
-        
+        public void AddToUser(tbl_eventhistory _event)
+        {
+            _TrackerDAO.AddToUser(_event);
+        }
     }
 }

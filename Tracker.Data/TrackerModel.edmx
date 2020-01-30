@@ -264,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EventTrackerEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TrackerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" />
           <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" />
           <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" />
@@ -297,7 +297,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EventTrackerModelStoreContainer" CdmEntityContainer="EventTrackerEntities">
+        <EntityContainerMapping StorageEntityContainer="EventTrackerModelStoreContainer" CdmEntityContainer="TrackerEntities">
           <EntitySetMapping Name="tbl_artisthistory">
             <EntityTypeMapping TypeName="EventTrackerModel.tbl_artisthistory">
               <MappingFragment StoreEntitySet="tbl_artisthistory">
