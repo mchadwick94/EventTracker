@@ -57,9 +57,11 @@ namespace EventTracker.Controllers
         }
         [HttpPost]
         public ActionResult AddToUser(tbl_eventhistory _event)
-        {
+        { 
+            
             try
             {
+                
                 _trackerService.AddToUser(_event);
                 return RedirectToAction("GetEvents");
             }

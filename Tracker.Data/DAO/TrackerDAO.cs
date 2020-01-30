@@ -102,8 +102,8 @@ namespace Tracker.Data.DAO
 
         public void AddToUser(tbl_eventhistory _event)
         {
-            _context.tbl_eventhistory.Add(_event);
-            _context.SaveChanges();
+                _context.tbl_eventhistory.Add(_event);
+                _context.SaveChanges(); }
         }
     }
-}
+
