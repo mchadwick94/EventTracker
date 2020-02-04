@@ -1,43 +1,47 @@
 ﻿@model Tracker.Data.tbl_eventhistory
 
-@{
-    ViewBag.Title = "AddToUser";
-}
-
-<h2>AddToUser</h2>
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>tbl_eventhistory</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.User_ID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.User_ID, new { htmlAttributes = new { @Value = Request.QueryString["User_ID"].ToString(), @class = "form-control", @disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.User_ID, "", new { @class = "text-danger" })
+    <form id="submitForm">
+        <div class="form-horizontal">
+            <h4>tbl_eventhistory</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.User_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User_ID, new { htmlAttributes = new { @Value = Request.QueryString["User_ID"].ToString(), @class = "form-control", @disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.User_ID, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Event_ID, "Event_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Event_ID, new{ htmlAttributes = new { @Value = Request.QueryString["Event_ID"].ToString(),@class = "form-control", @disabled = "disabled"} })
-                @Html.ValidationMessageFor(model => model.Event_ID, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Event_ID, "Event_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Event_ID, new { htmlAttributes = new { @Value = Request.QueryString["Event_ID"].ToString(), @class = "form-control", @disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.Event_ID, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" id="btn_submit" />
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    var auto_refresh = setInterval(function () { submitform(); }, 100);
+
+    function submitform() {
+
+        document.forms['submitForm'].submit();
+    }
+</script>

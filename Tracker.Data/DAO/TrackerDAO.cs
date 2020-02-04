@@ -60,6 +60,8 @@ namespace Tracker.Data.DAO
             return _lineup.ToList<tbl_eventlineup>();
         }
 
+
+
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Used to select the Event History of a specific user. Selects the Event_ID from tbl_usereventhistory, which is then to be used to display the records from tbl_events.

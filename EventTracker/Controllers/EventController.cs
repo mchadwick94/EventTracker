@@ -50,18 +50,18 @@ namespace EventTracker.Controllers
 
 
         //ADD EVENT TO A USERS HISTORY
-        [HttpGet]
+       /* [HttpGet]
         public ActionResult AddToUser()
         {
             return View();
-        }
-        [HttpPost]
+        }*/
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult AddToUser(tbl_eventhistory _event)
         { 
             
             try
             {
-                
+
                 _trackerService.AddToUser(_event);
                 return RedirectToAction("GetEvents");
             }
@@ -107,56 +107,7 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetLineUp(Event_ID));
         }
 
-       
 
-
-
-
-
-
-        // GET: Event/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Event/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Event/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Event/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: Event/Delete/5
         public ActionResult Delete(int id)

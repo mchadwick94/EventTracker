@@ -48,6 +48,8 @@ namespace Tracker.Services.Service
         {
             return _TrackerDAO.GetLineUp(Event_ID);
         }
+
+
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Displays the full list of events for a specific user.

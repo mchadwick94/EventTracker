@@ -29,6 +29,7 @@ namespace Tracker.Services.IService
 
 
         void AddToUser(tbl_eventhistory _event);
+
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         // Returns a list of all the events for a specific user.
