@@ -28,7 +28,7 @@
         </th>
     </tr>
 
-    @foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now).OrderByDescending(m => m.tbl_events.Event_Date))
+    @foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now).OrderBy(m => m.tbl_events.Event_Date))
     {@*This orders the records by Event Date in descending order, rather than it being done within the model.*@
     <tr>
         @*<td>
@@ -48,10 +48,10 @@
         </td>
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-            @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
+            @Html.ActionLink("Details", "GetEventHistoryDetails", new { Event_ID = item.Event_ID }) |
             @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
 
-            @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+            @Html.ActionLink("Delete", "../Event/deleteFromUserHistory", new { History_ID = item.History_ID })
         </td>
     </tr>
 }

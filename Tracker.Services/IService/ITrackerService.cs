@@ -28,13 +28,23 @@ namespace Tracker.Services.IService
         IList<Tracker.Data.tbl_eventlineup> GetLineUp(int Event_ID);
 
 
-        void AddToUser(tbl_eventhistory _event);
+
+        Tracker.Data.tbl_eventlineup GetLineupDetails(int Lineup_ID);
+
+        void addToLineup(tbl_eventlineup _lineup);
+
+        void deleteFromLineup(tbl_eventlineup _lineup);
 
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         // Returns a list of all the events for a specific user.
         IList<Tracker.Data.tbl_eventhistory> GetUserEvents(string User_ID);
 
+        void AddToUser(tbl_eventhistory _event);
+
+        Tracker.Data.tbl_eventhistory GetEventHistoryDetails(int Event_ID);
+
+        void deleteFromUserHistory(tbl_eventhistory _event);
         //-------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.

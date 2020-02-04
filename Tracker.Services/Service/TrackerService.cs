@@ -49,6 +49,21 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetLineUp(Event_ID);
         }
 
+        
+        public void addToLineup(tbl_eventlineup _lineup)
+        {
+            _TrackerDAO.addToLineup(_lineup);
+        }
+
+        public tbl_eventlineup GetLineupDetails(int Lineup_ID)
+        {
+            return _TrackerDAO.GetLineupDetails(Lineup_ID);
+        }
+
+        public void deleteFromLineup(tbl_eventlineup _lineup)
+        {
+            _TrackerDAO.deleteFromLineup(_lineup);
+        }
 
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
@@ -56,6 +71,21 @@ namespace Tracker.Services.Service
         public IList<tbl_eventhistory> GetUserEvents(string User_ID)
         {
             return _TrackerDAO.GetUserEvents(User_ID);
+        }
+
+        public void AddToUser(tbl_eventhistory _event)
+        {
+            _TrackerDAO.AddToUser(_event);
+        }
+
+        public tbl_eventhistory GetEventHistoryDetails(int Event_ID)
+        {
+            return _TrackerDAO.GetEventHistoryDetails(Event_ID);
+        }
+
+        public void deleteFromUserHistory(tbl_eventhistory _event)
+        {
+            _TrackerDAO.deleteFromUserHistory(_event);
         }
 
         //-------------------------------------------------------------------------------
@@ -80,9 +110,6 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetUsers();
         }
 
-        public void AddToUser(tbl_eventhistory _event)
-        {
-            _TrackerDAO.AddToUser(_event);
-        }
+
     }
 }

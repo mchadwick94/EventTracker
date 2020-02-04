@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tracker.Data.IDAO;
 using Tracker.Data;
+using System.Data.Entity;
 
 namespace Tracker.Data.DAO
 {
@@ -60,19 +61,52 @@ namespace Tracker.Data.DAO
             return _lineup.ToList<tbl_eventlineup>();
         }
 
+        public void addToLineup(tbl_eventlineup _lineup)
+        {
+            _context.tbl_eventlineup.Add(_lineup);
+            _context.SaveChanges();
+        }
 
+        public tbl_eventlineup GetLineupDetails(int Lineup_ID)
+        {
+            IQueryable<tbl_eventlineup> _entry;
+            _entry = from tbl_eventlineup in _context.tbl_eventlineup where tbl_eventlineup.Lineup_ID == Lineup_ID select tbl_eventlineup;
+            return _entry.First<tbl_eventlineup>();
+        }
+
+        public void deleteFromLineup(tbl_eventlineup _lineup)
+        {
+            _context.tbl_eventlineup.Remove(_lineup);
+            _context.SaveChanges();
+        }
 
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Used to select the Event History of a specific user. Selects the Event_ID from tbl_usereventhistory, which is then to be used to display the records from tbl_events.
         public IList<tbl_eventhistory> GetUserEvents(string User_ID)
         {
-
             IQueryable<tbl_eventhistory> _eventHistory;
             _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == User_ID select tbl_eventhistory;
             return _eventHistory.ToList<tbl_eventhistory>();
+        }
 
-            
+        public void AddToUser(tbl_eventhistory _event)
+        {
+            _context.tbl_eventhistory.Add(_event);
+            _context.SaveChanges();
+        }
+
+        public tbl_eventhistory GetEventHistoryDetails(int History_ID)
+        {
+            IQueryable<tbl_eventhistory> _event;
+            _event = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.History_ID == History_ID select tbl_eventhistory;
+            return _event.First<tbl_eventhistory>();
+        }
+
+        public void deleteFromUserHistory(tbl_eventhistory _event)
+        {
+            _context.tbl_eventhistory.Remove(_event);
+            _context.SaveChanges();
         }
 
         //-------------------------------------------------------------------------------
@@ -102,10 +136,9 @@ namespace Tracker.Data.DAO
             return _users.ToList<tbl_users>();
         }
 
-        public void AddToUser(tbl_eventhistory _event)
-        {
-                _context.tbl_eventhistory.Add(_event);
-                _context.SaveChanges(); }
-        }
+
+
+       
+    }
     }
 

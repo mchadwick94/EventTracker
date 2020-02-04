@@ -27,8 +27,9 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated){ @*Checks to see if there is a current user*@
                     <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = Convert.ToString(User.Identity.GetUserId()).GetHashCode() })</li>} @*Converts the Current Users ID to a hash code to look up their event history.*@
-                @Html.Partial("_LoginPartial")
-            </div>
+
+    @Html.Partial("_LoginPartial")</ul>
+</div>
         </div>
     </div>
     <div class="container body-content">

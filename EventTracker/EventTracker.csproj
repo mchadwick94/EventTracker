@@ -365,6 +365,11 @@
     <Content Include="Views\User\GetUsers.cshtml" />
     <Content Include="Views\Admin\GetUsers.cshtml" />
     <Content Include="Views\Event\AddToUser.cshtml" />
+    <Content Include="Views\Event\addToLineup.cshtml" />
+    <Content Include="Views\Event\GetLineupDetails.cshtml" />
+    <Content Include="Views\Event\deleteFromLineup.cshtml" />
+    <Content Include="Views\Event\GetEventHistoryDetails.cshtml" />
+    <Content Include="Views\Event\deleteFromUserHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

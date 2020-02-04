@@ -23,11 +23,10 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Event_Location)
-        @*</th>*@
-        <th></th>
+        </th>
     </tr>
 
-    @foreach (var item in Model.Where( x => x.Event_Date >= System.DateTime.Now))
+    @foreach (var item in Model.Where( x => x.Event_Date >= System.DateTime.Now).OrderBy(x => x.Event_Date))
     {
 
 <tr>

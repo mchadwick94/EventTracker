@@ -7,7 +7,8 @@
 <h2>GetLineUp</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add To Lineup", "../Event/addToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString() }) |
+
 </p>
 <table class="table">
     <tr>
@@ -24,9 +25,8 @@
         </td>
         
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Lineup_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Lineup_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Lineup_ID })
+            @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
+            @Html.ActionLink("Delete", "../Event/deleteFromLineup", new {  Lineup_ID = item.Lineup_ID })|
         </td>
     </tr>
 } 
