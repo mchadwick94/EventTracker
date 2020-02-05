@@ -6,17 +6,18 @@ using System.Web.Mvc;
 
 namespace EventTracker.Controllers
 {
-    public class ArtistController : Controller
+    public class ArtistController : ApplicationController
     {
-        private Tracker.Services.IService.ITrackerService _trackerService;
+        //private Tracker.Services.IService.ITrackerService _trackerService;
         public ArtistController()
         {
-            _trackerService = new Tracker.Services.Service.TrackerService();
+            //_trackerService = new Tracker.Services.Service.TrackerService();
         }
         // GET: Artist
         public ActionResult GetArtists()
         {
-            return View(_trackerService.GetArtists());
+            //return View(_trackerService.GetArtists());
+            return View(ViewBag.Artists);
         }
 
         // GET: Artist/Details/5

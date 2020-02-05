@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Tracker.Data.tbl_eventlineup>
+﻿@using Tracker.Data
+@model IEnumerable<Tracker.Data.tbl_eventlineup>
 
 @{
     ViewBag.Title = "GetLineUp";
@@ -7,7 +8,7 @@
 <h2>GetLineUp</h2>
 
 <p>
-    @Html.ActionLink("Add To Lineup", "../Event/addToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString() }) |
+
 
 </p>
 <table class="table">
@@ -15,20 +16,41 @@
         <th>
             @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
-        </td>
-        
-        <td>
-            @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
-            @Html.ActionLink("Delete", "../Event/deleteFromLineup", new {  Lineup_ID = item.Lineup_ID })|
-        </td>
-    </tr>
-} 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+            </td>
 
+            <td align="right">
+                @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
+                @Html.ActionLink("Delete", "../Event/deleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<br /><table class="table">
+
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+        </th>
+
+
+    @foreach (var item2 in ViewBag.Artists)
+    {
+
+
+        <tr>
+            <td>
+                @item2.Artist_Name
+            </td>
+            <td align="right">
+                @Html.ActionLink("Add To Lineup", "../Event/addToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
+            </td>
+        </tr>
+    }
 </table>

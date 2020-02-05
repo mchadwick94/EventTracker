@@ -9,14 +9,17 @@ using Tracker.Data;
 
 namespace EventTracker.Controllers
 {
-    public class EventController : Controller
+    public class EventController : ApplicationController
     {
-        private Tracker.Services.IService.ITrackerService _trackerService;
+        public int _eventID;
+
+        //private Tracker.Services.IService.ITrackerService _trackerService;
 
         public EventController()
         {
-            _trackerService = new Tracker.Services.Service.TrackerService();
-
+            //_trackerService = new Tracker.Services.Service.TrackerService();
+            
+            ViewBag.Lineup = _trackerService.GetLineUp(_eventID);
         }
         // GET: Complete Event List
         public ActionResult GetEvents()
@@ -143,16 +146,29 @@ namespace EventTracker.Controllers
         //Get an events Lineup
         public ActionResult GetLineUp(int Event_ID)
         {
+            _eventID = Event_ID;
             return View(_trackerService.GetLineUp(Event_ID));
+            
         }
 
         //Adds to an events lineup
-        [HttpGet]
+        /*[HttpGet]
         public ActionResult addToLineup()
         {
+            List<SelectListItem> artistList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetArtists())
+            {
+                artistList.Add(new SelectListItem()
+                {
+                    Text = item.Artist_Name,
+                    Value = item.Artist_ID.ToString(),
+                    Selected = (item.Artist_Name == (selectedArtist) ? true : false)
+                });
+            }
+            ViewBag.artistList = artistList;
             return View();
-        }
-        [HttpPost]
+        }*/
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult addToLineup(int Event_ID, tbl_eventlineup _lineup)
         {
             try
@@ -162,7 +178,7 @@ namespace EventTracker.Controllers
             }
             catch
             {
-                return View(_trackerService.GetLineUp(Event_ID));
+                return View(_trackerService.GetLineUp(_lineup.Event_ID));
             }
         }
 
@@ -192,14 +208,6 @@ namespace EventTracker.Controllers
             }
         }   
 
-
-        public ActionResult Index(string searchBy, string search)
-        {
-            ViewBag.SearchBy = searchBy;
-            ViewBag.Search = search;
-            return View(_trackerService.GetArtists().Where( X => X.Artist_Name == search || search == null).ToList());
-            
-        }
             }
         }
 

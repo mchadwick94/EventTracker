@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -365,15 +366,16 @@
     <Content Include="Views\User\GetUsers.cshtml" />
     <Content Include="Views\Admin\GetUsers.cshtml" />
     <Content Include="Views\Event\AddToUser.cshtml" />
-    <Content Include="Views\Event\addToLineup.cshtml" />
     <Content Include="Views\Event\GetLineupDetails.cshtml" />
     <Content Include="Views\Event\deleteFromLineup.cshtml" />
     <Content Include="Views\Event\GetEventHistoryDetails.cshtml" />
     <Content Include="Views\Event\deleteFromUserHistory.cshtml" />
+    <Content Include="Views\Event\addToLineup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\Application\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
