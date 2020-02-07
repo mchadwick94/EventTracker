@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Tracker.Data.IDAO;
 using Tracker.Data;
 using System.Data.Entity;
+using System.Web.UI;
+using System.Web.ModelBinding;
+using System.Windows.Forms;
 
 namespace Tracker.Data.DAO
 {
@@ -125,6 +128,13 @@ namespace Tracker.Data.DAO
             _artists = from tbl_artists in _context.tbl_artists where tbl_artists.Artist_ID == Artist_ID select tbl_artists;
             return _artists.First<tbl_artists>();
         }
+
+        public void NewArtist(tbl_artists _artist) 
+        {
+                _context.tbl_artists.Add(_artist);
+                _context.SaveChanges();
+        }
+
 
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS

@@ -52,6 +52,8 @@ namespace Tracker.Services.IService
 
         //Returns the details of a specific artist.
         Tracker.Data.tbl_artists GetArtistDetails(int Artist_ID);
+
+        void NewArtist(tbl_artists _artist);
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
         //Gets a list of all the users within the database.

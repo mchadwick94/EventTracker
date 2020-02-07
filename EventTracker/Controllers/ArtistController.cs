@@ -1,17 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Tracker.Data;
 
 namespace EventTracker.Controllers
 {
     public class ArtistController : ApplicationController
     {
         //private Tracker.Services.IService.ITrackerService _trackerService;
+        private TrackerEntities _context;
         public ArtistController()
         {
             //_trackerService = new Tracker.Services.Service.TrackerService();
+            _context = new TrackerEntities();
         }
         // GET: Artist
         public ActionResult GetArtists()
@@ -26,68 +31,34 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetArtistDetails(Artist_ID));
         }
 
-        // GET: Artist/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult NewArtist()
         {
             return View();
         }
-
-        // POST: Artist/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult NewArtist(tbl_artists _artist)
         {
-            try
+            if (String.IsNullOrEmpty(_artist.Artist_Name))
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                ModelState.AddModelError("Artist_Name", "Need an Artists Name"); 
             }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                var doesArtistExist = _context.tbl_artists.Any(x => x.Artist_Name == _artist.Artist_Name);
+                if (doesArtistExist)
+                {
+                    ModelState.AddModelError("Artist_Name", "This Artist already exists");
+                    return View();
+                }
+                _trackerService.NewArtist(_artist);
+                return RedirectToAction("NewArtist");
+                
+                
             }
-        }
-
-        // GET: Artist/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Artist/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            else
             {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Artist/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Artist/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
                 return View();
             }
         }

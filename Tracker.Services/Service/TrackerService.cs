@@ -102,6 +102,11 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetArtistDetails(Artist_ID);
         }
 
+        public void NewArtist(tbl_artists _artist)
+        {
+            _TrackerDAO.NewArtist(_artist);
+        }
+
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
         //Gets a list of all the users within the database.
