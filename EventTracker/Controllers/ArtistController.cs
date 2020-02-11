@@ -39,28 +39,31 @@ namespace EventTracker.Controllers
         [HttpPost]
         public ActionResult NewArtist(tbl_artists _artist)
         {
-            if (String.IsNullOrEmpty(_artist.Artist_Name))
+            if (String.IsNullOrEmpty(_artist.Artist_Name))//Checks if the field 'Artist_Name' is null, if so, throws an error.
             {
                 ModelState.AddModelError("Artist_Name", "Need an Artists Name"); 
             }
             if (ModelState.IsValid)
             {
-                var doesArtistExist = _context.tbl_artists.Any(x => x.Artist_Name == _artist.Artist_Name);
-                if (doesArtistExist)
+                var doesArtistExist = _context.tbl_artists.Any(x => x.Artist_Name == _artist.Artist_Name); //Creates a variable which is assigned the value of any artist in tbl_artists matching the Artist_Name given in the form (_artist)
+                if (doesArtistExist) //If there is a value assigned to the variable
                 {
-                    ModelState.AddModelError("Artist_Name", "This Artist already exists");
+                    ModelState.AddModelError("Artist_Name", "This Artist already exists"); //throw an error
                     return View();
                 }
-                _trackerService.NewArtist(_artist);
+                _trackerService.NewArtist(_artist); //Else add a new artist to the database with the Artist_Name given in the form.
                 return RedirectToAction("NewArtist");
-                
-                
             }
             else
             {
 
                 return View();
             }
+        }
+
+        public ActionResult GetHistoryLineup(int EventLineup_ID)
+        {
+            return View(_trackerService.GetHistoryLineup(EventLineup_ID));
         }
     }
 }

@@ -11,7 +11,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Event_ID, "Event_ID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Event_ID, new { htmlAttributes = new { @Value = Request.QueryString["Event_ID"].ToString(), @class = "form-control", @disabled = "disabled" } })
+                @Html.EditorFor(model => model.Event_ID, new { htmlAttributes = new { @Value = Request.QueryString["Event_ID"], @class = "form-control", @disabled = "disabled" } })
                 @Html.ValidationMessageFor(model => model.Event_ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Artist_ID, "Artist_ID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Artist_ID, new { htmlAttributes = new { @Value = Request.QueryString["Artist_ID"].ToString(), @class = "form-control", @disabled = "disabled" } })
+                @Html.EditorFor(model => model.Artist_ID, new { htmlAttributes = new { @Value = Request.QueryString["Artist_ID"], @class = "form-control", @disabled = "disabled" } })
                 @Html.ValidationMessageFor(model => model.Artist_ID, "", new { @class = "text-danger" })
             </div>
         </div>

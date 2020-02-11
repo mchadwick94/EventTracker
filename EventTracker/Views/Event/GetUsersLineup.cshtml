@@ -1,0 +1,119 @@
+﻿@using Tracker.Data
+@model IEnumerable<Tracker.Data.tbl_eventlineup>
+
+@{
+    ViewBag.Title = "GetLineUp";
+}
+
+<h2>GetLineUp</h2>
+
+<table class="table" id="LineupTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+            </td>
+
+            <td align="right">
+                @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
+                @Html.ActionLink("Delete", "../Event/deleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<br />
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Artists.." title="Type in an Artist" , name="myInput">
+@Html.ActionLink("Add New Artist", "../Artist/NewArtist")
+
+<table class="table" id="myTable">
+    <th>
+        @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+    </th>
+    @foreach (var item2 in ViewBag.Artists)
+    {
+        <tr>
+            <td>
+                @item2.Artist_Name
+            </td>
+            <td align="right">
+                @Html.ActionLink("Add To Lineup", "../Event/addToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]
+            if (td) {
+
+                txtValue = td.textContent || td.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+
+                } else {
+                    tr[i].style.display = "none";
+                }
+
+            }
+        }
+    }
+</script>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    #myInput {
+        background-image: url('../../Content/images/search.jpg');
+        background-size: 15px 15px;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+        align-self: center;
+    }
+
+    #myTable, #LineupTable {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+        #myTable th, #LineupTable, #myTable td {
+            text-align: left;
+            padding: 12px;
+        }
+
+            #myTable, #LineupTable tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+                #myTable tr.header, #LineupTable, #myTable tr:hover {
+                    background-color: #f1f1f1;
+                }
+</style>

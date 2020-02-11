@@ -14,7 +14,7 @@ namespace Tracker.Data.DAO
 {
     public class TrackerDAO :ITrackerDAO
     {
-        private TrackerEntities _context;
+        private readonly TrackerEntities _context;
         public TrackerDAO()
         {
             _context = new TrackerEntities(); 
@@ -97,6 +97,13 @@ namespace Tracker.Data.DAO
         {
             _context.tbl_eventhistory.Add(_event);
             _context.SaveChanges();
+        }
+
+        public IList<tbl_artisthistory> GetHistoryLineup(int EventLineup_ID)
+        {
+            IQueryable<tbl_artisthistory> _eventLineup;
+            _eventLineup = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.EventLineup_ID == EventLineup_ID select tbl_artisthistory;
+            return _eventLineup.ToList<tbl_artisthistory>();
         }
 
         public tbl_eventhistory GetEventHistoryDetails(int History_ID)

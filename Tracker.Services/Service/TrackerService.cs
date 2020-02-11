@@ -49,17 +49,19 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetLineUp(Event_ID);
         }
 
-        
+        //Allows users to add artists to a specific events lineup
         public void addToLineup(tbl_eventlineup _lineup)
         {
             _TrackerDAO.addToLineup(_lineup);
         }
 
+        //Retrieves the details of a lineup entry, this is used for automatic removal of an artist from a lineup using the 'deleteFromLineup' function below.
         public tbl_eventlineup GetLineupDetails(int Lineup_ID)
         {
             return _TrackerDAO.GetLineupDetails(Lineup_ID);
         }
 
+        //Allows users to remove an artist from a specific events lineup
         public void deleteFromLineup(tbl_eventlineup _lineup)
         {
             _TrackerDAO.deleteFromLineup(_lineup);
@@ -73,19 +75,28 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetUserEvents(User_ID);
         }
 
+        //Allows users to add an event to their event history.
         public void AddToUser(tbl_eventhistory _event)
         {
             _TrackerDAO.AddToUser(_event);
         }
 
+        //Retrieves a specific event in a users history, this is used for the below function of removing an event from a users history.
         public tbl_eventhistory GetEventHistoryDetails(int Event_ID)
         {
             return _TrackerDAO.GetEventHistoryDetails(Event_ID);
         }
 
+        //Allows users to remove an event from their history.
         public void deleteFromUserHistory(tbl_eventhistory _event)
         {
             _TrackerDAO.deleteFromUserHistory(_event);
+        }
+
+        //WORKING PROGRESS
+        public IList<tbl_artisthistory> GetHistoryLineup(int EventLineup_ID)
+        {
+            return _TrackerDAO.GetHistoryLineup(EventLineup_ID);
         }
 
         //-------------------------------------------------------------------------------
@@ -102,6 +113,7 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetArtistDetails(Artist_ID);
         }
 
+        //Allows users to add a new artist to the database
         public void NewArtist(tbl_artists _artist)
         {
             _TrackerDAO.NewArtist(_artist);

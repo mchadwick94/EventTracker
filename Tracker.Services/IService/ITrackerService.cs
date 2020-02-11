@@ -45,6 +45,9 @@ namespace Tracker.Services.IService
         Tracker.Data.tbl_eventhistory GetEventHistoryDetails(int Event_ID);
 
         void deleteFromUserHistory(tbl_eventhistory _event);
+
+        IList<Tracker.Data.tbl_artisthistory> GetHistoryLineup(int EventLineup_ID);
+
         //-------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.

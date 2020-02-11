@@ -415,6 +415,7 @@
     <Content Include="Views\Event\deleteFromUserHistory.cshtml" />
     <Content Include="Views\Event\addToLineup.cshtml" />
     <Content Include="Views\Artist\NewArtist.cshtml" />
+    <Content Include="Views\Event\GetUsersLineup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
