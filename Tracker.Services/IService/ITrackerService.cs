@@ -48,6 +48,9 @@ namespace Tracker.Services.IService
 
         IList<Tracker.Data.tbl_artisthistory> GetHistoryLineup(int EventLineup_ID);
 
+        //Returns a list of an events lineup through the user events.
+        IList<Tracker.Data.tbl_eventlineup> GetUsersLineUp(int Event_ID);
+
         //-------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.

@@ -110,6 +110,7 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetEventHistoryDetails(Event_ID));
         }
 
+        //DELETES an event from a users event history
         /*[HttpGet]
         public ActionResult deleteFromUserHistory(int History_ID)
         {
@@ -134,7 +135,13 @@ namespace EventTracker.Controllers
 
 
 
+        //Get an events Lineup through users events page
+        public ActionResult GetUsersLineUp(int Event_ID)
+        {
+            _eventID = Event_ID;
+            return View(_trackerService.GetLineUp(Event_ID));
 
+        }
 
 
 

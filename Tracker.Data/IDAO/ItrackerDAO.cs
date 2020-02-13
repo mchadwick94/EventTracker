@@ -44,6 +44,9 @@ namespace Tracker.Data.IDAO
 
         void deleteFromUserHistory(tbl_eventhistory _event);
 
+        //Returns a list of an events lineup for the user.
+        IList<Tracker.Data.tbl_eventlineup> GetUsersLineUp(int Event_ID);
+
         IList<Tracker.Data.tbl_artisthistory> GetHistoryLineup(int EventLineup_ID);
 
         //-----------------------------------------------------------------------------------------------------------------------

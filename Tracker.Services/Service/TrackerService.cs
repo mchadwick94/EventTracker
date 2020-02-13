@@ -99,6 +99,12 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetHistoryLineup(EventLineup_ID);
         }
 
+        //Returns a list of an events lineup through the users events.
+        public IList<tbl_eventlineup> GetUsersLineUp(int Event_ID)
+        {
+            return _TrackerDAO.GetUsersLineUp(Event_ID);
+        }
+
         //-------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.

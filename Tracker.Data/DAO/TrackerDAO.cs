@@ -20,6 +20,7 @@ namespace Tracker.Data.DAO
             _context = new TrackerEntities(); 
         }
 
+
         //EVENT RELATED FUNCTIONS
         //Get a list of all the events within the database.
         public IList<tbl_events> GetEvents()
@@ -117,6 +118,14 @@ namespace Tracker.Data.DAO
         {
             _context.tbl_eventhistory.Remove(_event);
             _context.SaveChanges();
+        }
+
+        //Returns a list of an events lineup through the users events.
+        public IList<tbl_eventlineup> GetUsersLineUp(int Event_ID)
+        {
+            IQueryable<tbl_eventlineup> _lineup;
+            _lineup = from tbl_eventlineup in _context.tbl_eventlineup where tbl_eventlineup.Event_ID == Event_ID select tbl_eventlineup;
+            return _lineup.ToList<tbl_eventlineup>();
         }
 
         //-------------------------------------------------------------------------------
