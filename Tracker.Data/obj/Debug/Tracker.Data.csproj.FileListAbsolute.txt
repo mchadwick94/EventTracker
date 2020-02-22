@@ -5,7 +5,8 @@ D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.D
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\EntityFramework.SqlServer.dll
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\EntityFramework.xml
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\EntityFramework.SqlServer.xml
-D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.csprojAssemblyReference.cache
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.csproj.CopyComplete
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.dll
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.pdb
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Tracker.Data.dll.CodeAnalysisLog.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Tracker.Data.dll.lastcodeanalysissucceeded

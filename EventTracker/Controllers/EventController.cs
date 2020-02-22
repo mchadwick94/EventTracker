@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -13,12 +9,8 @@ namespace EventTracker.Controllers
     {
         public int _eventID;
 
-        //private Tracker.Services.IService.ITrackerService _trackerService;
-
         public EventController()
         {
-            //_trackerService = new Tracker.Services.Service.TrackerService();
-            
             ViewBag.Lineup = _trackerService.GetLineUp(_eventID);
         }
         // GET: Complete Event List
@@ -53,20 +45,12 @@ namespace EventTracker.Controllers
             }
         }
 
-
         //ADD EVENT TO A USERS HISTORY
-       /* [HttpGet]
-        public ActionResult AddToUser()
-        {
-            return View();
-        }*/
-        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //Allows the Get and Post action to be done immediately to avoid redirecting the user to a 'Create' page.
         public ActionResult AddToUser(tbl_eventhistory _event)
-        { 
-            
+        {
             try
             {
-
                 _trackerService.AddToUser(_event);
                 return RedirectToAction("GetEvents");
             }
@@ -76,13 +60,13 @@ namespace EventTracker.Controllers
             }
         }
 
-        //GET: EDIT AN EVENT
+        //Edits the details of an event
         [HttpGet] //Retrieves the details of the event being edited
         public ActionResult EditEvent(int Event_ID)
         {
             return View(_trackerService.GetEventDetails(Event_ID));
         }
-        [HttpPost]
+        [HttpPost] //Posts the new variables into the database at the specific event being edited
         public ActionResult EditEvent(int Event_ID, tbl_events _event)
         {
             try
@@ -96,9 +80,6 @@ namespace EventTracker.Controllers
             }
         }
 
-
-
-
         // GET: Displays the full list of events for a specific user.
         public ActionResult GetUserEvents(string User_ID)
         {
@@ -111,19 +92,13 @@ namespace EventTracker.Controllers
         }
 
         //DELETES an event from a users event history
-        /*[HttpGet]
-        public ActionResult deleteFromUserHistory(int History_ID)
-        {
-            return View(_trackerService.GetEventHistoryDetails(History_ID));
-        }*/
-        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-//[HttpPost]
-        public ActionResult deleteFromUserHistory(int History_ID, tbl_eventhistory _event)
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //Allows events to be deleted without the user having to confirm it on a different page.
+        public ActionResult DeleteFromUserHistory(int History_ID, tbl_eventhistory _event)
         {
             try
             {
                 _event = _trackerService.GetEventHistoryDetails(_event.History_ID);
-                _trackerService.deleteFromUserHistory(_event);
+                _trackerService.DeleteFromUserHistory(_event);
                 return RedirectToAction("GetUserEvents", new { controller = "Event", User_ID = Convert.ToString(User.Identity.GetUserId()).GetHashCode() });
             }
             catch
@@ -132,30 +107,19 @@ namespace EventTracker.Controllers
             }
         }
 
-
-
-
         //Get an events Lineup through users events page
         public ActionResult GetUsersLineUp(int Event_ID)
         {
             _eventID = Event_ID;
             return View(_trackerService.GetLineUp(Event_ID));
-
         }
-
-
-
-
-
-
-
 
         //Get an events Lineup
         public ActionResult GetLineUp(int Event_ID)
         {
             _eventID = Event_ID;
             return View(_trackerService.GetLineUp(Event_ID));
-            
+
         }
 
         //Adds to an events lineup
@@ -175,13 +139,13 @@ namespace EventTracker.Controllers
             ViewBag.artistList = artistList;
             return View();
         }*/
-        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult addToLineup(int Event_ID, tbl_eventlineup _lineup)
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //Allows the user to add to a lineup without being redirected to a create page.
+        public ActionResult AddToLineup(int Event_ID, tbl_eventlineup _lineup)
         {
             try
             {
-                _trackerService.addToLineup(_lineup);
-                return RedirectToAction("GetLineup", new { Event_ID = _lineup.Event_ID });
+                _trackerService.AddToLineup(_lineup);
+                return RedirectToAction("GetLineup", new { _lineup.Event_ID });
             }
             catch
             {
@@ -189,33 +153,32 @@ namespace EventTracker.Controllers
             }
         }
 
+        //Retrieves the details of a specific events lineup.
         public ActionResult GetLineupDetails(int Lineup_ID)
         {
             return View(_trackerService.GetLineupDetails(Lineup_ID));
         }
 
-
-        /*[HttpGet]
+        /*[HttpGet] //Allows the user to delete an artist from an events lineup
         public ActionResult deleteFromLineup(int Lineup_ID)
         {
             return View(_trackerService.GetLineupDetails(Lineup_ID));
         }*/
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult deleteFromLineup(tbl_eventlineup _lineup)
+        public ActionResult DeleteFromLineup(tbl_eventlineup _lineup)
         {
             try
             {
                 _lineup = _trackerService.GetLineupDetails(_lineup.Lineup_ID);
-                _trackerService.deleteFromLineup(_lineup);
-                return RedirectToAction("GetLineup", new { controller = "Event", Event_ID = _lineup.Event_ID  });
+                _trackerService.DeleteFromLineup(_lineup);
+                return RedirectToAction("GetLineup", new { controller = "Event", _lineup.Event_ID });
             }
             catch
             {
                 return View();
             }
-        }   
-
-            }
         }
+    }
+}
 
 

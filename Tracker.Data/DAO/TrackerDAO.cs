@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tracker.Data.IDAO;
-using Tracker.Data;
-using System.Data.Entity;
-using System.Web.UI;
-using System.Web.ModelBinding;
-using System.Windows.Forms;
 
 namespace Tracker.Data.DAO
 {
-    public class TrackerDAO :ITrackerDAO
+    public class TrackerDAO : ITrackerDAO
     {
         private readonly TrackerEntities _context;
         public TrackerDAO()
         {
-            _context = new TrackerEntities(); 
+            _context = new TrackerEntities();
         }
-
 
         //EVENT RELATED FUNCTIONS
         //Get a list of all the events within the database.
@@ -27,13 +18,13 @@ namespace Tracker.Data.DAO
         {
             IQueryable<tbl_events> _events;
             _events = from tbl_events in _context.tbl_events select tbl_events;
-            return _events.OrderByDescending(x => x.Event_Date).ToList<tbl_events>() ;
+            return _events.OrderByDescending(x => x.Event_Date).ToList<tbl_events>();
         }
         //Returns the details of a specific event.
         public tbl_events GetEventDetails(int Event_ID)
         {
             IQueryable<tbl_events> _events;
-            _events = from tbl_events in _context.tbl_events where tbl_events.Event_ID == Event_ID select tbl_events ;
+            _events = from tbl_events in _context.tbl_events where tbl_events.Event_ID == Event_ID select tbl_events;
             return _events.First<tbl_events>();
         }
 
@@ -65,12 +56,14 @@ namespace Tracker.Data.DAO
             return _lineup.ToList<tbl_eventlineup>();
         }
 
-        public void addToLineup(tbl_eventlineup _lineup)
+        //Allows artists to be added to the lineup
+        public void AddToLineup(tbl_eventlineup _lineup)
         {
             _context.tbl_eventlineup.Add(_lineup);
             _context.SaveChanges();
         }
 
+        //Returns the details of a specific lineup entry
         public tbl_eventlineup GetLineupDetails(int Lineup_ID)
         {
             IQueryable<tbl_eventlineup> _entry;
@@ -78,7 +71,8 @@ namespace Tracker.Data.DAO
             return _entry.First<tbl_eventlineup>();
         }
 
-        public void deleteFromLineup(tbl_eventlineup _lineup)
+        //Removes an artist from a specific events lineup
+        public void DeleteFromLineup(tbl_eventlineup _lineup)
         {
             _context.tbl_eventlineup.Remove(_lineup);
             _context.SaveChanges();
@@ -94,12 +88,14 @@ namespace Tracker.Data.DAO
             return _eventHistory.ToList<tbl_eventhistory>();
         }
 
+        //Allows a user to add an event to their own event history
         public void AddToUser(tbl_eventhistory _event)
         {
             _context.tbl_eventhistory.Add(_event);
             _context.SaveChanges();
         }
 
+        //Retrieves a list of artists on the lineup of an event within a users event history
         public IList<tbl_artisthistory> GetHistoryLineup(int EventLineup_ID)
         {
             IQueryable<tbl_artisthistory> _eventLineup;
@@ -107,6 +103,7 @@ namespace Tracker.Data.DAO
             return _eventLineup.ToList<tbl_artisthistory>();
         }
 
+        //Retrieves the details of an event within the users event history
         public tbl_eventhistory GetEventHistoryDetails(int History_ID)
         {
             IQueryable<tbl_eventhistory> _event;
@@ -114,7 +111,8 @@ namespace Tracker.Data.DAO
             return _event.First<tbl_eventhistory>();
         }
 
-        public void deleteFromUserHistory(tbl_eventhistory _event)
+        //Allows a user to remove an event from their event history
+        public void DeleteFromUserHistory(tbl_eventhistory _event)
         {
             _context.tbl_eventhistory.Remove(_event);
             _context.SaveChanges();
@@ -133,11 +131,11 @@ namespace Tracker.Data.DAO
         //Gets a list of all of the artists within database.
         public IList<tbl_artists> GetArtists()
         {
-            IQueryable <tbl_artists> _artists;
+            IQueryable<tbl_artists> _artists;
             _artists = from tbl_artists in _context.tbl_artists select tbl_artists;
             return _artists.ToList<tbl_artists>();
         }
-
+        //Retrieves details of a specified artist
         public tbl_artists GetArtistDetails(int Artist_ID)
         {
             IQueryable<tbl_artists> _artists;
@@ -145,12 +143,12 @@ namespace Tracker.Data.DAO
             return _artists.First<tbl_artists>();
         }
 
-        public void NewArtist(tbl_artists _artist) 
+        //Inserts a new artist into the database
+        public void NewArtist(tbl_artists _artist)
         {
-                _context.tbl_artists.Add(_artist);
-                _context.SaveChanges();
+            _context.tbl_artists.Add(_artist);
+            _context.SaveChanges();
         }
-
 
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
@@ -161,10 +159,6 @@ namespace Tracker.Data.DAO
             _users = from tbl_users in _context.tbl_users select tbl_users;
             return _users.ToList<tbl_users>();
         }
-
-
-
-       
     }
-    }
+}
 

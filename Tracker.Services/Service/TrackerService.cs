@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Tracker.Data;
-using Tracker.Data.IDAO;
 using Tracker.Data.DAO;
+using Tracker.Data.IDAO;
 
 namespace Tracker.Services.Service
 {
     public class TrackerService : Tracker.Services.IService.ITrackerService
     {
-        private ITrackerDAO _TrackerDAO;
+        private  ITrackerDAO _TrackerDAO;
 
         public TrackerService()
         {
@@ -40,7 +36,7 @@ namespace Tracker.Services.Service
         //Edits the details of a specific event.
         public void EditEvent(tbl_events _events)
         {
-             _TrackerDAO.EditEvent(_events);
+            _TrackerDAO.EditEvent(_events);
         }
 
         //Returns a list of an events lineup.
@@ -50,9 +46,9 @@ namespace Tracker.Services.Service
         }
 
         //Allows users to add artists to a specific events lineup
-        public void addToLineup(tbl_eventlineup _lineup)
+        public void AddToLineup(tbl_eventlineup _lineup)
         {
-            _TrackerDAO.addToLineup(_lineup);
+            _TrackerDAO.AddToLineup(_lineup);
         }
 
         //Retrieves the details of a lineup entry, this is used for automatic removal of an artist from a lineup using the 'deleteFromLineup' function below.
@@ -62,9 +58,9 @@ namespace Tracker.Services.Service
         }
 
         //Allows users to remove an artist from a specific events lineup
-        public void deleteFromLineup(tbl_eventlineup _lineup)
+        public void DeleteFromLineup(tbl_eventlineup _lineup)
         {
-            _TrackerDAO.deleteFromLineup(_lineup);
+            _TrackerDAO.DeleteFromLineup(_lineup);
         }
 
         //-------------------------------------------------------------------------------
@@ -81,6 +77,12 @@ namespace Tracker.Services.Service
             _TrackerDAO.AddToUser(_event);
         }
 
+        //Retrieves a list of artists on the lineup of an event within a users event history
+        public IList<tbl_artisthistory> GetHistoryLineup(int EventLineup_ID)
+        {
+            return _TrackerDAO.GetHistoryLineup(EventLineup_ID);
+        }
+
         //Retrieves a specific event in a users history, this is used for the below function of removing an event from a users history.
         public tbl_eventhistory GetEventHistoryDetails(int Event_ID)
         {
@@ -88,15 +90,9 @@ namespace Tracker.Services.Service
         }
 
         //Allows users to remove an event from their history.
-        public void deleteFromUserHistory(tbl_eventhistory _event)
+        public void DeleteFromUserHistory(tbl_eventhistory _event)
         {
-            _TrackerDAO.deleteFromUserHistory(_event);
-        }
-
-        //WORKING PROGRESS
-        public IList<tbl_artisthistory> GetHistoryLineup(int EventLineup_ID)
-        {
-            return _TrackerDAO.GetHistoryLineup(EventLineup_ID);
+            _TrackerDAO.DeleteFromUserHistory(_event);
         }
 
         //Returns a list of an events lineup through the users events.
@@ -132,7 +128,5 @@ namespace Tracker.Services.Service
         {
             return _TrackerDAO.GetUsers();
         }
-
-
     }
 }

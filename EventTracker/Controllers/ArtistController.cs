@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -15,22 +11,22 @@ namespace EventTracker.Controllers
         private TrackerEntities _context;
         public ArtistController()
         {
-            //_trackerService = new Tracker.Services.Service.TrackerService();
             _context = new TrackerEntities();
         }
-        // GET: Artist
+        // Retrieves a list of all the artists within the database (tbl_artists)
         public ActionResult GetArtists()
         {
             //return View(_trackerService.GetArtists());
             return View(ViewBag.Artists);
         }
 
-        // GET: Artist/Details/5
+        // Retrieves the details of a specific artist
         public ActionResult GetArtistDetails(int Artist_ID)
         {
             return View(_trackerService.GetArtistDetails(Artist_ID));
         }
 
+        // Inserts a new artist into the database.
         [HttpGet]
         public ActionResult NewArtist()
         {
@@ -41,7 +37,7 @@ namespace EventTracker.Controllers
         {
             if (String.IsNullOrEmpty(_artist.Artist_Name))//Checks if the field 'Artist_Name' is null, if so, throws an error.
             {
-                ModelState.AddModelError("Artist_Name", "Need an Artists Name"); 
+                ModelState.AddModelError("Artist_Name", "Need an Artists Name");
             }
             if (ModelState.IsValid)
             {
@@ -56,11 +52,11 @@ namespace EventTracker.Controllers
             }
             else
             {
-
                 return View();
             }
         }
 
+        // Retrieves the lineup for an event inside a specific users event history
         public ActionResult GetHistoryLineup(int EventLineup_ID)
         {
             return View(_trackerService.GetHistoryLineup(EventLineup_ID));

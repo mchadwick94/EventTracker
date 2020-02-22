@@ -23,8 +23,6 @@
                 @Html.ValidationMessageFor(model => model.Artist_ID, "", new { @class = "text-danger" })
             </div>
         </div>
-
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" id="btn_submit" />
@@ -32,16 +30,14 @@
         </div>
     </div>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 @*The following script automatically submits this form*@
 <script>
     window.onload = submitform();
-
-    function submitform() {
-
+    function submitform()
+    {
         document.getElementById("btn_submit").click();
     }
 </script>

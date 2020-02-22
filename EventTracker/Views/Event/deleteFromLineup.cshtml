@@ -9,26 +9,21 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Lineup_ID)
             </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.Lineup_ID)
             </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
             </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.tbl_artists.Artist_Name)
             </dd>
-
             <dt>
                 @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
             </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.tbl_events.Event_Name)
             </dd>
-
         </dl>
 
         @using (Html.BeginForm())
@@ -45,9 +40,8 @@
 @*The following script automatically submits this form*@
     <script>
         window.onload = submitform();
-
-        function submitform() {
-
+        function submitform()
+        {
             document.getElementById("btn_del").click();
         }
     </script>
