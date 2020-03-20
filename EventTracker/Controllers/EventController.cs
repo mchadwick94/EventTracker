@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Web.Mvc;
 using Tracker.Data;
@@ -9,14 +10,24 @@ namespace EventTracker.Controllers
     public class EventController : ApplicationController
     {
         public int _eventID;
+        public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+
 
         public EventController()
         {
             ViewBag.Lineup = _trackerService.GetLineUp(_eventID);
+            ViewBag.MyEvents = _trackerService.GetUserEvents(User_ID);
         }
         // GET: Complete Event List
         public ActionResult GetEvents()
         {
+            List<string> UsersEvents = new List<string>();
+            foreach (var item in _trackerService.GetUserEvents(User_ID))
+            {
+                UsersEvents.Add(item.Event_ID.ToString());
+            }
+            ViewBag.MyEvents = _trackerService.GetUserEvents(User_ID);
+            ViewBag.MyEvents = UsersEvents;
             return View(_trackerService.GetEvents());
         }
 

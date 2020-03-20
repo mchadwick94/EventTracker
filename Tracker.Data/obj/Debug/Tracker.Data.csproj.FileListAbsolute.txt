@@ -8,3 +8,4 @@ D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.D
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.csproj.CopyComplete
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.dll
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.pdb
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.csprojAssemblyReference.cache

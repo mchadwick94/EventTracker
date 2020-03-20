@@ -48,12 +48,16 @@
         @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID, Event_Name = item.Event_Name }) |
         @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
         {@*Checks to see if there is a current user*@
-        @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = item.Event_ID })}
+        if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+        { <p>TEST</p> }@*TO BE REPLACED WITH REMOVE FUNCTION FOR USER EVENTS*@
+        else
+        {
+            @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = item.Event_ID })}
+    }
     @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
     </td>
 </tr>
     }
-
 </table>
 
 <br/>
@@ -98,7 +102,12 @@
                 @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
                 @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {@*Checks to see if there is a current user*@
-                @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = item.Event_ID })}
+                if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                { <p>TEST</p> } @*TO BE REPLACED WITH REMOVE FUNCTION FOR USER EVENTS*@
+                else
+                {
+                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = item.Event_ID })}
+            }
             @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
             </td>
         </tr>
