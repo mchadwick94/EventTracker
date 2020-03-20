@@ -15,9 +15,13 @@ namespace Tracker.Data
     public partial class tbl_artisthistory
     {
         public int ArtistHistory_ID { get; set; }
-        public int EventLineup_ID { get; set; }
         public int User_ID { get; set; }
+        public int Event_ID { get; set; }
+        public int EventLineup_ID { get; set; }
+        public int Artist_ID { get; set; }
     
+        public virtual tbl_artists tbl_artists { get; set; }
+        public virtual tbl_events tbl_events { get; set; }
         public virtual tbl_eventlineup tbl_eventlineup { get; set; }
     }
 }

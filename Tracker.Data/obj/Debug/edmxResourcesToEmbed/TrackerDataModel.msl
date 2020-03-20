@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EventTrackerModelStoreContainer" CdmEntityContainer="TrackerEntities">
+  <EntityContainerMapping StorageEntityContainer="TrackerModelStoreContainer" CdmEntityContainer="Entities">
     <EntitySetMapping Name="tbl_artisthistory">
-      <EntityTypeMapping TypeName="EventTrackerModel.tbl_artisthistory">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_artisthistory">
         <MappingFragment StoreEntitySet="tbl_artisthistory">
           <ScalarProperty Name="ArtistHistory_ID" ColumnName="ArtistHistory_ID" />
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
           <ScalarProperty Name="EventLineup_ID" ColumnName="EventLineup_ID" />
           <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_artists">
-      <EntityTypeMapping TypeName="EventTrackerModel.tbl_artists">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_artists">
         <MappingFragment StoreEntitySet="tbl_artists">
           <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
           <ScalarProperty Name="Artist_Name" ColumnName="Artist_Name" />
@@ -19,7 +21,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_eventhistory">
-      <EntityTypeMapping TypeName="EventTrackerModel.tbl_eventhistory">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_eventhistory">
         <MappingFragment StoreEntitySet="tbl_eventhistory">
           <ScalarProperty Name="History_ID" ColumnName="History_ID" />
           <ScalarProperty Name="User_ID" ColumnName="User_ID" />
@@ -28,7 +30,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_eventlineup">
-      <EntityTypeMapping TypeName="EventTrackerModel.tbl_eventlineup">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_eventlineup">
         <MappingFragment StoreEntitySet="tbl_eventlineup">
           <ScalarProperty Name="Lineup_ID" ColumnName="Lineup_ID" />
           <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
@@ -37,7 +39,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_events">
-      <EntityTypeMapping TypeName="EventTrackerModel.tbl_events">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_events">
         <MappingFragment StoreEntitySet="tbl_events">
           <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
           <ScalarProperty Name="Event_Name" ColumnName="Event_Name" />
@@ -48,7 +50,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_users">
-      <EntityTypeMapping TypeName="EventTrackerModel.tbl_users">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_users">
         <MappingFragment StoreEntitySet="tbl_users">
           <ScalarProperty Name="User_ID" ColumnName="User_ID" />
           <ScalarProperty Name="User_Username" ColumnName="User_Username" />

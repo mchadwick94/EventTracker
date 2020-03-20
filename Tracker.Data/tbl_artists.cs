@@ -17,12 +17,15 @@ namespace Tracker.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_artists()
         {
+            this.tbl_artisthistory = new HashSet<tbl_artisthistory>();
             this.tbl_eventlineup = new HashSet<tbl_eventlineup>();
         }
     
         public int Artist_ID { get; set; }
         public string Artist_Name { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_artisthistory> tbl_artisthistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_eventlineup> tbl_eventlineup { get; set; }
     }

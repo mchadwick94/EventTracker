@@ -17,6 +17,7 @@ namespace Tracker.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_events()
         {
+            this.tbl_artisthistory = new HashSet<tbl_artisthistory>();
             this.tbl_eventhistory = new HashSet<tbl_eventhistory>();
             this.tbl_eventlineup = new HashSet<tbl_eventlineup>();
         }
@@ -27,6 +28,8 @@ namespace Tracker.Data
         public string Event_Location { get; set; }
         public bool Upcoming { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_artisthistory> tbl_artisthistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_eventhistory> tbl_eventhistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="EventTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="TrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="tbl_artisthistory">
     <Key>
       <PropertyRef Name="ArtistHistory_ID" />
     </Key>
     <Property Name="ArtistHistory_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_ID" Type="int" Nullable="false" />
+    <Property Name="Event_ID" Type="int" Nullable="false" />
     <Property Name="EventLineup_ID" Type="int" Nullable="false" />
     <Property Name="Artist_ID" Type="int" Nullable="false" />
   </EntityType>
@@ -20,7 +22,7 @@
       <PropertyRef Name="History_ID" />
     </Key>
     <Property Name="History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="User_ID" Type="String" Nullable="false" />
+    <Property Name="User_ID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Event_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_eventlineup">
@@ -45,10 +47,34 @@
     <Key>
       <PropertyRef Name="User_ID" />
     </Key>
-    <Property Name="User_ID" Type="String" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="User_Username" Type="varchar" MaxLength="30" Nullable="false" />
   </EntityType>
-  <Association Name="tbl_artisthistory$tbl_artisthistory_ibfk_1">
+  <Association Name="FK__tbl_artis__Artis__18B6AB08">
+    <End Role="tbl_artists" Type="Self.tbl_artists" Multiplicity="1" />
+    <End Role="tbl_artisthistory" Type="Self.tbl_artisthistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_artists">
+        <PropertyRef Name="Artist_ID" />
+      </Principal>
+      <Dependent Role="tbl_artisthistory">
+        <PropertyRef Name="Artist_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_artis__Event__16CE6296">
+    <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
+    <End Role="tbl_artisthistory" Type="Self.tbl_artisthistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_events">
+        <PropertyRef Name="Event_ID" />
+      </Principal>
+      <Dependent Role="tbl_artisthistory">
+        <PropertyRef Name="Event_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_artis__Event__17C286CF">
     <End Role="tbl_eventlineup" Type="Self.tbl_eventlineup" Multiplicity="1" />
     <End Role="tbl_artisthistory" Type="Self.tbl_artisthistory" Multiplicity="*" />
     <ReferentialConstraint>
@@ -60,19 +86,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="tbl_eventhistory$tbl_eventhistory_ibfk_1">
-    <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
-    <End Role="tbl_eventhistory" Type="Self.tbl_eventhistory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_users">
-        <PropertyRef Name="User_ID" />
-      </Principal>
-      <Dependent Role="tbl_eventhistory">
-        <PropertyRef Name="User_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="tbl_eventhistory$tbl_eventhistory_ibfk_2">
+  <Association Name="FK_tbl_eventhistory_tbl_events">
     <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
     <End Role="tbl_eventhistory" Type="Self.tbl_eventhistory" Multiplicity="*" />
     <ReferentialConstraint>
@@ -108,22 +122,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="EventTrackerModelStoreContainer">
+  <EntityContainer Name="TrackerModelStoreContainer">
     <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_eventlineup" EntityType="Self.tbl_eventlineup" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_events" EntityType="Self.tbl_events" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_users" EntityType="Self.tbl_users" Schema="db_eventtracker" store:Type="Tables" />
-    <AssociationSet Name="tbl_artisthistory$tbl_artisthistory_ibfk_1" Association="Self.tbl_artisthistory$tbl_artisthistory_ibfk_1">
+    <AssociationSet Name="FK__tbl_artis__Artis__18B6AB08" Association="Self.FK__tbl_artis__Artis__18B6AB08">
+      <End Role="tbl_artists" EntitySet="tbl_artists" />
+      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_artis__Event__16CE6296" Association="Self.FK__tbl_artis__Event__16CE6296">
+      <End Role="tbl_events" EntitySet="tbl_events" />
+      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_artis__Event__17C286CF" Association="Self.FK__tbl_artis__Event__17C286CF">
       <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
       <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
     </AssociationSet>
-    <AssociationSet Name="tbl_eventhistory$tbl_eventhistory_ibfk_1" Association="Self.tbl_eventhistory$tbl_eventhistory_ibfk_1">
-      <End Role="tbl_users" EntitySet="tbl_users" />
-      <End Role="tbl_eventhistory" EntitySet="tbl_eventhistory" />
-    </AssociationSet>
-    <AssociationSet Name="tbl_eventhistory$tbl_eventhistory_ibfk_2" Association="Self.tbl_eventhistory$tbl_eventhistory_ibfk_2">
+    <AssociationSet Name="FK_tbl_eventhistory_tbl_events" Association="Self.FK_tbl_eventhistory_tbl_events">
       <End Role="tbl_events" EntitySet="tbl_events" />
       <End Role="tbl_eventhistory" EntitySet="tbl_eventhistory" />
     </AssociationSet>

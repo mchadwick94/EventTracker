@@ -410,12 +410,13 @@
     <Content Include="Views\Admin\GetUsers.cshtml" />
     <Content Include="Views\Event\AddToUser.cshtml" />
     <Content Include="Views\Event\GetLineupDetails.cshtml" />
-    <Content Include="Views\Event\deleteFromLineup.cshtml" />
+    <Content Include="Views\Event\DeleteFromLineup.cshtml" />
     <Content Include="Views\Event\GetEventHistoryDetails.cshtml" />
-    <Content Include="Views\Event\deleteFromUserHistory.cshtml" />
-    <Content Include="Views\Event\addToLineup.cshtml" />
+    <Content Include="Views\Event\DeleteFromUserHistory.cshtml" />
+    <Content Include="Views\Event\AddToLineup.cshtml" />
     <Content Include="Views\Artist\NewArtist.cshtml" />
     <Content Include="Views\Event\GetUsersLineUp.cshtml" />
+    <Content Include="Views\Event\AddToArtistHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,8 +18,6 @@ namespace Tracker.Data
         public string User_ID { get; set; }
         public int Event_ID { get; set; }
     
-        public virtual tbl_eventhistory tbl_eventhistory1 { get; set; }
-        public virtual tbl_eventhistory tbl_eventhistory2 { get; set; }
         public virtual tbl_events tbl_events { get; set; }
     }
 }

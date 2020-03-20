@@ -1,34 +1,47 @@
-﻿@using Tracker.Data
+﻿@using Microsoft.AspNet.Identity
+@using Tracker.Data
 @model IEnumerable<Tracker.Data.tbl_eventlineup>
 
 @{
     ViewBag.Title = Request.QueryString["Event_Name"];
 }
 
-    <h1>Lineup for @ViewBag.Title</h1>
+<h1>Lineup for @ViewBag.Title</h1>
 
 <table class="table" id="LineupTable">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.tbl_artists.Artist_ID)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+        </th>
+        <th>
+            Seen?
         </th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
-            </td>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.tbl_artists.Artist_ID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+    </td>
 
-            <td align="right">
-                @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
-                @Html.ActionLink("Delete", "../Event/deleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
-            </td>
-        </tr>
+    <td align="right">
+        @Html.ActionLink("I Saw This Artist", "AddToArtistHistory", new { EventLineup_ID = item.Lineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = Request.QueryString["Event_ID"].ToString() });
+        @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
+        @Html.ActionLink("Delete", "../Event/DeleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
+    </td>
+</tr>
     }
 </table>
+<script>
 
+</script>
 <style>
     * {
         box-sizing: border-box;
@@ -54,16 +67,16 @@
         font-size: 18px;
     }
 
-    #myTable th, #LineupTable, #myTable td {
-        text-align: left;
-        padding: 12px;
-    }
+        #myTable th, #LineupTable, #myTable td {
+            text-align: left;
+            padding: 12px;
+        }
 
-    #myTable, #LineupTable tr {
-        border-bottom: 1px solid #ddd;
-    }
+            #myTable, #LineupTable tr {
+                border-bottom: 1px solid #ddd;
+            }
 
-    #myTable tr.header, #LineupTable, #myTable tr:hover {
-        background-color: #f1f1f1;
-    }
+                #myTable tr.header, #LineupTable, #myTable tr:hover {
+                    background-color: #f1f1f1;
+                }
 </style>

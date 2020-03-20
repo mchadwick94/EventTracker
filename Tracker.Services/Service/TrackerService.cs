@@ -51,7 +51,7 @@ namespace Tracker.Services.Service
             _TrackerDAO.AddToLineup(_lineup);
         }
 
-        //Retrieves the details of a lineup entry, this is used for automatic removal of an artist from a lineup using the 'deleteFromLineup' function below.
+        //Retrieves the details of a lineup entry, this is used for automatic removal of an artist from a lineup using the 'DeleteFromLineup' function below.
         public tbl_eventlineup GetLineupDetails(int Lineup_ID)
         {
             return _TrackerDAO.GetLineupDetails(Lineup_ID);
@@ -99,6 +99,11 @@ namespace Tracker.Services.Service
         public IList<tbl_eventlineup> GetUsersLineUp(int Event_ID)
         {
             return _TrackerDAO.GetUsersLineUp(Event_ID);
+        }
+
+        public void AddToArtistHistory(tbl_artisthistory _entry)
+        {
+            _TrackerDAO.AddToArtistHistory(_entry);
         }
 
         //-------------------------------------------------------------------------------

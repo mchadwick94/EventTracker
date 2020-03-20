@@ -126,6 +126,12 @@ namespace Tracker.Data.DAO
             return _lineup.ToList<tbl_eventlineup>();
         }
 
+        public void AddToArtistHistory(tbl_artisthistory _entry)
+        {
+            _context.tbl_artisthistory.Add(_entry);
+            _context.SaveChanges();
+        }
+
         //-------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.
@@ -133,7 +139,7 @@ namespace Tracker.Data.DAO
         {
             IQueryable<tbl_artists> _artists;
             _artists = from tbl_artists in _context.tbl_artists select tbl_artists;
-            return _artists.ToList<tbl_artists>();
+            return _artists.OrderBy(x => x.Artist_Name).ToList<tbl_artists>();
         }
         //Retrieves details of a specified artist
         public tbl_artists GetArtistDetails(int Artist_ID)

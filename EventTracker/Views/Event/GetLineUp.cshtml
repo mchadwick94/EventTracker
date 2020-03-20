@@ -23,7 +23,7 @@
 
             <td align="right">
                 @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
-                @Html.ActionLink("Delete", "../Event/deleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
+                @Html.ActionLink("Delete", "../Event/DeleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
             </td>
         </tr>
     }
@@ -45,7 +45,7 @@
                 @item2.Artist_Name
             </td>
             <td align="right">
-                @Html.ActionLink("Add To Lineup", "../Event/addToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
+                @Html.ActionLink("Add To Lineup", "../Event/AddToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
             </td>
         </tr>
     }
@@ -97,16 +97,16 @@
         font-size: 18px;
     }
 
-    #myTable th, #LineupTable, #myTable td {
-        text-align: left;
-        padding: 12px;
-    }
+        #myTable th, #LineupTable, #myTable td {
+            text-align: left;
+            padding: 12px;
+        }
 
-    #myTable, #LineupTable tr {
-        border-bottom: 1px solid #ddd;
-    }
+            #myTable, #LineupTable tr {
+                border-bottom: 1px solid #ddd;
+            }
 
-    #myTable tr.header, #LineupTable, #myTable tr:hover {
-        background-color: #f1f1f1;
-    }
+                #myTable tr.header, #LineupTable, #myTable tr:hover {
+                    background-color: #f1f1f1;
+                }
 </style>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Data.SqlClient;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -176,6 +177,21 @@ namespace EventTracker.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //TO THIS METHOD, ADD VERIFICATION AND IF ALREADY EXISTS, REMOVE FROM DATABASE
+        public ActionResult AddToArtistHistory(tbl_artisthistory _entry, tbl_eventlineup _lineup)
+        {
+            try
+            {
+                _lineup = _trackerService.GetLineupDetails(_entry.EventLineup_ID);
+                _trackerService.AddToArtistHistory(_entry);
+                return RedirectToAction("GetUsersLineup", new { _lineup.Event_ID});
+            }
+            catch
+            {
+                return RedirectToAction("GetUsersLineup", new { _lineup.Event_ID });
             }
         }
     }
