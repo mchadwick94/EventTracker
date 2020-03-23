@@ -54,6 +54,12 @@ namespace Tracker.Data.IDAO
         //Adds an artist to a users artistHistory
         void AddToArtistHistory(tbl_artisthistory _entry);
 
+        IList<Tracker.Data.tbl_artisthistory> GetSeenArtists(int User_ID);
+
+        Tracker.Data.tbl_artisthistory GetSeenArtistDetails(int ArtistHistory_ID);
+
+        void DeleteFromSeenArtists(tbl_artisthistory _entry);
+
         //-----------------------------------------------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.

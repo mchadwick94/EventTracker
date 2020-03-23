@@ -205,6 +205,30 @@ namespace EventTracker.Controllers
                 return RedirectToAction("GetUsersLineup", new { _lineup.Event_ID });
             }
         }
+        public ActionResult GetSeenArtists(int User_ID)
+        {
+            return View(_trackerService.GetSeenArtists(User_ID));
+        }
+
+        public ActionResult GetSeenArtistDetails(int ArtistHistory_ID)
+        {
+            return View(_trackerService.GetSeenArtistDetails(ArtistHistory_ID));
+        }
+
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public ActionResult DeleteFromSeenArtists(tbl_artisthistory _entry)
+        {
+            try
+            {
+                _entry = _trackerService.GetSeenArtistDetails(_entry.ArtistHistory_ID);
+                _trackerService.DeleteFromSeenArtists(_entry);
+                return RedirectToAction("GetSeenArtists", new { controller = "Event", _entry.User_ID });
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }
 

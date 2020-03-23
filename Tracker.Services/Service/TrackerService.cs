@@ -106,6 +106,22 @@ namespace Tracker.Services.Service
             _TrackerDAO.AddToArtistHistory(_entry);
         }
 
+        public IList<tbl_artisthistory> GetSeenArtists(int User_ID)
+        {
+            return _TrackerDAO.GetSeenArtists(User_ID);
+        }
+
+        public tbl_artisthistory GetSeenArtistDetails(int ArtistHistory_ID)
+        {
+            return _TrackerDAO.GetSeenArtistDetails(ArtistHistory_ID);
+        }
+
+
+        public void DeleteFromSeenArtists(tbl_artisthistory _entry)
+        {
+            _TrackerDAO.DeleteFromSeenArtists(_entry);
+        }
+
         //-------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.

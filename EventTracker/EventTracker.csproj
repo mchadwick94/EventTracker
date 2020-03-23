@@ -417,6 +417,9 @@
     <Content Include="Views\Artist\NewArtist.cshtml" />
     <Content Include="Views\Event\GetUsersLineUp.cshtml" />
     <Content Include="Views\Event\AddToArtistHistory.cshtml" />
+    <Content Include="Views\Event\GetSeenArtists.cshtml" />
+    <Content Include="Views\Event\GetSeenArtistDetails.cshtml" />
+    <Content Include="Views\Event\DeleteFromSeenArtists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

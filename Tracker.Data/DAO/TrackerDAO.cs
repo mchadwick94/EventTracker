@@ -132,6 +132,26 @@ namespace Tracker.Data.DAO
             _context.SaveChanges();
         }
 
+        public IList<tbl_artisthistory> GetSeenArtists(int User_ID)
+        {
+            IQueryable<tbl_artisthistory> _artists;
+            _artists = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID == User_ID select tbl_artisthistory;
+            return _artists.ToList<tbl_artisthistory>();
+        }
+
+        public tbl_artisthistory GetSeenArtistDetails(int ArtistHistory_ID)
+        {
+            IQueryable<tbl_artisthistory> _entry;
+            _entry = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.ArtistHistory_ID == ArtistHistory_ID select tbl_artisthistory;
+            return _entry.First<tbl_artisthistory>();
+        }
+
+        public void DeleteFromSeenArtists(tbl_artisthistory _entry)
+        {
+            _context.tbl_artisthistory.Remove(_entry);
+            _context.SaveChanges();
+        }
+
         //-------------------------------------------------------------------------------
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.

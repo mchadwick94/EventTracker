@@ -30,6 +30,9 @@
     <td>
         @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
     </td>
+    <td>
+
+    </td>
 
     <td align="right">
         @Html.ActionLink("I Saw This Artist", "AddToArtistHistory", new { EventLineup_ID = item.Lineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = Request.QueryString["Event_ID"].ToString() });
