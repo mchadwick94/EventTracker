@@ -14,8 +14,6 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-
-    @Html.ActionLink("Test", "../Artist/GetUsersArtistCount", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() })
     <table class="table">
         <tr>
             <th>
@@ -56,8 +54,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
-                    @Html.ActionLink("Details", "../Event/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
-                    @Html.ActionLink("Delete", "../Event/DeleteFromSeenArtists", new { ArtistHistory_ID = item.ArtistHistory_ID })
+                    @Html.ActionLink("Details", "../Artist/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
+                    @Html.ActionLink("Delete", "../Artist/DeleteFromSeenArtists", new { ArtistHistory_ID = item.ArtistHistory_ID })
                 </td>
             </tr>
         }

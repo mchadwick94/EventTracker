@@ -28,7 +28,7 @@
                     {
                         @*Checks to see if there is a current user*@
                         <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = Convert.ToString(User.Identity.GetUserId()).GetHashCode() })</li>
-                        <li>@Html.ActionLink("Seen Artists", "../Event/GetSeenArtists", new {User_ID = Convert.ToString(User.Identity.GetUserId()).GetHashCode() })</li>
+                        <li>@Html.ActionLink("Seen Artists", "../Artist/GetSeenArtists", new {User_ID = Convert.ToString(User.Identity.GetUserId()).GetHashCode() })</li>
                     }
                     @*Converts the Current Users ID to a hash code to look up their event history.*@
 

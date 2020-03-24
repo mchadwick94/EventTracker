@@ -190,45 +190,6 @@ namespace EventTracker.Controllers
                 return View();
             }
         }
-
-        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //TO THIS METHOD, ADD VERIFICATION AND IF ALREADY EXISTS, REMOVE FROM DATABASE
-        public ActionResult AddToArtistHistory(tbl_artisthistory _entry, tbl_eventlineup _lineup)
-        {
-            try
-            {
-                _lineup = _trackerService.GetLineupDetails(_entry.EventLineup_ID);
-                _trackerService.AddToArtistHistory(_entry);
-                return RedirectToAction("GetUsersLineup", new { _lineup.Event_ID});
-            }
-            catch
-            {
-                return RedirectToAction("GetUsersLineup", new { _lineup.Event_ID });
-            }
-        }
-        public ActionResult GetSeenArtists(int User_ID) //Returns indexed view of all artists a user has seen
-        {
-            return View(_trackerService.GetSeenArtists(User_ID));
-        }
-
-        public ActionResult GetSeenArtistDetails(int ArtistHistory_ID) //Retrieves the details of an entry in a users artist history
-        {
-            return View(_trackerService.GetSeenArtistDetails(ArtistHistory_ID));
-        }
-
-        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //removes an artist from a users seen history
-        public ActionResult DeleteFromSeenArtists(tbl_artisthistory _entry)
-        {
-            try
-            {
-                _entry = _trackerService.GetSeenArtistDetails(_entry.ArtistHistory_ID);
-                _trackerService.DeleteFromSeenArtists(_entry);
-                return RedirectToAction("GetSeenArtists", new { controller = "Event", _entry.User_ID });
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
 
