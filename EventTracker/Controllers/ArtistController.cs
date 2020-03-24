@@ -1,7 +1,12 @@
-﻿using System;
+﻿using EventTracker.Models;
+using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Services;
 using Tracker.Data;
 
 namespace EventTracker.Controllers
@@ -10,9 +15,12 @@ namespace EventTracker.Controllers
     {
         //private Tracker.Services.IService.ITrackerService _trackerService;
         private TrackerEntities _context;
+        public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+
         public ArtistController()
         {
             _context = new TrackerEntities();
+
         }
         // Retrieves a list of all the artists within the database (tbl_artists)
         public ActionResult GetArtists()
@@ -55,6 +63,31 @@ namespace EventTracker.Controllers
             {
                 return View();
             }
+        }
+
+        //SQL Action to return a grouped list of artists based on how many times a user has seen them
+        [WebMethod]
+        public ActionResult GetUsersArtistCount(int User_ID)
+        {
+            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
+
+            SqlConnection MyConn = new SqlConnection(connString);
+            SqlCommand MySqlCmd = MyConn.CreateCommand();
+            SqlDataReader adapter;
+            MySqlCmd.CommandText = @"select [db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name], count(*) AS c from[db_eventtracker].[tbl_artists] left join[db_eventtracker].[tbl_artisthistory] on[db_eventtracker].[tbl_artists].Artist_ID = [db_eventtracker].[tbl_artisthistory].[Artist_ID] where[db_eventtracker].[tbl_artisthistory].[User_ID] = ' " + User_ID + " 'group by[db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name] order by C DESC;";
+            MyConn.Open();
+            DataTable dt = new DataTable("countTable");
+            adapter = MySqlCmd.ExecuteReader();
+            dt.Load(adapter);
+            MyConn.Close();
+
+            List<SeenArtistCount> artistCountList = dt.AsEnumerable().Select(m => new SeenArtistCount()
+            {
+                Artist_ID = m.Field<int>("Artist_ID"),
+                Artist_Name = m.Field<string>("Artist_Name"),
+                c = m.Field<int>("c"),
+            }).ToList();
+            return View(artistCountList);
         }
 
         // Retrieves the lineup for an event inside a specific users event history

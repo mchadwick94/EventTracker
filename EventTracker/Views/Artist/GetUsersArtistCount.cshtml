@@ -1,0 +1,37 @@
+﻿@model IEnumerable<EventTracker.Models.SeenArtistCount>
+
+
+@{
+    ViewBag.Title = "GetSeenArtistsCount";
+}
+
+<h2>Times You've seen DJ's</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Artist_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Artist_Name)
+        </th>
+        <th>
+            <p>Times Seen</p>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.c)
+            </td>
+        </tr>
+    }
+
+</table>

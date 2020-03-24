@@ -420,6 +420,7 @@
     <Content Include="Views\Event\GetSeenArtists.cshtml" />
     <Content Include="Views\Event\GetSeenArtistDetails.cshtml" />
     <Content Include="Views\Event\DeleteFromSeenArtists.cshtml" />
+    <Content Include="Views\Artist\GetUsersArtistCount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
