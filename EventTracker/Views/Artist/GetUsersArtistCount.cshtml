@@ -1,37 +1,35 @@
-﻿@model IEnumerable<EventTracker.Models.SeenArtistCount>
+﻿    @model IEnumerable<EventTracker.Models.SeenArtistCount>
+    <link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
+    <!DOCTYPE html>
+    <html>
+    <body>
 
+        @{
+            ViewBag.Title = "GetSeenArtistsCount";
+        }
 
-@{
-    ViewBag.Title = "GetSeenArtistsCount";
-}
+        <h6>Times You've seen DJ's</h6>
+        <table class="artist-count-table">
+            <tr>
+                <th class="count-table-head" width="2%">
+                    <p>Times Seen</p>
+                </th>
+                <th class="count-table-head">
+                    Artist
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr class="count-table-row">
+                    <td class="count-table-count-col">
+                        @Html.DisplayFor(modelItem => item.c)
+                    </td>
+                    <td class="count-table-artist-col">
+                        @Html.DisplayFor(modelItem => item.Artist_Name)
+                    </td>
+                </tr>
+            }
 
-<h2>Times You've seen DJ's</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Artist_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Artist_Name)
-        </th>
-        <th>
-            <p>Times Seen</p>
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.c)
-            </td>
-        </tr>
-    }
-
-</table>
+        </table>
+    </body>
+    </html>

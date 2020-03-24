@@ -1,15 +1,16 @@
 ﻿@model Tracker.Data.tbl_artisthistory
 
+<link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "AddToArtistHistory";
 }
 
 <h2>AddToArtistHistory</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>tbl_artisthistory</h4>
         <hr />

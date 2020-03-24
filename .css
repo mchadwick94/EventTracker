@@ -1,0 +1,32 @@
+﻿.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 15%; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    font-size: small;
+    background-color: #222222;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 2%;
+}
+.artist-count-table {
+    width: 20%;
+    color: white;
+    background-color: #222222;
+}
+
+.count-table-head {
+    text-align: center;
+}
+
+.count-table-row {
+    border-bottom: 1px solid #424242;
+    text-align: left;
+}
+
+.count-table-artist-col {
+    font-size: 70%;
+    border-left: 1px solid white;
+    padding-left: 10px;
+}

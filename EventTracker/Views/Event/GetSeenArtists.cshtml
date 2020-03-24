@@ -1,62 +1,66 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<Tracker.Data.tbl_artisthistory>
+<link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "GetSeenArtists";
 }
 
+<div class="artist-count-sidebar">
+    @{Html.RenderAction("GetUsersArtistCount", "Artist", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }); }
+</div>
 <h2>GetSeenArtists</h2>
+<body class="seen-artists-body">
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-@Html.ActionLink("Test", "../Artist/GetUsersArtistCount", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString()})
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tbl_events.Event_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tbl_eventlineup.Lineup_ID)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    @Html.ActionLink("Test", "../Artist/GetUsersArtistCount", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() })
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_eventlineup.Lineup_ID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
-                @Html.ActionLink("Details", "../Event/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
-                @Html.ActionLink("Delete", "../Event/DeleteFromSeenArtists", new { ArtistHistory_ID = item.ArtistHistory_ID })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.User_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tbl_events.Event_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tbl_eventlineup.Lineup_ID)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_eventlineup.Lineup_ID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
+                    @Html.ActionLink("Details", "../Event/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
+                    @Html.ActionLink("Delete", "../Event/DeleteFromSeenArtists", new { ArtistHistory_ID = item.ArtistHistory_ID })
+                </td>
+            </tr>
+        }
 
+    </table>
+</body>
