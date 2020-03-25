@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Tracker.Data
 @model IEnumerable<Tracker.Data.tbl_eventlineup>
+<link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = Request.QueryString["Event_Name"];
@@ -23,62 +24,20 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.tbl_artists.Artist_ID)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
-    </td>
-    <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+            </td>
+            <td>
+            </td>
 
-    </td>
-
-    <td align="right">
-        @Html.ActionLink("I Saw This Artist", "../Artist/AddToArtistHistory", new { EventLineup_ID = item.Lineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = Request.QueryString["Event_ID"].ToString() });
-        @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
-    </td>
-</tr>
+            <td align="right">
+                @Html.ActionLink("I Saw This Artist", "../Artist/AddToArtistHistory", new { Event_Name = item.tbl_events.Event_Name, EventLineup_ID = item.Lineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = Request.QueryString["Event_ID"].ToString() });
+                @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
+            </td>
+        </tr>
     }
 </table>
-<script>
-
-</script>
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    #myInput {
-        background-image: url('../../Content/images/search.jpg');
-        background-size: 15px 15px;
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        width: 100%;
-        font-size: 16px;
-        padding: 12px 20px 12px 40px;
-        border: 1px solid #ddd;
-        margin-bottom: 12px;
-        align-self: center;
-    }
-
-    #myTable, #LineupTable {
-        border-collapse: collapse;
-        width: 100%;
-        border: 1px solid #ddd;
-        font-size: 18px;
-    }
-
-        #myTable th, #LineupTable, #myTable td {
-            text-align: left;
-            padding: 12px;
-        }
-
-            #myTable, #LineupTable tr {
-                border-bottom: 1px solid #ddd;
-            }
-
-                #myTable tr.header, #LineupTable, #myTable tr:hover {
-                    background-color: #f1f1f1;
-                }
-</style>

@@ -123,13 +123,15 @@ namespace EventTracker.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //TO THIS METHOD, ADD VERIFICATION AND IF ALREADY EXISTS, REMOVE FROM DATABASE
-        public ActionResult AddToArtistHistory(tbl_artisthistory _entry, tbl_eventlineup _lineup)
+        public ActionResult AddToArtistHistory(tbl_artisthistory _entry, tbl_eventlineup _lineup, tbl_events _event)
         {
             try
             {
+                _event = _trackerService.GetEventDetails(_entry.Event_ID);
+                string Event_Name = _event.Event_Name;
                 _lineup = _trackerService.GetLineupDetails(_entry.EventLineup_ID);
                 _trackerService.AddToArtistHistory(_entry);
-                return RedirectToAction("GetUsersLineup", "Event", new { _lineup.Event_ID });
+                return RedirectToAction("GetUsersLineup", "Event", new { _lineup.Event_ID, Event_Name });
             }
             catch
             {
