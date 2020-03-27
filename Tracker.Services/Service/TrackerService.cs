@@ -116,6 +116,11 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetSeenArtistDetails(ArtistHistory_ID);
         }
 
+        public tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
+        {
+            return _TrackerDAO.FindSeenArtistEntry(Lineup_ID, Event_ID, Artist_ID, User_ID);
+        }
+
 
         public void DeleteFromSeenArtists(tbl_artisthistory _entry)
         {

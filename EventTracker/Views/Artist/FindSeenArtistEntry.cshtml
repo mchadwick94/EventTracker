@@ -1,0 +1,44 @@
+﻿@model Tracker.Data.tbl_artisthistory
+
+<div>
+    <h4>tbl_artisthistory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_artists.Artist_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_events.Event_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_eventlineup.Lineup_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_eventlineup.Lineup_ID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ArtistHistory_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

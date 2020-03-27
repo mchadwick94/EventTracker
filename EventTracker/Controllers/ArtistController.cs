@@ -108,14 +108,22 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetSeenArtistDetails(ArtistHistory_ID));
         }
 
+        public ActionResult FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
+        {
+            return View(_trackerService.FindSeenArtistEntry(Lineup_ID, Event_ID, Artist_ID, User_ID));
+        }
+
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //removes an artist from a users seen history
-        public ActionResult DeleteFromSeenArtists(tbl_artisthistory _entry)
+        public ActionResult DeleteFromSeenArtists(tbl_artisthistory _entry, tbl_eventlineup _lineup, tbl_events _event, int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
         {
             try
             {
-                _entry = _trackerService.GetSeenArtistDetails(_entry.ArtistHistory_ID);
+                _event = _trackerService.GetEventDetails(_entry.Event_ID);
+                string Event_Name = _event.Event_Name;
+                _entry = _trackerService.FindSeenArtistEntry(Lineup_ID, Event_ID, Artist_ID, User_ID);
                 _trackerService.DeleteFromSeenArtists(_entry);
-                return RedirectToAction("GetSeenArtists", new { controller = "Artist", _entry.User_ID });
+                _lineup = _trackerService.GetLineupDetails(_entry.EventLineup_ID);
+                return RedirectToAction("GetUsersLineup", "Event", new { _lineup.Event_ID, Event_Name });
             }
             catch
             {

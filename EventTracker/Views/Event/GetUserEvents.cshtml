@@ -15,27 +15,28 @@
             <h2>Upcoming Events</h2>
             @*<th>
                     @Html.DisplayNameFor(model => model.tbl_users.User_Username)
-                </th>*@
+                </th>
             <th>
                 @Html.DisplayNameFor(model => model.tbl_events.Event_ID)
+            </th>*@
+            <th>
+                Event Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
+                Location
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tbl_events.Event_Location)
+                Date
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.tbl_events.Event_Date)
-            </th>
+            <th></th>
         </tr>
 
         @foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now).OrderBy(m => m.tbl_events.Event_Date))
         {@*This orders the records by Event Date in descending order, rather than it being done within the model.*@
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
             </td>
@@ -48,8 +49,8 @@
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
                 @Html.ActionLink("Details", "GetEventHistoryDetails", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
-                @Html.ActionLink("Delete", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
+                @Html.ActionLink("View Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
+                @Html.ActionLink("Remove Event", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
             </td>
         </tr>
     }
@@ -59,26 +60,27 @@
     <table class="table">
         <tr>
             <h2>Past Events</h2>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.tbl_events.Event_ID)
+            </th>*@
+            <th>
+                Event Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
+                Location
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tbl_events.Event_Location)
+                Date
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.tbl_events.Event_Date)
-            </th>
+            <th></th>
         </tr>
 
         @foreach (var item in Model.Where(m => m.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(m => m.tbl_events.Event_Date))
         {@*This orders the records by Event Date in descending order, rather than it being done within the model.*@
         <tr>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
             </td>
@@ -91,10 +93,17 @@
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
                 @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
-                @Html.ActionLink("Delete", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
+                @Html.ActionLink("View Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
+                @Html.ActionLink("Remove Event", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
             </td>
         </tr>
     }
 
     </table>
+    <script>
+function myFunction() {
+  var str = document.getElementById("table-header").innerHTML;
+  var res = str.replace(/_/g, " ");
+  document.getElementById("table_header").innerHTML = res;
+}
+    </script>

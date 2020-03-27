@@ -146,6 +146,13 @@ namespace Tracker.Data.DAO
             return _entry.First<tbl_artisthistory>();
         }
 
+        public tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
+        {
+            IQueryable<tbl_artisthistory> _entry;
+            _entry = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID == User_ID & tbl_artisthistory.Event_ID == Event_ID & tbl_artisthistory.EventLineup_ID == Lineup_ID & tbl_artisthistory.Artist_ID == Artist_ID select tbl_artisthistory;
+            return _entry.First<tbl_artisthistory>();
+        }
+
         public void DeleteFromSeenArtists(tbl_artisthistory _entry)
         {
             _context.tbl_artisthistory.Remove(_entry);

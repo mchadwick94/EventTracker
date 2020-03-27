@@ -58,6 +58,8 @@ namespace Tracker.Services.IService
 
         Tracker.Data.tbl_artisthistory GetSeenArtistDetails(int ArtistHistory_ID);
 
+        Tracker.Data.tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID);
+
         void DeleteFromSeenArtists(tbl_artisthistory _entry);
 
         //-------------------------------------------------------------------------------
