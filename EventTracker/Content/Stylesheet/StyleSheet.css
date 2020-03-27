@@ -43,6 +43,11 @@
     box-sizing: border-box;
 }
 
+#myTable {
+  max-height: 300px;
+  overflow: scroll;
+  table-layout: fixed;
+}
 #myInput {
     background-image: url('../../Content/images/search.jpg');
     background-size: 15px 15px;
@@ -58,15 +63,22 @@
     border-radius: 5px 5px 5px 5px;
     outline: none;
     color: #424242;
+
 }
 
-#search-btn {
+#new-artist-btn {
     font-size: 20px;
     width: 100%;
     position: relative;
-    display: flex;
+
+    text-align: center;
+    padding: 3px 2px;
 }
 
+#search-card-body {
+    max-height: 50%;
+    overflow-y: scroll
+}
 #myInput:focus {
     color: #424242;
 }
@@ -94,9 +106,6 @@
     transition: 0.3s;
     border: 2px solid #ddd; 
 }
-
-    /* On mouse-over, add a deeper shadow */
-
 
 /* Add some padding inside the card container */
 .container {

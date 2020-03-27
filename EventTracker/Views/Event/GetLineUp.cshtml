@@ -33,19 +33,13 @@
     }
 </table>
 <br />
-<br />
-<input type="button" id="search-btn" value="Add New Artist" onclick="location.href='@Url.Action("NewArtist", "Artist" )'" />
 
-<div class="card">
-    <div class="card-body">
+<button type="button" id="new-artist-btn" onclick="location.href='@Url.Action("NewArtist", "Artist" )'">Add New Artist</button>
+<br /><br />
+    <div class="card">
         <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Artists.." title="Type in an Artist" , name="myInput">
-
-        <table class="table" id="myTable">
-            <th>
-                @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
-            </th>
-            <th>
-
+        <div class="card-body" id="search-card-body">
+            <table class="table" id="myTable">
                 @foreach (var item2 in ViewBag.Artists)
                 {
                     if ((ViewBag.Lineup.Contains(item2.Artist_ID.ToString())))
@@ -62,11 +56,9 @@
                     </tr>
                 }
             }
-                </th>
             </table>
-
+        </div>
     </div>
-</div>
 
 <script>
     function myFunction() { // Script found at https://www.w3schools.com/howto/howto_js_filter_table.asp
@@ -83,6 +75,7 @@
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
                 } else {
+
                     tr[i].style.display = "none";
                 }
             }
