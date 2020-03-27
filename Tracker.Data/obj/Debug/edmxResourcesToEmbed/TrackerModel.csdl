@@ -50,7 +50,6 @@
     <Property Name="Event_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Event_Date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Event_Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Upcoming" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="tbl_artisthistory" Relationship="Self.FK__tbl_artis__Event__16CE6296" FromRole="tbl_events" ToRole="tbl_artisthistory" />
     <NavigationProperty Name="tbl_eventhistory" Relationship="Self.FK_tbl_eventhistory_tbl_events" FromRole="tbl_events" ToRole="tbl_eventhistory" />
     <NavigationProperty Name="tbl_eventlineup" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_events" ToRole="tbl_eventlineup" />

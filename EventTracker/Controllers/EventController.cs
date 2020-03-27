@@ -17,7 +17,6 @@ namespace EventTracker.Controllers
         public EventController()
         {
             ViewBag.Lineup = _trackerService.GetLineUp(_eventID);
-            ViewBag.MyEvents = _trackerService.GetUserEvents(User_ID);
         }
         // GET: Complete Event List
         public ActionResult GetEvents()
@@ -27,7 +26,6 @@ namespace EventTracker.Controllers
             {
                 UsersEvents.Add(item.Event_ID.ToString());
             }
-            ViewBag.MyEvents = _trackerService.GetUserEvents(User_ID);
             ViewBag.MyEvents = UsersEvents;
             return View(_trackerService.GetEvents());
         }
@@ -139,8 +137,13 @@ namespace EventTracker.Controllers
         public ActionResult GetLineUp(int Event_ID)
         {
             _eventID = Event_ID;
+            List<string> Lineup = new List<string>();
+            foreach (var item in _trackerService.GetLineUp(Event_ID))
+            {
+                Lineup.Add(item.Artist_ID.ToString());
+            }
+            ViewBag.Lineup = Lineup;
             return View(_trackerService.GetLineUp(Event_ID));
-
         }
 
         //Adds to an events lineup

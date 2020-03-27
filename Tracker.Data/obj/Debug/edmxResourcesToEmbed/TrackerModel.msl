@@ -45,7 +45,6 @@
           <ScalarProperty Name="Event_Name" ColumnName="Event_Name" />
           <ScalarProperty Name="Event_Date" ColumnName="Event_Date" />
           <ScalarProperty Name="Event_Location" ColumnName="Event_Location" />
-          <ScalarProperty Name="Upcoming" ColumnName="Upcoming" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -44,7 +44,6 @@ namespace Tracker.Data.DAO
             _event.Event_Name = _events.Event_Name;
             _event.Event_Location = _events.Event_Location;
             _event.Event_Date = _events.Event_Date;
-            _event.Upcoming = _events.Upcoming;
             _context.SaveChanges();
         }
 

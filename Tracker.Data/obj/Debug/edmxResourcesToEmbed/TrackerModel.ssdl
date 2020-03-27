@@ -41,7 +41,6 @@
     <Property Name="Event_Name" Type="varchar" MaxLength="60" Nullable="false" />
     <Property Name="Event_Date" Type="date" Nullable="false" />
     <Property Name="Event_Location" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Upcoming" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_users">
     <Key>
