@@ -23,7 +23,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderBy( i => i.tbl_artists.Artist_Name))
     {
         <tr>
             <td>
@@ -33,12 +33,19 @@
                 @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
             </td>
             <td>
+                @if (((IList<string>)ViewBag.UsersSeenOnLineup).Contains(item.Artist_ID.ToString()))
+                {
+                    <input id="Checkbox1" type="checkbox" checked="checked" disabled="disabled" />
+                }
+                else
+                {
+                    <input id="Checkbox1" type="checkbox" disabled="disabled" />
+                }
             </td>
-
             <td align="right">
                 @if (((IList<string>
                     )ViewBag.UsersSeenOnLineup).Contains(item.Artist_ID.ToString()))
-                { }
+                {  }
                 else
                 {
                     @Html.ActionLink("I Saw This Artist", "../Artist/AddToArtistHistory", new { Event_Name = item.tbl_events.Event_Name, EventLineup_ID = item.Lineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = Request.QueryString["Event_ID"].ToString() })
