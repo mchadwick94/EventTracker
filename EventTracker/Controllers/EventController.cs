@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -120,9 +121,17 @@ namespace EventTracker.Controllers
         }
 
         //Get an events Lineup through users events page
-        public ActionResult GetUsersLineUp(int Event_ID)
+        public ActionResult GetUsersLineUp(int Event_ID, tbl_events _event)
         {
-            _eventID = Event_ID;
+            List<string> UsersSeenLineup= new List<string>();
+            _event = _trackerService.GetEventDetails(Event_ID);
+            foreach (var item in _trackerService.GetSeenArtists(Convert.ToInt32(User_ID))){
+                if(item.Event_ID == _event.Event_ID)
+                {
+                    UsersSeenLineup.Add(item.Artist_ID.ToString());
+                }
+            }
+            ViewBag.UsersSeenOnLineup = UsersSeenLineup;
             return View(_trackerService.GetLineUp(Event_ID));
         }
 

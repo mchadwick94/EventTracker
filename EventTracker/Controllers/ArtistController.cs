@@ -81,6 +81,7 @@ namespace EventTracker.Controllers
             dt.Load(adapter);
             MyConn.Close();
 
+            //Convert DataTable to List
             List<SeenArtistCount> artistCountList = dt.AsEnumerable().Select(m => new SeenArtistCount()
             {
                 Artist_ID = m.Field<int>("Artist_ID"),
