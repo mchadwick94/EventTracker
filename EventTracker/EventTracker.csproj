@@ -424,6 +424,7 @@
     <Content Include="Views\Artist\DeleteFromSeenArtists.cshtml" />
     <Content Include="Views\Artist\GetUsersArtistCount.cshtml" />
     <Content Include="Views\Artist\FindSeenArtistEntry.cshtml" />
+    <Content Include="Views\Artist\GetSeenArtistHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

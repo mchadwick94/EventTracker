@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tracker.Data.IDAO;
 
@@ -183,6 +184,15 @@ namespace Tracker.Data.DAO
         }
 
         //-------------------------------------------------------------------------------
+        // USER/ARTIST RELATED FUNCTIONS
+        public IList<tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID)
+        {
+            IQueryable<tbl_artisthistory> _UsersArtistEvents;
+            _UsersArtistEvents = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID == User_ID & tbl_artisthistory.Artist_ID == Artist_ID select tbl_artisthistory;
+            return _UsersArtistEvents.ToList<tbl_artisthistory>();
+        }
+
+        //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
         //Gets a list of all the users within the database.
         public IList<tbl_users> GetUsers()
@@ -191,6 +201,7 @@ namespace Tracker.Data.DAO
             _users = from tbl_users in _context.tbl_users select tbl_users;
             return _users.ToList<tbl_users>();
         }
+
     }
 }
 

@@ -147,5 +147,11 @@ namespace EventTracker.Controllers
                 return RedirectToAction("GetUsersLineup", "Event", new { _lineup.Event_ID });
             }
         }
+
+        public ActionResult GetSeenArtistHistory(int User_ID, int Artist_ID)
+        {
+            ViewBag.Artist_Name = _trackerService.GetArtistDetails(Artist_ID).Artist_Name.ToString();
+            return View(_trackerService.GetSeenArtistHistory(User_ID, Artist_ID));
+        }
     }
 }

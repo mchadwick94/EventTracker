@@ -75,6 +75,15 @@
     padding: 3px 2px;
 }
 
+#event-card-body {
+    max-height: 55%;
+    overflow-y: scroll
+}
+
+#event-table {
+    max-height: 55%;
+    overflow-y: scroll
+}
 #search-card-body {
     max-height: 50%;
     overflow-y: scroll

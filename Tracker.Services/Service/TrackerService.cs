@@ -147,6 +147,15 @@ namespace Tracker.Services.Service
             _TrackerDAO.NewArtist(_artist);
         }
 
+
+        //-------------------------------------------------------------------------------
+        // USER/ARTIST RELATED FUNCTIONS
+        public IList<tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID)
+        {
+            return _TrackerDAO.GetSeenArtistHistory(User_ID, Artist_ID);
+        }
+
+
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
         //Gets a list of all the users within the database.

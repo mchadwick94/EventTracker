@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 
 namespace EventTracker.Controllers
 {
@@ -21,5 +22,7 @@ namespace EventTracker.Controllers
         {
             return View();
         }
+
+
     }
 }
