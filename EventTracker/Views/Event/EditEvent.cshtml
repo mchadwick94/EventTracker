@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Event_Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Event_Date, new { htmlAttributes = new { @class = "datepicker" } })
+                @Html.EditorFor(model =>  Model.Event_Date, new { htmlAttributes = new { @class = "datepicker" } }) 
                 @Html.ValidationMessageFor(model => model.Event_Date, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,7 +49,7 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
 </div>
 
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />

@@ -35,6 +35,7 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetArtistDetails(Artist_ID));
         }
 
+
         // Inserts a new artist into the database.
         [HttpGet]
         public ActionResult NewArtist()

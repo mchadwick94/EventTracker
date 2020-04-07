@@ -31,7 +31,7 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
 </div>
 @*The following script automatically submits this form*@
 <script>

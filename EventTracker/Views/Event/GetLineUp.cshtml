@@ -7,6 +7,7 @@
 }
 
 <h1>Lineup for @ViewBag.Title</h1>
+@Html.ActionLink("Back To Events", "../Event/GetEvents")
 
 <table class="table" id="LineupTable">
     <tr>
@@ -35,17 +36,18 @@
 <br />
 
 <button type="button" id="new-artist-btn" onclick="location.href='@Url.Action("NewArtist", "Artist" )'">Add New Artist</button>
-<br /><br />
-    <div class="card">
-        <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Artists.." title="Type in an Artist" , name="myInput">
-        <div class="card-body" id="search-card-body">
-            <table class="table" id="myTable">
-                @foreach (var item2 in ViewBag.Artists)
+<br />
+<br />
+<div class="card">
+    <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Artists.." title="Type in an Artist" , name="myInput">
+    <div class="card-body" id="search-card-body">
+        <table class="table" id="myTable">
+            @foreach (var item2 in ViewBag.Artists)
+            {
+                if ((ViewBag.Lineup.Contains(item2.Artist_ID.ToString())))
+                { }
+                else
                 {
-                    if ((ViewBag.Lineup.Contains(item2.Artist_ID.ToString())))
-                    { }
-                    else
-                    {
                     <tr>
                         <td>
                             @item2.Artist_Name
@@ -56,9 +58,9 @@
                     </tr>
                 }
             }
-            </table>
-        </div>
+        </table>
     </div>
+</div>
 
 <script>
     function myFunction() { // Script found at https://www.w3schools.com/howto/howto_js_filter_table.asp

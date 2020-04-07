@@ -49,7 +49,7 @@
         </td>
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-            @Html.ActionLink("Details", "GetEventHistoryDetails", new { Event_ID = item.Event_ID }) |
+            @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.tbl_events.Event_ID }) |
             @Html.ActionLink("View Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
             @Html.ActionLink("Remove Event", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
         </td>

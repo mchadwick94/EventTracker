@@ -14,14 +14,16 @@
     
     <tr><h2>Upcoming Events</h2>
         <th>
-            @Html.DisplayNameFor(model => model.Event_Name)
+            Event Name:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Event_Date)
+            Date of Event:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Event_Location)
+            Location:
         </th>
+    <th>
+    </th>
     </tr>
 
     @foreach (var item in Model.Where( x => x.Event_Date >= System.DateTime.Now).OrderBy(x => x.Event_Date))
@@ -59,15 +61,16 @@
 <br/>
 <table class="table">
     
-    <tr><h2>Past Events</h2>
+    <tr>
+        <h2>Past Events</h2>
         <th>
-            @Html.DisplayNameFor(model => model.Event_Name)
+            Event Name:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Event_Date)
+            Date of Event:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Event_Location)
+            Location:
         </th>
         <th></th>
     </tr>
