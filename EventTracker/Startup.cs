@@ -2,6 +2,7 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(EventTracker.Startup))]
+
 namespace EventTracker
 {
     public partial class Startup

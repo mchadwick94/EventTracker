@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -13,11 +11,11 @@ namespace EventTracker.Controllers
         public int _eventID;
         public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
 
-
         public EventController()
         {
             ViewBag.Lineup = _trackerService.GetLineUp(_eventID);
         }
+
         // GET: Complete Event List
         public ActionResult GetEvents()
         {
@@ -42,6 +40,7 @@ namespace EventTracker.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult CreateEvent(tbl_events _event)
         {
@@ -77,6 +76,7 @@ namespace EventTracker.Controllers
         {
             return View(_trackerService.GetEventDetails(Event_ID));
         }
+
         [HttpPost] //Posts the new variables into the database at the specific event being edited
         public ActionResult EditEvent(int Event_ID, tbl_events _event)
         {
@@ -121,10 +121,11 @@ namespace EventTracker.Controllers
         //Get an events Lineup through users events page
         public ActionResult GetUsersLineUp(int Event_ID, tbl_events _event)
         {
-            List<string> UsersSeenLineup= new List<string>();
+            List<string> UsersSeenLineup = new List<string>();
             _event = _trackerService.GetEventDetails(Event_ID);
-            foreach (var item in _trackerService.GetSeenArtists(Convert.ToInt32(User_ID))){
-                if(item.Event_ID == _event.Event_ID)
+            foreach (var item in _trackerService.GetSeenArtists(Convert.ToInt32(User_ID)))
+            {
+                if (item.Event_ID == _event.Event_ID)
                 {
                     UsersSeenLineup.Add(item.Artist_ID.ToString());
                 }
@@ -163,6 +164,7 @@ namespace EventTracker.Controllers
             ViewBag.artistList = artistList;
             return View();
         }*/
+
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //Allows the user to add to a lineup without being redirected to a create page.
         public ActionResult AddToLineup(int Event_ID, tbl_eventlineup _lineup)
         {
@@ -188,6 +190,7 @@ namespace EventTracker.Controllers
         {
             return View(_trackerService.GetLineupDetails(Lineup_ID));
         }*/
+
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult DeleteFromLineup(tbl_eventlineup _lineup)
         {
@@ -204,5 +207,3 @@ namespace EventTracker.Controllers
         }
     }
 }
-
-

@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace EventTracker.Controllers
 {
     public class UserController : Controller
     {
         private Tracker.Services.IService.ITrackerService _trackerService;
+
         public UserController()
         {
             _trackerService = new Tracker.Services.Service.TrackerService();
@@ -22,7 +22,5 @@ namespace EventTracker.Controllers
         {
             return View();
         }
-
-
     }
 }

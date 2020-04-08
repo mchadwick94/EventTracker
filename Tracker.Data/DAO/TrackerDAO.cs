@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Tracker.Data.IDAO;
 
@@ -8,6 +7,7 @@ namespace Tracker.Data.DAO
     public class TrackerDAO : ITrackerDAO
     {
         private readonly TrackerEntities _context;
+
         public TrackerDAO()
         {
             _context = new TrackerEntities();
@@ -21,6 +21,7 @@ namespace Tracker.Data.DAO
             _events = from tbl_events in _context.tbl_events select tbl_events;
             return _events.OrderByDescending(x => x.Event_Date).ToList<tbl_events>();
         }
+
         //Returns the details of a specific event.
         public tbl_events GetEventDetails(int Event_ID)
         {
@@ -168,6 +169,7 @@ namespace Tracker.Data.DAO
             _artists = from tbl_artists in _context.tbl_artists select tbl_artists;
             return _artists.OrderBy(x => x.Artist_Name).ToList<tbl_artists>();
         }
+
         //Retrieves details of a specified artist
         public tbl_artists GetArtistDetails(int Artist_ID)
         {
@@ -201,7 +203,5 @@ namespace Tracker.Data.DAO
             _users = from tbl_users in _context.tbl_users select tbl_users;
             return _users.ToList<tbl_users>();
         }
-
     }
 }
-

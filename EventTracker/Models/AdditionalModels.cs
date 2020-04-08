@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Tracker.Data;
 
@@ -25,6 +24,7 @@ namespace EventTracker.Models
         [Key]
         [Column(Order = 0)]
         public int Artist_ID { get; set; }
+
         public string Artist_Name { get; set; }
         public int c { get; set; }
         public virtual tbl_artists tbl_artists { get; set; }

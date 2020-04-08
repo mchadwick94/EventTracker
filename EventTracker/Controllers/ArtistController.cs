@@ -15,13 +15,14 @@ namespace EventTracker.Controllers
     {
         //private Tracker.Services.IService.ITrackerService _trackerService;
         private TrackerEntities _context;
+
         public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
 
         public ArtistController()
         {
             _context = new TrackerEntities();
-
         }
+
         // Retrieves a list of all the artists within the database (tbl_artists)
         public ActionResult GetArtists()
         {
@@ -35,13 +36,13 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetArtistDetails(Artist_ID));
         }
 
-
         // Inserts a new artist into the database.
         [HttpGet]
         public ActionResult NewArtist()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult NewArtist(tbl_artists _artist)
         {
@@ -97,7 +98,6 @@ namespace EventTracker.Controllers
         {
             return View(_trackerService.GetHistoryLineup(EventLineup_ID));
         }
-
 
         public ActionResult GetSeenArtists(int User_ID) //Returns indexed view of all artists a user has seen
         {

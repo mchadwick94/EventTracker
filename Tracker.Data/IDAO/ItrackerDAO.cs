@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace Tracker.Data.IDAO
 {
     public interface ITrackerDAO
@@ -9,7 +8,7 @@ namespace Tracker.Data.IDAO
         //Get a list of all the events within the database.
         IList<Tracker.Data.tbl_events> GetEvents();
 
-        //Returns the details of a specific event.        
+        //Returns the details of a specific event.
         Tracker.Data.tbl_events GetEventDetails(int Event_ID);
 
         //Creates an event
@@ -29,7 +28,6 @@ namespace Tracker.Data.IDAO
 
         //Removes an artist from a specific events lineup
         void DeleteFromLineup(tbl_eventlineup _lineup);
-
 
         //-----------------------------------------------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
@@ -66,6 +64,7 @@ namespace Tracker.Data.IDAO
         // ARTIST RELATED FUNCTIONS
         //Gets a list of all of the artists within database.
         IList<Tracker.Data.tbl_artists> GetArtists();
+
         //Returns the details of a specific artist.
         Tracker.Data.tbl_artists GetArtistDetails(int Artist_ID);
 

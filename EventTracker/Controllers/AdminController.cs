@@ -5,7 +5,6 @@ namespace EventTracker.Controllers
 {
     public class AdminController : Controller
     {
-
         private EventTracker.Models.ApplicationDbContext _context;
 
         public AdminController()
@@ -17,11 +16,6 @@ namespace EventTracker.Controllers
         {
             return View(_context.Users.ToList());
         }
-
-
-
-
-
 
         // GET: Admin
         public ActionResult Index()

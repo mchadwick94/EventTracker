@@ -26,11 +26,11 @@
     </dl>
 
     @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-<div class="form-actions no-color">
-    <input type="submit" value="Delete" class="btn btn-default" /> |
-    @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
-</div>
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
+    </div>
     }
 </div>

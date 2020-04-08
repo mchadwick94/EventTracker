@@ -15,10 +15,8 @@ namespace Tracker.Services.IService
         //Create a new Event
         void CreateEvent(tbl_events _event);
 
-
         //Edits the details of a specific event.
         void EditEvent(tbl_events _events);
-
 
         //Returns a list of an events lineup.
         IList<Tracker.Data.tbl_eventlineup> GetLineUp(int Event_ID);

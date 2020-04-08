@@ -36,29 +36,28 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tbl_eventlineup.Lineup_ID)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
-                    @Html.ActionLink("Details", "../Artist/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
-                    @Html.ActionLink("Delete", "../Artist/DeleteFromSeenArtists", new { ArtistHistory_ID = item.ArtistHistory_ID })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_eventlineup.Lineup_ID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
+                @Html.ActionLink("Details", "../Artist/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
+                @Html.ActionLink("Delete", "../Artist/DeleteFromSeenArtists", new { ArtistHistory_ID = item.ArtistHistory_ID })
+            </td>
+        </tr>
         }
-
     </table>
 </body>

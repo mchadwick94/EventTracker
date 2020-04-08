@@ -11,6 +11,7 @@ namespace EventTracker.Controllers
             _trackerService = new Tracker.Services.Service.TrackerService();
             ViewBag.Artists = _trackerService.GetArtists();
         }
+
         // GET: Application
         public ActionResult Index()
         {

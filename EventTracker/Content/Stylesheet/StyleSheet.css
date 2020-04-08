@@ -10,7 +10,8 @@
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 2%;
 }
-.artist-count-table{
+
+.artist-count-table {
     width: 20%;
     color: white;
     background-color: #222222;
@@ -30,12 +31,14 @@
     border-left: 1px solid white;
     padding-left: 10px;
 }
+
 .count-table-count-col {
-    width:1%;
+    width: 1%;
     text-align: center;
 }
-.seen-artists-body{
-    width:85%;
+
+.seen-artists-body {
+    width: 85%;
     padding-left: 15%;
 }
 
@@ -52,15 +55,17 @@
 .navbar navbar-inverse navbar-fixed-top {
     width: 100%;
 }
+
 * {
     box-sizing: border-box;
 }
 
 #myTable {
-  max-height: 300px;
-  overflow: scroll;
-  table-layout: fixed;
+    max-height: 300px;
+    overflow: scroll;
+    table-layout: fixed;
 }
+
 #myInput {
     background-image: url('../../Content/images/search.jpg');
     background-size: 15px 15px;
@@ -76,14 +81,12 @@
     border-radius: 5px 5px 5px 5px;
     outline: none;
     color: #424242;
-
 }
 
 #new-artist-btn {
     font-size: 20px;
     width: 100%;
     position: relative;
-
     text-align: center;
     padding: 3px 2px;
 }
@@ -97,22 +100,24 @@
     max-height: 55%;
     overflow-y: scroll
 }
+
 #search-card-body {
     max-height: 50%;
     overflow-y: scroll
 }
+
 #myInput:focus {
     color: #424242;
 }
+
 #myTable, #LineupTable {
     border-collapse: collapse;
     width: 100%;
+}
 
-    }
     #myTable th, #LineupTable, #myTable td {
         text-align: left;
         padding: 12px 20px 12px 20px;
-
     }
 
         #myTable, #LineupTable tr {
@@ -126,7 +131,7 @@
 .card {
     /* Add shadows to create the "card" effect */
     transition: 0.3s;
-    border: 2px solid #ddd; 
+    border: 2px solid #ddd;
 }
 
 /* Add some padding inside the card container */

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Tracker.Data;
 
 namespace EventTracker.Models
 {
@@ -12,7 +10,7 @@ namespace EventTracker.Models
         public string Email { get; set; }
     }
 
-        public class ExternalLoginListViewModel
+    public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
     }
@@ -33,6 +31,7 @@ namespace EventTracker.Models
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Remember this browser?")]

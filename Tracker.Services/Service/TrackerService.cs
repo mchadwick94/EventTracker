@@ -7,12 +7,13 @@ namespace Tracker.Services.Service
 {
     public class TrackerService : Tracker.Services.IService.ITrackerService
     {
-        private  ITrackerDAO _TrackerDAO;
+        private ITrackerDAO _TrackerDAO;
 
         public TrackerService()
         {
             _TrackerDAO = new TrackerDAO();
         }
+
         //-------------------------------------------------------------------------------
         //EVENT RELATED FUNCTIONS
         //Get a list of all the events within the database.
@@ -121,7 +122,6 @@ namespace Tracker.Services.Service
             return _TrackerDAO.FindSeenArtistEntry(Lineup_ID, Event_ID, Artist_ID, User_ID);
         }
 
-
         public void DeleteFromSeenArtists(tbl_artisthistory _entry)
         {
             _TrackerDAO.DeleteFromSeenArtists(_entry);
@@ -147,14 +147,12 @@ namespace Tracker.Services.Service
             _TrackerDAO.NewArtist(_artist);
         }
 
-
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         public IList<tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID)
         {
             return _TrackerDAO.GetSeenArtistHistory(User_ID, Artist_ID);
         }
-
 
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
