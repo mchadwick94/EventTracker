@@ -18,6 +18,7 @@ namespace Tracker.Data
         public tbl_artists()
         {
             this.tbl_artisthistory = new HashSet<tbl_artisthistory>();
+            this.tbl_artistImages = new HashSet<tbl_artistImages>();
             this.tbl_eventlineup = new HashSet<tbl_eventlineup>();
         }
     
@@ -26,6 +27,8 @@ namespace Tracker.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_artisthistory> tbl_artisthistory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_artistImages> tbl_artistImages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_eventlineup> tbl_eventlineup { get; set; }
     }

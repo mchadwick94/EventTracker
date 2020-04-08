@@ -26,6 +26,7 @@ namespace Tracker.Data
         }
     
         public virtual DbSet<tbl_artisthistory> tbl_artisthistory { get; set; }
+        public virtual DbSet<tbl_artistImages> tbl_artistImages { get; set; }
         public virtual DbSet<tbl_artists> tbl_artists { get; set; }
         public virtual DbSet<tbl_eventhistory> tbl_eventhistory { get; set; }
         public virtual DbSet<tbl_eventlineup> tbl_eventlineup { get; set; }

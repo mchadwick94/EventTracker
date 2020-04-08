@@ -3,8 +3,10 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Services;
 using Tracker.Data;
@@ -33,6 +35,15 @@ namespace EventTracker.Controllers
         // Retrieves the details of a specific artist
         public ActionResult GetArtistDetails(int Artist_ID)
         {
+            if (Artist_ID == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            tbl_artists _artist = _context.tbl_artists.Include(s => s.tbl_artistImages).SingleOrDefault(s => s.Artist_ID == Artist_ID); //fetches all files associated with the artist regardless of type.
+            if (_artist == null)
+            {
+                return HttpNotFound();
+            }
             return View(_trackerService.GetArtistDetails(Artist_ID));
         }
 
@@ -44,7 +55,7 @@ namespace EventTracker.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewArtist(tbl_artists _artist)
+        public ActionResult NewArtist(tbl_artists _artist, HttpPostedFileBase upload)
         {
             if (String.IsNullOrEmpty(_artist.Artist_Name))//Checks if the field 'Artist_Name' is null, if so, throws an error.
             {
@@ -58,6 +69,22 @@ namespace EventTracker.Controllers
                     ModelState.AddModelError("Artist_Name", "This Artist already exists"); //throw an error
                     return View();
                 }
+
+                //====================== THIS BLOCK IS REGARDING ADDING IMAGES TO ARTIST
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    var avatar = new Tracker.Data.tbl_artistImages
+                    {
+                        File_Name = System.IO.Path.GetFileName(upload.FileName),
+                        Content_Type = upload.ContentType
+                    };
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        avatar.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    _artist.tbl_artistImages = new List<tbl_artistImages> { avatar };
+                }
+                //=========================
                 _trackerService.NewArtist(_artist); //Else add a new artist to the database with the Artist_Name given in the form.
                 return RedirectToAction("NewArtist");
             }

@@ -4,16 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="910fecc7026b404ea4ca73581b7ffe3f" Name="Diagram1">
-        <EntityTypeShape EntityType="TrackerModel.tbl_artisthistory" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="TrackerModel.tbl_artists" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TrackerModel.tbl_eventhistory" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TrackerModel.tbl_eventlineup" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TrackerModel.tbl_events" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="TrackerModel.tbl_users" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="15116b62fc714a81b84a0bfda0cae001" Name="Diagram1">
+        <EntityTypeShape EntityType="TrackerModel.tbl_artisthistory" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrackerModel.tbl_artistImages" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrackerModel.tbl_artists" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrackerModel.tbl_eventhistory" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrackerModel.tbl_eventlineup" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrackerModel.tbl_events" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrackerModel.tbl_users" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="TrackerModel.FK__tbl_artis__Artis__18B6AB08" ManuallyRouted="false" />
         <AssociationConnector Association="TrackerModel.FK__tbl_artis__Event__16CE6296" ManuallyRouted="false" />
         <AssociationConnector Association="TrackerModel.FK__tbl_artis__Event__17C286CF" ManuallyRouted="false" />
+        <AssociationConnector Association="TrackerModel.FK__tbl_artis__Artis__50FB042B" ManuallyRouted="false" />
         <AssociationConnector Association="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="TrackerModel.FK_tbl_eventhistory_tbl_events" ManuallyRouted="false" />
         <AssociationConnector Association="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_1" ManuallyRouted="false" />

@@ -12,6 +12,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tbl_artistImages">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_artistImages">
+        <MappingFragment StoreEntitySet="tbl_artistImages">
+          <ScalarProperty Name="File_ID" ColumnName="File_ID" />
+          <ScalarProperty Name="File_Name" ColumnName="File_Name" />
+          <ScalarProperty Name="Content_Type" ColumnName="Content_Type" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tbl_artists">
       <EntityTypeMapping TypeName="TrackerModel.tbl_artists">
         <MappingFragment StoreEntitySet="tbl_artists">

@@ -10,6 +10,16 @@
     <Property Name="EventLineup_ID" Type="int" Nullable="false" />
     <Property Name="Artist_ID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="tbl_artistImages">
+    <Key>
+      <PropertyRef Name="File_ID" />
+    </Key>
+    <Property Name="File_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="File_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Content_Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Artist_ID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="tbl_artists">
     <Key>
       <PropertyRef Name="Artist_ID" />
@@ -57,6 +67,18 @@
         <PropertyRef Name="Artist_ID" />
       </Principal>
       <Dependent Role="tbl_artisthistory">
+        <PropertyRef Name="Artist_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_artis__Artis__50FB042B">
+    <End Role="tbl_artists" Type="Self.tbl_artists" Multiplicity="1" />
+    <End Role="tbl_artistImages" Type="Self.tbl_artistImages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_artists">
+        <PropertyRef Name="Artist_ID" />
+      </Principal>
+      <Dependent Role="tbl_artistImages">
         <PropertyRef Name="Artist_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -123,6 +145,7 @@
   </Association>
   <EntityContainer Name="TrackerModelStoreContainer">
     <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" Schema="db_eventtracker" store:Type="Tables" />
+    <EntitySet Name="tbl_artistImages" EntityType="Self.tbl_artistImages" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_eventlineup" EntityType="Self.tbl_eventlineup" Schema="db_eventtracker" store:Type="Tables" />
@@ -131,6 +154,10 @@
     <AssociationSet Name="FK__tbl_artis__Artis__18B6AB08" Association="Self.FK__tbl_artis__Artis__18B6AB08">
       <End Role="tbl_artists" EntitySet="tbl_artists" />
       <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_artis__Artis__50FB042B" Association="Self.FK__tbl_artis__Artis__50FB042B">
+      <End Role="tbl_artists" EntitySet="tbl_artists" />
+      <End Role="tbl_artistImages" EntitySet="tbl_artistImages" />
     </AssociationSet>
     <AssociationSet Name="FK__tbl_artis__Event__16CE6296" Association="Self.FK__tbl_artis__Event__16CE6296">
       <End Role="tbl_events" EntitySet="tbl_events" />

@@ -11,8 +11,7 @@ namespace Tracker.Data
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tbl_events
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,9 +24,7 @@ namespace Tracker.Data
     
         public int Event_ID { get; set; }
         public string Event_Name { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public System.DateTime? Event_Date { get; set; }
+        public System.DateTime Event_Date { get; set; }
         public string Event_Location { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

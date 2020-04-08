@@ -58,3 +58,5 @@ D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTrac
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\obj\Debug\EventTracker.csproj.CopyComplete
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\obj\Debug\EventTracker.dll
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\obj\Debug\EventTracker.pdb
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Sitecore.FakeDb.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Sitecore.FakeDb.xml
