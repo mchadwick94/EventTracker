@@ -6,24 +6,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title - My ASP.NET Application</title>
 
-        @Styles.Render("~/Content/StyleSheet/StyleSheet.css")
+        <link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
 
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="navbar navbar-inverse navbar-fixed-top" >
+            <div class="nav-container">
+                <div class="navbar-header" >
+                    @Html.ActionLink("Event Tracker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" style="float:right; padding-right: 5%">
                         <li>@Html.ActionLink("Events", "../Event/GetEvents")</li>
                         <li>@Html.ActionLink("Artists", "../Artist/GetArtists")</li>
                         @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
