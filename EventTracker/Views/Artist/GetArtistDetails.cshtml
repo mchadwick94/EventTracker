@@ -1,10 +1,10 @@
 ﻿@model Tracker.Data.tbl_artists
 
 @{
-    ViewBag.Title = "GetArtistDetials";
+    ViewBag.Title = "GetArtistDetails";
 }
 
-<h2>GetArtistDetials</h2>
+<h2>GetArtistDetails</h2>
 
 <div>
     <h4>tbl_artists</h4>
@@ -17,17 +17,11 @@
         <dd>
             @Html.DisplayFor(model => model.Artist_Name)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Artist_ID)
-        </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Artist_ID)
+            <img src="@Url.Action("Index", "File", new {File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID})" style="width:200px; height:180px" />
         </dd>
     </dl>
-    <dd>
-        <img src="@Url.Action("Index", "File", new {File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID})" style="width:200px; height:180px" />
-    </dd>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Artist_ID }) |

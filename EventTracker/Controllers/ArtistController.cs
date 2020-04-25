@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services;
@@ -91,6 +92,60 @@ namespace EventTracker.Controllers
             else
             {
                 return View();
+            }
+        }
+
+        //Edit an artists details
+        [HttpGet] //Retrieves the details of the event being edited
+        public ActionResult EditArtist(int Artist_ID)
+        {
+            if (Artist_ID == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_artists _artist = _context.tbl_artists.Include(s => s.tbl_artistImages).SingleOrDefault(s => s.Artist_ID == Artist_ID); //fetches all files associated with the artist regardless of type.
+            if (_artist == null)
+            {
+                return HttpNotFound("An Artist wasn't entered.");
+            }
+            return View(_trackerService.GetArtistDetails(Artist_ID));
+        }
+
+        [HttpPost] //Posts the new variables into the database at the specific event being edited
+        public ActionResult EditArtist(int Artist_ID, tbl_artists _artist, HttpPostedFileBase upload)
+        {
+            try
+            {
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    if (_artist.tbl_artistImages.Any())
+                    {
+                        _context.tbl_artistImages.Remove(_artist.tbl_artistImages.First());
+                    }
+                    var avatar = new Tracker.Data.tbl_artistImages
+                    {
+                        File_Name = System.IO.Path.GetFileName(upload.FileName),
+                        Content_Type = upload.ContentType
+                    };
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        avatar.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    _artist.tbl_artistImages = new List<tbl_artistImages> { avatar };
+                }
+
+                var doesArtistExist = _context.tbl_artists.Any(x => x.Artist_Name == _artist.Artist_Name); //Creates a variable which is assigned the value of any artist in tbl_artists matching the Artist_Name given in the form (_artist)
+                if (doesArtistExist) //If there is a value assigned to the variable
+                {
+                    ModelState.AddModelError("Artist_Name", "This Artist already exists"); //throw an error
+                    return View();
+                }
+                _trackerService.EditArtist(_artist);
+                return RedirectToAction("GetArtistDetails", new { _artist.Artist_ID });
+            }
+            catch
+            {
+                return View(_trackerService.GetArtistDetails(Artist_ID));
             }
         }
 

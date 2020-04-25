@@ -71,6 +71,8 @@ namespace Tracker.Data.IDAO
         //Inserts a new artist into the database
         void NewArtist(tbl_artists _artist);
 
+        void EditArtist(tbl_artists _artists);
+
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         IList<Tracker.Data.tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID);

@@ -23,7 +23,7 @@
             @Html.DisplayFor(modelItem => item.Artist_Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Artist_ID }) |
+            @Html.ActionLink("Edit", "../Artist/EditArtist", new { Artist_ID =item.Artist_ID }) |
             @Html.ActionLink("Details", "GetArtistDetails", new { Artist_ID =item.Artist_ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Artist_ID })
         </td>

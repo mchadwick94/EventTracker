@@ -292,6 +292,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\6099f305983371dadaceae99f5c905bf.png" />
+    <Content Include="Content\images\default-profile.png" />
     <Content Include="Content\images\search.jpg" />
     <Content Include="Content\images\search.png" />
     <Content Include="Content\Stylesheet\StyleSheet.css" />
@@ -408,7 +410,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Artist\GetArtistDetails.cshtml" />
     <Content Include="Views\Artist\GetArtists.cshtml" />
     <Content Include="Views\Event\CreateEvent.cshtml" />
     <Content Include="Views\Event\EditEvent.cshtml" />
@@ -433,6 +434,8 @@
     <Content Include="Views\Artist\GetUsersArtistCount.cshtml" />
     <Content Include="Views\Artist\FindSeenArtistEntry.cshtml" />
     <Content Include="Views\Artist\GetSeenArtistHistory.cshtml" />
+    <Content Include="Views\Artist\EditArtist.cshtml" />
+    <Content Include="Views\Artist\GetArtistDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

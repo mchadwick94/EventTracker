@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" onclick="required()" />
             </div>
         </div>
         <div class="form-group">
@@ -40,3 +40,15 @@
 <div>
     @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
 </div>
+
+<script>
+    function required()
+    {
+        var field = document.getElementById(Avatar)
+     if (field.value.length == 0)
+     {
+         document.Avatar.value = "@Url.Content("~/Content/images/6099f305983371dadaceae99f5c905bf.png")"
+      }
+      return true;
+    }
+</script>

@@ -173,15 +173,25 @@ namespace Tracker.Data.DAO
         //Retrieves details of a specified artist
         public tbl_artists GetArtistDetails(int Artist_ID)
         {
-            IQueryable<tbl_artists> _artists;
-            _artists = from tbl_artists in _context.tbl_artists where tbl_artists.Artist_ID == Artist_ID select tbl_artists;
-            return _artists.First<tbl_artists>();
+            IQueryable<tbl_artists> _artist;
+            _artist = from tbl_artists in _context.tbl_artists where tbl_artists.Artist_ID == Artist_ID select tbl_artists;
+            return _artist.First<tbl_artists>();
         }
 
         //Inserts a new artist into the database
         public void NewArtist(tbl_artists _artist)
         {
             _context.tbl_artists.Add(_artist);
+            _context.SaveChanges();
+        }
+
+        //Edits the details of a specific artist.
+        public void EditArtist(tbl_artists _artists)
+        {
+            tbl_artists _artist = GetArtistDetails(_artists.Artist_ID);
+
+            _artist.Artist_ID = _artists.Artist_ID;
+            _artist.Artist_Name = _artists.Artist_Name;
             _context.SaveChanges();
         }
 
