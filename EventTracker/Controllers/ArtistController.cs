@@ -124,16 +124,27 @@ namespace EventTracker.Controllers
                     if (_context.tbl_artistImages.Any(f => f.Artist_ID == _artist.Artist_ID))
                     {
                         oldImage = _context.tbl_artistImages.FirstOrDefault(s => s.Artist_ID == Artist_ID);
-                    }
 
-                    newImage.Artist_ID = _artist.Artist_ID;
-                    newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
-                    newImage.Content_Type = upload.ContentType;
-                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                    {
-                        newImage.Content = reader.ReadBytes(upload.ContentLength);
+                        newImage.Artist_ID = _artist.Artist_ID;
+                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                        newImage.Content_Type = upload.ContentType;
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            newImage.Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                        _trackerService.EditArtistImage(oldImage, newImage);
                     }
-                    _trackerService.EditArtistImage(oldImage, newImage);
+                    else
+                    {
+                        newImage.Artist_ID = _artist.Artist_ID;
+                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                        newImage.Content_Type = upload.ContentType;
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            newImage.Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                        _trackerService.AddArtistImage(newImage);
+                    }
                     _trackerService.EditArtist(_artist);
                 }
 
