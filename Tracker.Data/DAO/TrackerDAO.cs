@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using Tracker.Data.IDAO;
 
 namespace Tracker.Data.DAO
@@ -192,6 +193,29 @@ namespace Tracker.Data.DAO
 
             _artist.Artist_ID = _artists.Artist_ID;
             _artist.Artist_Name = _artists.Artist_Name;
+            _context.SaveChanges();
+        }
+
+        public void AddArtistImage(tbl_artistImages image)
+        {
+            _context.tbl_artistImages.Add(image);
+            _context.SaveChanges();
+        }
+
+        public void EditArtistImage(tbl_artistImages oldImage, tbl_artistImages newImage)
+        {
+            tbl_artistImages imageEntry = _context.tbl_artistImages.FirstOrDefault(s => s.File_ID == oldImage.File_ID);
+            _context.tbl_artistImages.Remove(imageEntry);
+            imageEntry.Content = newImage.Content;
+            imageEntry.Content_Type = newImage.Content_Type;
+            imageEntry.File_Name = newImage.File_Name;
+            _context.tbl_artistImages.Add(newImage);
+            _context.SaveChanges();
+        }
+
+        public void RemoveArtistImage(tbl_artistImages image)
+        {
+            _context.tbl_artistImages.Remove(image);
             _context.SaveChanges();
         }
 

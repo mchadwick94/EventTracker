@@ -19,7 +19,7 @@ namespace EventTracker.Controllers
         //private Tracker.Services.IService.ITrackerService _trackerService;
         private TrackerEntities _context;
 
-        public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+        public string User_ID;
 
         public ArtistController()
         {
@@ -29,6 +29,10 @@ namespace EventTracker.Controllers
         // Retrieves a list of all the artists within the database (tbl_artists)
         public ActionResult GetArtists()
         {
+            if (HttpContext.User.Identity.IsAuthenticated != false)
+            {
+                User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+            }
             //return View(_trackerService.GetArtists());
             return View(ViewBag.Artists);
         }
@@ -56,7 +60,7 @@ namespace EventTracker.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewArtist(tbl_artists _artist, HttpPostedFileBase upload)
+        public ActionResult NewArtist(tbl_artists _artist, HttpPostedFileBase upload, tbl_artistImages image)
         {
             if (String.IsNullOrEmpty(_artist.Artist_Name))//Checks if the field 'Artist_Name' is null, if so, throws an error.
             {
@@ -70,23 +74,21 @@ namespace EventTracker.Controllers
                     ModelState.AddModelError("Artist_Name", "This Artist already exists"); //throw an error
                     return View();
                 }
+                _trackerService.NewArtist(_artist); //Else add a new artist to the database with the Artist_Name given in the form.
 
                 //====================== THIS BLOCK IS REGARDING ADDING IMAGES TO ARTIST
                 if (upload != null && upload.ContentLength > 0)
                 {
-                    var avatar = new Tracker.Data.tbl_artistImages
-                    {
-                        File_Name = System.IO.Path.GetFileName(upload.FileName),
-                        Content_Type = upload.ContentType
-                    };
+                    image.Artist_ID = _artist.Artist_ID;
+                    image.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                    image.Content_Type = upload.ContentType;
                     using (var reader = new System.IO.BinaryReader(upload.InputStream))
                     {
-                        avatar.Content = reader.ReadBytes(upload.ContentLength);
+                        image.Content = reader.ReadBytes(upload.ContentLength);
                     }
-                    _artist.tbl_artistImages = new List<tbl_artistImages> { avatar };
+                    _trackerService.AddArtistImage(image);
                 }
                 //=========================
-                _trackerService.NewArtist(_artist); //Else add a new artist to the database with the Artist_Name given in the form.
                 return RedirectToAction("NewArtist");
             }
             else
@@ -112,36 +114,30 @@ namespace EventTracker.Controllers
         }
 
         [HttpPost] //Posts the new variables into the database at the specific event being edited
-        public ActionResult EditArtist(int Artist_ID, tbl_artists _artist, HttpPostedFileBase upload)
+        public ActionResult EditArtist(int Artist_ID, tbl_artists _artist, HttpPostedFileBase upload, tbl_artistImages newImage, tbl_artistImages oldImage)
         {
+            var Model = new TrackerEntities();
             try
             {
                 if (upload != null && upload.ContentLength > 0)
                 {
-                    if (_artist.tbl_artistImages.Any())
+                    if (_context.tbl_artistImages.Any(f => f.Artist_ID == _artist.Artist_ID))
                     {
-                        _context.tbl_artistImages.Remove(_artist.tbl_artistImages.First());
+                        oldImage = _context.tbl_artistImages.FirstOrDefault(s => s.Artist_ID == Artist_ID);
                     }
-                    var avatar = new Tracker.Data.tbl_artistImages
-                    {
-                        File_Name = System.IO.Path.GetFileName(upload.FileName),
-                        Content_Type = upload.ContentType
-                    };
+
+                    newImage.Artist_ID = _artist.Artist_ID;
+                    newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                    newImage.Content_Type = upload.ContentType;
                     using (var reader = new System.IO.BinaryReader(upload.InputStream))
                     {
-                        avatar.Content = reader.ReadBytes(upload.ContentLength);
+                        newImage.Content = reader.ReadBytes(upload.ContentLength);
                     }
-                    _artist.tbl_artistImages = new List<tbl_artistImages> { avatar };
+                    _trackerService.EditArtistImage(oldImage, newImage);
+                    _trackerService.EditArtist(_artist);
                 }
 
-                var doesArtistExist = _context.tbl_artists.Any(x => x.Artist_Name == _artist.Artist_Name); //Creates a variable which is assigned the value of any artist in tbl_artists matching the Artist_Name given in the form (_artist)
-                if (doesArtistExist) //If there is a value assigned to the variable
-                {
-                    ModelState.AddModelError("Artist_Name", "This Artist already exists"); //throw an error
-                    return View();
-                }
-                _trackerService.EditArtist(_artist);
-                return RedirectToAction("GetArtistDetails", new { _artist.Artist_ID });
+                return RedirectToAction("GetArtists");
             }
             catch
             {

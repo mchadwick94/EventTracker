@@ -17,11 +17,24 @@
         <dd>
             @Html.DisplayFor(model => model.Artist_Name)
         </dd>
-
+        
         <dd>
-            <img src="@Url.Action("Index", "File", new {File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID})" style="width:200px; height:180px" />
-        </dd>
-    </dl>
+            @if (Model.tbl_artistImages.Any())
+            {
+            <dt>
+                Avatar
+            </dt>
+            <dd>
+                <img src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" style="width:200px; height:180px" />
+            </dd>
+        }
+        else
+        {
+            <img src="@Url.Action("Index", "File", new { File_ID = "1209" })" style="width:200px; height:180px" />
+
+        }
+            </dd>
+        </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Artist_ID }) |

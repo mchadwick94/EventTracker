@@ -152,6 +152,21 @@ namespace Tracker.Services.Service
             _TrackerDAO.EditArtist(_artists);
         }
 
+        public void AddArtistImage(tbl_artistImages image)
+        {
+            _TrackerDAO.AddArtistImage(image);
+        }
+
+        public void EditArtistImage(tbl_artistImages oldImage, tbl_artistImages newImage)
+        {
+            _TrackerDAO.EditArtistImage(oldImage, newImage);
+        }
+
+        public void RemoveArtistImage(tbl_artistImages image)
+        {
+            _TrackerDAO.RemoveArtistImage(image);
+        }
+
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         public IList<tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID)

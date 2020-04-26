@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using Microsoft.AspNet.Identity;
+using System.Web.Mvc;
 
 namespace EventTracker.Controllers
 {
@@ -21,6 +22,11 @@ namespace EventTracker.Controllers
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        public class RetrieveCurrentUser
+        {
+            public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
         }
     }
 }

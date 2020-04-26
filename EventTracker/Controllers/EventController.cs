@@ -9,7 +9,7 @@ namespace EventTracker.Controllers
     public class EventController : ApplicationController
     {
         public int _eventID;
-        public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+        public string User_ID;
 
         public EventController()
         {
@@ -19,12 +19,17 @@ namespace EventTracker.Controllers
         // GET: Complete Event List
         public ActionResult GetEvents()
         {
-            List<string> UsersEvents = new List<string>();
-            foreach (var item in _trackerService.GetUserEvents(User_ID))
+            if (HttpContext.User.Identity.IsAuthenticated != false)
             {
-                UsersEvents.Add(item.Event_ID.ToString());
+                User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+                List<string> UsersEvents = new List<string>();
+                foreach (var item in _trackerService.GetUserEvents(User_ID))
+                {
+                    UsersEvents.Add(item.Event_ID.ToString());
+                }
+                ViewBag.MyEvents = UsersEvents;
             }
-            ViewBag.MyEvents = UsersEvents;
+
             return View(_trackerService.GetEvents());
         }
 

@@ -73,6 +73,12 @@ namespace Tracker.Data.IDAO
 
         void EditArtist(tbl_artists _artists);
 
+        void AddArtistImage(tbl_artistImages image);
+
+        void EditArtistImage(tbl_artistImages oldImage, tbl_artistImages newImage);
+
+        void RemoveArtistImage(tbl_artistImages image);
+
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         IList<Tracker.Data.tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID);
