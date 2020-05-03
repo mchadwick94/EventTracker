@@ -19,6 +19,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="float:right; padding-right: 5%;">
                     <li>@Html.ActionLink("Events", "../Event/GetEvents")</li>
+                    <li>@Html.ActionLink("Venues", "../Venue/GetVenues")</li>
                     <li>@Html.ActionLink("Artists", "../Artist/GetArtists")</li>
                     @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                     {

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Tracker.Data.tbl_countries>
+
+@{
+    ViewBag.Title = "GetCountries";
+}
+
+<h2>GetCountries</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Country_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C_Iso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C_Iso3)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Country_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C_Iso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C_Iso3)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Country_ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Country_ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Country_ID })
+            </td>
+        </tr>
+    }
+</table>

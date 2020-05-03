@@ -179,6 +179,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -436,11 +437,15 @@
     <Content Include="Views\Artist\GetSeenArtistHistory.cshtml" />
     <Content Include="Views\Artist\EditArtist.cshtml" />
     <Content Include="Views\Artist\GetArtistDetails.cshtml" />
+    <Content Include="Views\Venue\GetVenues.cshtml" />
+    <Content Include="Views\Venue\GetVenueDetails.cshtml" />
+    <Content Include="Views\Venue\EditVenue.cshtml" />
+    <Content Include="Views\Application\GetCountries.cshtml" />
+    <Content Include="Views\Venue\CreateVenue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\Application\" />
     <Folder Include="Views\File\" />
   </ItemGroup>
   <ItemGroup>

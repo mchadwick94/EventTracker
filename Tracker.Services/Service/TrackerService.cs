@@ -177,9 +177,42 @@ namespace Tracker.Services.Service
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
         //Gets a list of all the users within the database.
-        public IList<tbl_users> GetUsers()
+
+        //-------------------------------------------------------------------------------
+        // VENUE RELATED FUNCTIONS
+        public IList<tbl_venues> GetVenues()
         {
-            return _TrackerDAO.GetUsers();
+            return _TrackerDAO.GetVenues();
         }
+
+        public void CreateVenue(tbl_venues _venue)
+        {
+            _TrackerDAO.CreateVenue(_venue);
+        }
+
+        public Tracker.Data.tbl_venues GetVenueDetails(int Venue_ID)
+        {
+            return _TrackerDAO.GetVenueDetails(Venue_ID);
+        }
+
+        public void EditVenue(tbl_venues _venues)
+        {
+            _TrackerDAO.EditVenue(_venues);
+        }
+
+        public void DeleteVenue(tbl_venues venue)
+        {
+            _TrackerDAO.DeleteVenue(venue);
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------
+        // Country RELATED FUNCTIONS
+        //Gets a list of all the countries within the database.
+        public IList<Tracker.Data.tbl_countries> GetCountries()
+        {
+            return _TrackerDAO.GetCountries();
+        }
+
+        //-------------------------------------------------------------------------------
     }
 }

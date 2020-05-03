@@ -59,11 +59,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tbl_users">
-      <EntityTypeMapping TypeName="TrackerModel.tbl_users">
-        <MappingFragment StoreEntitySet="tbl_users">
-          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-          <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+    <EntitySetMapping Name="tbl_countries">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_countries">
+        <MappingFragment StoreEntitySet="tbl_countries">
+          <ScalarProperty Name="C_Iso3" ColumnName="C_Iso3" />
+          <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+          <ScalarProperty Name="C_Iso" ColumnName="C_Iso" />
+          <ScalarProperty Name="Country_ID" ColumnName="Country_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_venues">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_venues">
+        <MappingFragment StoreEntitySet="tbl_venues">
+          <ScalarProperty Name="V_Postcode" ColumnName="V_Postcode" />
+          <ScalarProperty Name="V_Country" ColumnName="V_Country" />
+          <ScalarProperty Name="V_City" ColumnName="V_City" />
+          <ScalarProperty Name="V_StreetAddress" ColumnName="V_StreetAddress" />
+          <ScalarProperty Name="V_Name" ColumnName="V_Name" />
+          <ScalarProperty Name="Venue_ID" ColumnName="Venue_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

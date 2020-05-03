@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_artisthistory">
           <Key>
             <PropertyRef Name="ArtistHistory_ID" />
@@ -32,6 +32,15 @@
           <Property Name="Artist_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Artist_Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="tbl_countries">
+          <Key>
+            <PropertyRef Name="Country_ID" />
+          </Key>
+          <Property Name="Country_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="C_Iso" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="C_Name" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="C_Iso3" Type="char" MaxLength="3" />
+        </EntityType>
         <EntityType Name="tbl_eventhistory">
           <Key>
             <PropertyRef Name="History_ID" />
@@ -55,14 +64,18 @@
           <Property Name="Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Event_Name" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="Event_Date" Type="date" Nullable="false" />
-          <Property Name="Event_Location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Event_Location" Type="int" />
         </EntityType>
-        <EntityType Name="tbl_users">
+        <EntityType Name="tbl_venues">
           <Key>
-            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Venue_ID" />
           </Key>
-          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="User_Username" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Venue_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="V_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="V_StreetAddress" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="V_City" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="V_Country" Type="int" Nullable="false" />
+          <Property Name="V_Postcode" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK__tbl_artis__Artis__18B6AB08">
           <End Role="tbl_artists" Type="Self.tbl_artists" Multiplicity="1" />
@@ -112,6 +125,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__tbl_venue__V_Cou__02925FBF">
+          <End Role="tbl_countries" Type="Self.tbl_countries" Multiplicity="1" />
+          <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_countries">
+              <PropertyRef Name="Country_ID" />
+            </Principal>
+            <Dependent Role="tbl_venues">
+              <PropertyRef Name="V_Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_eventhistory_tbl_events">
           <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
           <End Role="tbl_eventhistory" Type="Self.tbl_eventhistory" Multiplicity="*" />
@@ -121,6 +146,18 @@
             </Principal>
             <Dependent Role="tbl_eventhistory">
               <PropertyRef Name="Event_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_events_tbl_venues">
+          <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="0..1" />
+          <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_venues">
+              <PropertyRef Name="Venue_ID" />
+            </Principal>
+            <Dependent Role="tbl_events">
+              <PropertyRef Name="Event_Location" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -152,10 +189,11 @@
           <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_artistImages" EntityType="Self.tbl_artistImages" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" Schema="db_eventtracker" store:Type="Tables" />
+          <EntitySet Name="tbl_countries" EntityType="Self.tbl_countries" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_eventlineup" EntityType="Self.tbl_eventlineup" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_events" EntityType="Self.tbl_events" Schema="db_eventtracker" store:Type="Tables" />
-          <EntitySet Name="tbl_users" EntityType="Self.tbl_users" Schema="db_eventtracker" store:Type="Tables" />
+          <EntitySet Name="tbl_venues" EntityType="Self.tbl_venues" Schema="db_eventtracker" store:Type="Tables" />
           <AssociationSet Name="FK__tbl_artis__Artis__18B6AB08" Association="Self.FK__tbl_artis__Artis__18B6AB08">
             <End Role="tbl_artists" EntitySet="tbl_artists" />
             <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
@@ -172,9 +210,17 @@
             <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
             <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
           </AssociationSet>
+          <AssociationSet Name="FK__tbl_venue__V_Cou__02925FBF" Association="Self.FK__tbl_venue__V_Cou__02925FBF">
+            <End Role="tbl_countries" EntitySet="tbl_countries" />
+            <End Role="tbl_venues" EntitySet="tbl_venues" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbl_eventhistory_tbl_events" Association="Self.FK_tbl_eventhistory_tbl_events">
             <End Role="tbl_events" EntitySet="tbl_events" />
             <End Role="tbl_eventhistory" EntitySet="tbl_eventhistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_events_tbl_venues" Association="Self.FK_tbl_events_tbl_venues">
+            <End Role="tbl_venues" EntitySet="tbl_venues" />
+            <End Role="tbl_events" EntitySet="tbl_events" />
           </AssociationSet>
           <AssociationSet Name="tbl_eventlineup$tbl_eventlineup_ibfk_1" Association="Self.tbl_eventlineup$tbl_eventlineup_ibfk_1">
             <End Role="tbl_events" EntitySet="tbl_events" />
@@ -185,8 +231,7 @@
             <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -251,17 +296,11 @@
           <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Event_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Event_Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Event_Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Event_Location" Type="Int32" />
           <NavigationProperty Name="tbl_artisthistory" Relationship="Self.FK__tbl_artis__Event__16CE6296" FromRole="tbl_events" ToRole="tbl_artisthistory" />
           <NavigationProperty Name="tbl_eventhistory" Relationship="Self.FK_tbl_eventhistory_tbl_events" FromRole="tbl_events" ToRole="tbl_eventhistory" />
           <NavigationProperty Name="tbl_eventlineup" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_events" ToRole="tbl_eventlineup" />
-        </EntityType>
-        <EntityType Name="tbl_users">
-          <Key>
-            <PropertyRef Name="User_ID" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_Username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_venues" Relationship="TrackerModel.FK_tbl_events_tbl_venues" FromRole="tbl_events" ToRole="tbl_venues" />
         </EntityType>
         <Association Name="FK__tbl_artis__Artis__18B6AB08">
           <End Role="tbl_artists" Type="Self.tbl_artists" Multiplicity="1" />
@@ -354,7 +393,6 @@
           <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" />
           <EntitySet Name="tbl_eventlineup" EntityType="Self.tbl_eventlineup" />
           <EntitySet Name="tbl_events" EntityType="Self.tbl_events" />
-          <EntitySet Name="tbl_users" EntityType="Self.tbl_users" />
           <AssociationSet Name="FK__tbl_artis__Artis__18B6AB08" Association="Self.FK__tbl_artis__Artis__18B6AB08">
             <End Role="tbl_artists" EntitySet="tbl_artists" />
             <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
@@ -383,7 +421,64 @@
             <End Role="tbl_events" EntitySet="tbl_events" />
             <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
           </AssociationSet>
+          <EntitySet Name="tbl_countries" EntityType="TrackerModel.tbl_countries" />
+          <EntitySet Name="tbl_venues" EntityType="TrackerModel.tbl_venues" />
+          <AssociationSet Name="FK__tbl_venue__V_Cou__02925FBF" Association="TrackerModel.FK__tbl_venue__V_Cou__02925FBF">
+            <End Role="tbl_countries" EntitySet="tbl_countries" />
+            <End Role="tbl_venues" EntitySet="tbl_venues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_events_tbl_venues" Association="TrackerModel.FK_tbl_events_tbl_venues">
+            <End Role="tbl_venues" EntitySet="tbl_venues" />
+            <End Role="tbl_events" EntitySet="tbl_events" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tbl_countries">
+          <Key>
+            <PropertyRef Name="Country_ID" />
+          </Key>
+          <Property Name="Country_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_Iso" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="C_Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="C_Iso3" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tbl_venues" Relationship="TrackerModel.FK__tbl_venue__V_Cou__02925FBF" FromRole="tbl_countries" ToRole="tbl_venues" />
+        </EntityType>
+        <EntityType Name="tbl_venues">
+          <Key>
+            <PropertyRef Name="Venue_ID" />
+          </Key>
+          <Property Name="Venue_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="V_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="V_StreetAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="V_City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="V_Country" Type="Int32" Nullable="false" />
+          <Property Name="V_Postcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_countries" Relationship="TrackerModel.FK__tbl_venue__V_Cou__02925FBF" FromRole="tbl_venues" ToRole="tbl_countries" />
+          <NavigationProperty Name="tbl_events" Relationship="TrackerModel.FK_tbl_events_tbl_venues" FromRole="tbl_venues" ToRole="tbl_events" />
+        </EntityType>
+        <Association Name="FK__tbl_venue__V_Cou__02925FBF">
+          <End Type="TrackerModel.tbl_countries" Role="tbl_countries" Multiplicity="1" />
+          <End Type="TrackerModel.tbl_venues" Role="tbl_venues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_countries">
+              <PropertyRef Name="Country_ID" />
+            </Principal>
+            <Dependent Role="tbl_venues">
+              <PropertyRef Name="V_Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_events_tbl_venues">
+          <End Type="TrackerModel.tbl_venues" Role="tbl_venues" Multiplicity="0..1" />
+          <End Type="TrackerModel.tbl_events" Role="tbl_events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_venues">
+              <PropertyRef Name="Venue_ID" />
+            </Principal>
+            <Dependent Role="tbl_events">
+              <PropertyRef Name="Event_Location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -448,11 +543,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_users">
-            <EntityTypeMapping TypeName="TrackerModel.tbl_users">
-              <MappingFragment StoreEntitySet="tbl_users">
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+          <EntitySetMapping Name="tbl_countries">
+            <EntityTypeMapping TypeName="TrackerModel.tbl_countries">
+              <MappingFragment StoreEntitySet="tbl_countries">
+                <ScalarProperty Name="C_Iso3" ColumnName="C_Iso3" />
+                <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+                <ScalarProperty Name="C_Iso" ColumnName="C_Iso" />
+                <ScalarProperty Name="Country_ID" ColumnName="Country_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_venues">
+            <EntityTypeMapping TypeName="TrackerModel.tbl_venues">
+              <MappingFragment StoreEntitySet="tbl_venues">
+                <ScalarProperty Name="V_Postcode" ColumnName="V_Postcode" />
+                <ScalarProperty Name="V_Country" ColumnName="V_Country" />
+                <ScalarProperty Name="V_City" ColumnName="V_City" />
+                <ScalarProperty Name="V_StreetAddress" ColumnName="V_StreetAddress" />
+                <ScalarProperty Name="V_Name" ColumnName="V_Name" />
+                <ScalarProperty Name="Venue_ID" ColumnName="Venue_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

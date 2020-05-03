@@ -15,7 +15,7 @@ namespace EventTracker.Controllers
         // GET: User - CAN BE REMOVED/REPLACED WITH ACTION TO RETRIEVE USERS IN NEW USER DATABASE
         public ActionResult GetUsers()
         {
-            return View(_trackerService.GetUsers());
+            return View();
         }
 
         // GET: User/Details/5

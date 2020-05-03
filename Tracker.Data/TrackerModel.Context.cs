@@ -31,6 +31,7 @@ namespace Tracker.Data
         public virtual DbSet<tbl_eventhistory> tbl_eventhistory { get; set; }
         public virtual DbSet<tbl_eventlineup> tbl_eventlineup { get; set; }
         public virtual DbSet<tbl_events> tbl_events { get; set; }
-        public virtual DbSet<tbl_users> tbl_users { get; set; }
+        public virtual DbSet<tbl_countries> tbl_countries { get; set; }
+        public virtual DbSet<tbl_venues> tbl_venues { get; set; }
     }
 }

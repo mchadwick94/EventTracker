@@ -25,7 +25,7 @@ namespace Tracker.Data
         public int Event_ID { get; set; }
         public string Event_Name { get; set; }
         public System.DateTime Event_Date { get; set; }
-        public string Event_Location { get; set; }
+        public Nullable<int> Event_Location { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_artisthistory> tbl_artisthistory { get; set; }
@@ -33,5 +33,6 @@ namespace Tracker.Data
         public virtual ICollection<tbl_eventhistory> tbl_eventhistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_eventlineup> tbl_eventlineup { get; set; }
+        public virtual tbl_venues tbl_venues { get; set; }
     }
 }

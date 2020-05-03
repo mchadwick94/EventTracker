@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace EventTracker.Controllers
 {
@@ -10,12 +11,25 @@ namespace EventTracker.Controllers
         {
             _trackerService = new Tracker.Services.Service.TrackerService();
             ViewBag.Artists = _trackerService.GetArtists();
+            ViewBag.Countries = _trackerService.GetCountries();
         }
 
         // GET: Application
-        public ActionResult Index()
+        public ActionResult GetCountries()
         {
-            return View();
+            List<SelectListItem> CountriesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetCountries())
+            {
+                CountriesList.Add(
+                    new SelectListItem()
+                    {
+                        Text = item.C_Name,
+                        Value = item.Country_ID.ToString()
+                    });
+            }
+            ViewBag.Countries = CountriesList;
+
+            return View(ViewBag.Countries);
         }
     }
 }

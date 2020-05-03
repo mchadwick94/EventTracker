@@ -86,6 +86,24 @@ namespace Tracker.Data.IDAO
         //-----------------------------------------------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
         //Gets a list of all the users within the database.
-        IList<Tracker.Data.tbl_users> GetUsers();
+
+        //-------------------------------------------------------------------------------
+        // VENUE RELATED FUNCTIONS
+        IList<Tracker.Data.tbl_venues> GetVenues();
+
+        void CreateVenue(tbl_venues _venue);
+
+        Tracker.Data.tbl_venues GetVenueDetails(int Venue_ID);
+
+        void EditVenue(tbl_venues _venues);
+
+        void DeleteVenue(tbl_venues venue);
+
+        //-----------------------------------------------------------------------------------------------------------------------
+        // Country RELATED FUNCTIONS
+        //Gets a list of all the countries within the database.
+        IList<Tracker.Data.tbl_countries> GetCountries();
+
+        //-------------------------------------------------------------------------------
     }
 }

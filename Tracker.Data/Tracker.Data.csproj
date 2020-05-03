@@ -77,6 +77,9 @@
     <Compile Include="tbl_artists.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_countries.cs">
+      <DependentUpon>TrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_eventhistory.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
@@ -86,7 +89,7 @@
     <Compile Include="tbl_events.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tbl_users.cs">
+    <Compile Include="tbl_venues.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TrackerModel.Context.cs">

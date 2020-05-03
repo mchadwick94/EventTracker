@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Tracker.Data.IDAO;
@@ -231,11 +232,57 @@ namespace Tracker.Data.DAO
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS
         //Gets a list of all the users within the database.
-        public IList<tbl_users> GetUsers()
+
+        //-------------------------------------------------------------------------------
+        // VENUE RELATED FUNCTIONS
+
+        public IList<tbl_venues> GetVenues()
         {
-            IQueryable<tbl_users> _users;
-            _users = from tbl_users in _context.tbl_users select tbl_users;
-            return _users.ToList<tbl_users>();
+            IQueryable<tbl_venues> _Venues;
+            _Venues = from tbl_venues in _context.tbl_venues select tbl_venues;
+            return _Venues.ToList<tbl_venues>();
+        }
+
+        public void CreateVenue(tbl_venues _venue)
+        {
+            _context.tbl_venues.Add(_venue);
+            _context.SaveChanges();
+        }
+
+        public tbl_venues GetVenueDetails(int Venue_ID)
+        {
+            IQueryable<tbl_venues> _venues;
+            _venues = from tbl_venues in _context.tbl_venues where tbl_venues.Venue_ID == Venue_ID select tbl_venues;
+            return _venues.First<tbl_venues>();
+        }
+
+        public void EditVenue(tbl_venues _venues)
+        {
+            tbl_venues _venue = GetVenueDetails(_venues.Venue_ID);
+
+            _venue.V_Name = _venues.V_Name;
+            _venue.V_StreetAddress = _venues.V_StreetAddress;
+            _venue.V_City = _venues.V_City;
+            _venue.V_Postcode = _venues.V_Postcode;
+            _venue.V_Country = _venues.V_Country;
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteVenue(tbl_venues venue)
+        {
+            _context.tbl_venues.Remove(venue);
+            _context.SaveChanges();
+        }
+
+        //-------------------------------------------------------------------------------
+        // Country RELATED FUNCTIONS
+
+        public IList<tbl_countries> GetCountries()
+        {
+            IQueryable<tbl_countries> _Countries;
+            _Countries = from tbl_countries in _context.tbl_countries select tbl_countries;
+            return _Countries.ToList<tbl_countries>();
         }
     }
 }

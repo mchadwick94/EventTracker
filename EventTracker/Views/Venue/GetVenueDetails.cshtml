@@ -1,0 +1,58 @@
+﻿@model Tracker.Data.tbl_venues
+
+@{
+    ViewBag.Title = "GetVenueDetails";
+}
+
+<h2>GetVenueDetails</h2>
+
+<div>
+    <h4>tbl_venues</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.V_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.V_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.V_StreetAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.V_StreetAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.V_City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.V_City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.V_Postcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.V_Postcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_countries.C_Iso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_countries.C_Iso)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Venue_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
