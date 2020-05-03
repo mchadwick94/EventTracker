@@ -8,3 +8,5 @@ EventTracker/App_Data/aspnet-EventTracker-20200130120606.mdf
 *.mdf
 *.ldf
 EventTracker/App_Data/aspnet-EventTracker-20200130120606_log.ldf
+*.ldf
+*.mdf
