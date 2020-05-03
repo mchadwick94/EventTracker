@@ -23,7 +23,7 @@
         </dt>
 
         <dd>
-            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", Model.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
         </dd>
 
         <dt>
@@ -31,7 +31,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Event_Location)
+            @Html.DisplayFor(model => model.tbl_venues.V_Name), </br>
+            @Html.DisplayFor(model => model.tbl_venues.V_StreetAddress), </br>
+            @Html.DisplayFor(model => model.tbl_venues.V_City)</br>
+            @Html.DisplayFor(model => model.tbl_venues.tbl_countries.C_Name) (@Html.DisplayFor(model => model.tbl_venues.tbl_countries.C_Iso3))
         </dd>
     </dl>
 </div>

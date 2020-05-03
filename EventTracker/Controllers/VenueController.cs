@@ -97,5 +97,13 @@ namespace EventTracker.Controllers
                 return View();
             }
         }
+
+        protected void Redirect(string V_Name, string V_StreetAddress, string V_City)
+        {
+            string SearchName = V_Name + ",+" + V_StreetAddress + ", +" + V_City;
+            ViewBag.UrlMapString = "https://google.com/maps/search/" + SearchName;
+
+            Response.Redirect(ViewBag.UrlMapString);
+        }
     }
 }

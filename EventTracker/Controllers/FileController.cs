@@ -8,8 +8,6 @@ namespace EventTracker.Controllers
     {
         private TrackerEntities _context;
 
-        public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
-
         public FileController()
         {
             _context = new TrackerEntities();

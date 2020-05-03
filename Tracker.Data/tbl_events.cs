@@ -27,7 +27,7 @@ namespace Tracker.Data
         public System.DateTime Event_Date { get; set; }
 
         public int Event_Country { get; set; }
-        public Nullable<int> Event_Location { get; set; }
+        public int Event_Location { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_artisthistory> tbl_artisthistory { get; set; }
