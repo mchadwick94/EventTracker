@@ -91,6 +91,8 @@ namespace Tracker.Data.IDAO
         // VENUE RELATED FUNCTIONS
         IList<Tracker.Data.tbl_venues> GetVenues();
 
+        IList<tbl_venues> GetVenuesByCountry(int Country_ID);
+
         void CreateVenue(tbl_venues _venue);
 
         Tracker.Data.tbl_venues GetVenueDetails(int Venue_ID);

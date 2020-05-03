@@ -29,7 +29,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderBy(a => a.tbl_countries.C_Name).ThenBy(b => b.V_City).ThenBy(c => c.V_Name))
     {
         <tr>
             <td>

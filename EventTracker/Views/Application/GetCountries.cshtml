@@ -6,47 +6,59 @@
 
 <h2>GetCountries</h2>
 
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Country_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C_Iso)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C_Iso3)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
+<div class="card">
+    <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for a Country.." title="Type in an Country" , name="myInput">
+    <div class="card-body" id="search-card-body">
+        <table class="table" id="myTable">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.C_Name)
+                </th>
+                <th></th>
+            </tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Country_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C_Iso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C_Iso3)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Country_ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Country_ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Country_ID })
-            </td>
-        </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.C_Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Select Country", "../Event/CreateEvent", new { Country_ID = item.Country_ID }) |
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+    function myFunction() { // Script found at https://www.w3schools.com/howto/howto_js_filter_table.asp
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     }
-</table>
+</script>
+
+
+

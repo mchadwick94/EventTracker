@@ -185,6 +185,11 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetVenues();
         }
 
+        public IList<tbl_venues> GetVenuesByCountry(int Country_ID)
+        {
+            return _TrackerDAO.GetVenuesByCountry(Country_ID);
+        }
+
         public void CreateVenue(tbl_venues _venue)
         {
             _TrackerDAO.CreateVenue(_venue);

@@ -31,6 +31,12 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetVenues());
         }
 
+        // GET: Venue
+        public ActionResult GetVenuesByCountry(int Country_ID)
+        {
+            return View(_trackerService.GetVenuesByCountry(Country_ID));
+        }
+
         //CREATE a new event
         [HttpGet]
         public ActionResult CreateVenue()

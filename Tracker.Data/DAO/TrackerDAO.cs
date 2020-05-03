@@ -240,7 +240,14 @@ namespace Tracker.Data.DAO
         {
             IQueryable<tbl_venues> _Venues;
             _Venues = from tbl_venues in _context.tbl_venues select tbl_venues;
-            return _Venues.ToList<tbl_venues>();
+            return _Venues.OrderBy(i => i.V_City).ThenBy(n => n.V_Name).ToList<tbl_venues>();
+        }
+
+        public IList<tbl_venues> GetVenuesByCountry(int Country_ID)
+        {
+            IQueryable<tbl_venues> _Venues;
+            _Venues = from tbl_venues in _context.tbl_venues where tbl_venues.V_Country == Country_ID select tbl_venues;
+            return _Venues.OrderBy(i => i.V_City).ThenBy(n => n.V_Name).ToList<tbl_venues>();
         }
 
         public void CreateVenue(tbl_venues _venue)

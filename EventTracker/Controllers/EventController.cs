@@ -41,8 +41,19 @@ namespace EventTracker.Controllers
 
         //CREATE a new event
         [HttpGet]
-        public ActionResult CreateEvent()
+        public ActionResult CreateEvent(int Country_ID)
         {
+            List<SelectListItem> VenuesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetVenuesByCountry(Country_ID))
+            {
+                VenuesList.Add(
+                    new SelectListItem()
+                    {
+                        Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                        Value = item.Venue_ID.ToString()
+                    });
+            }
+            ViewBag.Venues = VenuesList;
             return View();
         }
 
@@ -77,8 +88,35 @@ namespace EventTracker.Controllers
 
         //Edits the details of an event
         [HttpGet] //Retrieves the details of the event being edited
-        public ActionResult EditEvent(int Event_ID)
+        public ActionResult EditEvent(int Event_ID, int Country_ID)
         {
+            List<SelectListItem> VenuesList = new List<SelectListItem>();
+            if (Country_ID == 0 || Country_ID == null)
+            {
+                foreach (var item in _trackerService.GetVenues())
+                {
+                    VenuesList.Add(
+                        new SelectListItem()
+                        {
+                            Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                            Value = item.Venue_ID.ToString()
+                        });
+                }
+            }
+            else
+            {
+                foreach (var item in _trackerService.GetVenuesByCountry(Country_ID))
+                {
+                    VenuesList.Add(
+                        new SelectListItem()
+                        {
+                            Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                            Value = item.Venue_ID.ToString()
+                        });
+                }
+            }
+
+            ViewBag.Venues = VenuesList;
             return View(_trackerService.GetEventDetails(Event_ID));
         }
 

@@ -17,19 +17,7 @@ namespace EventTracker.Controllers
         // GET: Application
         public ActionResult GetCountries()
         {
-            List<SelectListItem> CountriesList = new List<SelectListItem>();
-            foreach (var item in _trackerService.GetCountries())
-            {
-                CountriesList.Add(
-                    new SelectListItem()
-                    {
-                        Text = item.C_Name,
-                        Value = item.Country_ID.ToString()
-                    });
-            }
-            ViewBag.Countries = CountriesList;
-
-            return View(ViewBag.Countries);
+            return View(_trackerService.GetCountries());
         }
     }
 }
