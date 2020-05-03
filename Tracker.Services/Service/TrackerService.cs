@@ -167,6 +167,12 @@ namespace Tracker.Services.Service
             _TrackerDAO.RemoveArtistImage(image);
         }
 
+        //Retrieve List of events that an artist has played at
+        public IList<tbl_eventlineup> GetAnArtistsEventHistory(int Artist_ID)
+        {
+            return _TrackerDAO.GetAnArtistsEventHistory(Artist_ID);
+        }
+
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         public IList<tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID)

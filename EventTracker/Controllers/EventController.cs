@@ -9,7 +9,7 @@ namespace EventTracker.Controllers
     public class EventController : ApplicationController
     {
         public int _eventID;
-        public string User_ID;
+        protected string User_ID;
 
         public EventController()
         {
@@ -164,6 +164,8 @@ namespace EventTracker.Controllers
         //Get an events Lineup through users events page
         public ActionResult GetUsersLineUp(int Event_ID, tbl_events _event)
         {
+            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+
             List<string> UsersSeenLineup = new List<string>();
             _event = _trackerService.GetEventDetails(Event_ID);
             foreach (var item in _trackerService.GetSeenArtists(Convert.ToInt32(User_ID)))
@@ -174,7 +176,7 @@ namespace EventTracker.Controllers
                 }
             }
             ViewBag.UsersSeenOnLineup = UsersSeenLineup;
-            return View(_trackerService.GetLineUp(Event_ID));
+            return View(_trackerService.GetUsersLineUp(Event_ID));
         }
 
         //Get an events Lineup

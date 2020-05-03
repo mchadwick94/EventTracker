@@ -243,5 +243,10 @@ namespace EventTracker.Controllers
             ViewBag.Artist_Name = _trackerService.GetArtistDetails(Artist_ID).Artist_Name.ToString();
             return View(_trackerService.GetSeenArtistHistory(User_ID, Artist_ID));
         }
+
+        public ActionResult GetAnArtistsEventHistory(int Artist_ID)
+        {
+            return View(_trackerService.GetAnArtistsEventHistory(Artist_ID));
+        }
     }
 }

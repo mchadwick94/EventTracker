@@ -442,6 +442,7 @@
     <Content Include="Views\Venue\EditVenue.cshtml" />
     <Content Include="Views\Application\GetCountries.cshtml" />
     <Content Include="Views\Venue\CreateVenue.cshtml" />
+    <Content Include="Views\Artist\GetAnArtistsEventHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

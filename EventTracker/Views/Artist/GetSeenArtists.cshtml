@@ -55,7 +55,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
                 @Html.ActionLink("Details", "../Artist/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
-                @Html.ActionLink("Delete", "../Artist/DeleteFromSeenArtists", new { ArtistHistory_ID = item.ArtistHistory_ID })
+                @Html.ActionLink("Delete", "../Artist/DeleteFromSeenArtists", new { Event_ID = item.Event_ID, Lineup_ID = item.EventLineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode() })
             </td>
         </tr>
         }

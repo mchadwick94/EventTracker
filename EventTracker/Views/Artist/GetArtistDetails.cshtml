@@ -1,42 +1,64 @@
 ﻿@model Tracker.Data.tbl_artists
+<link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "GetArtistDetails";
 }
-
-<h2>GetArtistDetails</h2>
-
-<div>
-    <h4>tbl_artists</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Artist_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Artist_Name)
-        </dd>
-        
-        <dd>
+<div class="body-content" position="fixed" height="100%" width="100%">
+    <h1 align="center">
+        <b>@Html.DisplayFor(model => model.Artist_Name)</b>
+    </h1>
+    <div class="jumbotron" id="profile-jumbotron" align="left" style="display: inline-flex">
+        <div class="card" id="profile-card">
             @if (Model.tbl_artistImages.Any())
             {
-            <dt>
-                Avatar
-            </dt>
-            <dd>
-                <img src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" style="width:200px; height:180px" />
-            </dd>
-        }
-        else
-        {
-            <img src="@Url.Action("Index", "File", new { File_ID = "1209" })" style="width:200px; height:180px" />
+                <dd>
+                    <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" />
+                </dd>
+            }
+            else
+            {
+                <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = "1209" })" />
 
-        }
-            </dd>
-        </dl>
+            }
+        </div>
+        <div class="card" id="profile-history-card">
+            <div class="body-content">
+                @{Html.RenderAction("GetAnArtistsEventHistory", "Artist", new { Artist_ID = Model.Artist_ID }); }
+            </div>
+        </div>
+    </div>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Artist_ID }) |
     @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
 </p>
+<style>
+
+    .profile-image {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 3px solid #1f1f1f;
+        border-radius: 20px;
+        background-position: center center;
+        background-size: cover;
+        object-fit: cover;
+        overflow: hidden;
+    }
+
+    #profile-jumbotron {
+        max-height: 80%;
+    }
+
+    #profile-history-card {
+        width: 48%;
+        overflow-y: auto;
+    }
+
+    #profile-card {
+        width: 48%;
+    }
+</style>

@@ -98,7 +98,7 @@ namespace EventTracker.Controllers
             }
         }
 
-        protected void Redirect(string V_Name, string V_StreetAddress, string V_City)
+        private void Redirect(string V_Name, string V_StreetAddress, string V_City)
         {
             string SearchName = V_Name + ",+" + V_StreetAddress + ", +" + V_City;
             ViewBag.UrlMapString = "https://google.com/maps/search/" + SearchName;
