@@ -297,7 +297,7 @@
     <Content Include="Content\images\default-profile.png" />
     <Content Include="Content\images\search.jpg" />
     <Content Include="Content\images\search.png" />
-    <Content Include="Content\Stylesheet\StyleSheet.css" />
+    <Content Include="Content\StyleSheet.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -446,6 +446,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Stylesheet\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\File\" />
   </ItemGroup>

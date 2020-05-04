@@ -48,6 +48,7 @@ namespace Tracker.Data.DAO
             _event.Event_Name = _events.Event_Name;
             _event.Event_Location = _events.Event_Location;
             _event.Event_Date = _events.Event_Date;
+            _event.Event_Cancelled = _events.Event_Cancelled;
             _context.SaveChanges();
         }
 
@@ -220,7 +221,7 @@ namespace Tracker.Data.DAO
             _context.SaveChanges();
         }
 
-        public IList<tbl_eventlineup> GetAnArtistsEventHistory (int Artist_ID)
+        public IList<tbl_eventlineup> GetAnArtistsEventHistory(int Artist_ID)
         {
             IQueryable<tbl_eventlineup> _events;
             _events = from tbl_eventlineup in _context.tbl_eventlineup where tbl_eventlineup.Artist_ID == Artist_ID select tbl_eventlineup;

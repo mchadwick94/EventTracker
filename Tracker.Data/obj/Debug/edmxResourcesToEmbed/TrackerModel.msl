@@ -4,58 +4,30 @@
     <EntitySetMapping Name="tbl_artisthistory">
       <EntityTypeMapping TypeName="TrackerModel.tbl_artisthistory">
         <MappingFragment StoreEntitySet="tbl_artisthistory">
-          <ScalarProperty Name="ArtistHistory_ID" ColumnName="ArtistHistory_ID" />
-          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
-          <ScalarProperty Name="EventLineup_ID" ColumnName="EventLineup_ID" />
           <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
+          <ScalarProperty Name="EventLineup_ID" ColumnName="EventLineup_ID" />
+          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="ArtistHistory_ID" ColumnName="ArtistHistory_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_artistImages">
       <EntityTypeMapping TypeName="TrackerModel.tbl_artistImages">
         <MappingFragment StoreEntitySet="tbl_artistImages">
-          <ScalarProperty Name="File_ID" ColumnName="File_ID" />
-          <ScalarProperty Name="File_Name" ColumnName="File_Name" />
-          <ScalarProperty Name="Content_Type" ColumnName="Content_Type" />
-          <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Content_Type" ColumnName="Content_Type" />
+          <ScalarProperty Name="File_Name" ColumnName="File_Name" />
+          <ScalarProperty Name="File_ID" ColumnName="File_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_artists">
       <EntityTypeMapping TypeName="TrackerModel.tbl_artists">
         <MappingFragment StoreEntitySet="tbl_artists">
-          <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
           <ScalarProperty Name="Artist_Name" ColumnName="Artist_Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_eventhistory">
-      <EntityTypeMapping TypeName="TrackerModel.tbl_eventhistory">
-        <MappingFragment StoreEntitySet="tbl_eventhistory">
-          <ScalarProperty Name="History_ID" ColumnName="History_ID" />
-          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_eventlineup">
-      <EntityTypeMapping TypeName="TrackerModel.tbl_eventlineup">
-        <MappingFragment StoreEntitySet="tbl_eventlineup">
-          <ScalarProperty Name="Lineup_ID" ColumnName="Lineup_ID" />
-          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
           <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_events">
-      <EntityTypeMapping TypeName="TrackerModel.tbl_events">
-        <MappingFragment StoreEntitySet="tbl_events">
-          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
-          <ScalarProperty Name="Event_Name" ColumnName="Event_Name" />
-          <ScalarProperty Name="Event_Date" ColumnName="Event_Date" />
-          <ScalarProperty Name="Event_Location" ColumnName="Event_Location" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -66,6 +38,35 @@
           <ScalarProperty Name="C_Name" ColumnName="C_Name" />
           <ScalarProperty Name="C_Iso" ColumnName="C_Iso" />
           <ScalarProperty Name="Country_ID" ColumnName="Country_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_eventhistory">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_eventhistory">
+        <MappingFragment StoreEntitySet="tbl_eventhistory">
+          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="History_ID" ColumnName="History_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_eventlineup">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_eventlineup">
+        <MappingFragment StoreEntitySet="tbl_eventlineup">
+          <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
+          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
+          <ScalarProperty Name="Lineup_ID" ColumnName="Lineup_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_events">
+      <EntityTypeMapping TypeName="TrackerModel.tbl_events">
+        <MappingFragment StoreEntitySet="tbl_events">
+          <ScalarProperty Name="Event_Cancelled" ColumnName="Event_Cancelled" />
+          <ScalarProperty Name="Event_Location" ColumnName="Event_Location" />
+          <ScalarProperty Name="Event_Date" ColumnName="Event_Date" />
+          <ScalarProperty Name="Event_Name" ColumnName="Event_Name" />
+          <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

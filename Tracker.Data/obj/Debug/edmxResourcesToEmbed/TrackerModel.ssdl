@@ -59,7 +59,8 @@
     <Property Name="Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Event_Name" Type="varchar" MaxLength="60" Nullable="false" />
     <Property Name="Event_Date" Type="date" Nullable="false" />
-    <Property Name="Event_Location" Type="int" />
+    <Property Name="Event_Location" Type="int" Nullable="false" />
+    <Property Name="Event_Cancelled" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_venues">
     <Key>
@@ -145,7 +146,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_events_tbl_venues">
-    <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="0..1" />
+    <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="1" />
     <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_venues">

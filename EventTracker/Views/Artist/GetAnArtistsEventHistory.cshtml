@@ -1,66 +1,78 @@
 ﻿@model IEnumerable<Tracker.Data.tbl_eventlineup>
 
-<h2><b>Upcoming Events</b></h2>
+<h2 id="profile-h2"><b>Upcoming Events</b></h2>
 <div class="card" id="profile-table">
-    <table class="table">
-        <tr>
-            <th>
-                Event Name
-            </th>
-            <th>
-                Date
-            </th>
-        </tr>
-        @foreach (var item in Model.Where(x => x.tbl_events.Event_Date >= System.DateTime.Now).OrderByDescending(x => x.tbl_events.Event_Date))
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-                </td>
-                <td>
-                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
-                </td>
-            </tr>
-        }
-    </table>
-</div>
-<br />
-<div class="card" id="profile-table">
-    <h2><b>Past Events</b></h2>
+    @if (Model.Count() == 0)
+    {
+        <br /> <br />
+        <h3 id="profile-title">No Upcoming Events</h3>
+    }
+    else
+    {
+        <table class="table">
 
-    <table class="table">
-        <tr>
-            <th>
-                Event Name
-            </th>
-            <th>
-                Date
-            </th>
-        </tr>
-        @foreach (var item in Model.Where(x => x.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(x => x.tbl_events.Event_Date))
-        {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-                </td>
-                <td>
-                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
-                </td>
+                <th>
+                    Event Name
+                </th>
+                <th>
+                    Date
+                </th>
             </tr>
-        }
-    </table>
+            @foreach (var item in Model.Where(x => x.tbl_events.Event_Date >= System.DateTime.Now).OrderByDescending(x => x.tbl_events.Event_Date))
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+                    </td>
+                    <td>
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+<h3 id="profile-h2"><b>Past Events</b></h3>
+<div class="card" id="profile-table">
+
+    @if (Model.Count() == 0)
+    {
+        <br /> <br />
+        <h2 id="profile-title">No Past Events</h2>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Event Name
+                </th>
+                <th>
+                    Date
+                </th>
+            </tr>
+            @foreach (var item in Model.Where(x => x.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(x => x.tbl_events.Event_Date))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+                    </td>
+                    <td>
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
+                    </td>
+                </tr>
+            }
+        </table>
+    }
 </div>
 
 
 
 <style>
-    #profile-table {
-        max-height: 42%;
-        min-height: 40%;
-        overflow-y: auto;
-    }
-
-    footer {
-        display: none !important;
+    #profile-title {
+        text-align: center;
     }
 </style>

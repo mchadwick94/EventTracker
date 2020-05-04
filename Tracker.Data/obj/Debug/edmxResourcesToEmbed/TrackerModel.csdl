@@ -1,5 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TrackerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_artisthistory" EntityType="TrackerModel.tbl_artisthistory" />
+    <EntitySet Name="tbl_artistImages" EntityType="TrackerModel.tbl_artistImages" />
+    <EntitySet Name="tbl_artists" EntityType="TrackerModel.tbl_artists" />
+    <EntitySet Name="tbl_countries" EntityType="TrackerModel.tbl_countries" />
+    <EntitySet Name="tbl_eventhistory" EntityType="TrackerModel.tbl_eventhistory" />
+    <EntitySet Name="tbl_eventlineup" EntityType="TrackerModel.tbl_eventlineup" />
+    <EntitySet Name="tbl_events" EntityType="TrackerModel.tbl_events" />
+    <EntitySet Name="tbl_venues" EntityType="TrackerModel.tbl_venues" />
+    <AssociationSet Name="FK__tbl_artis__Artis__18B6AB08" Association="TrackerModel.FK__tbl_artis__Artis__18B6AB08">
+      <End Role="tbl_artists" EntitySet="tbl_artists" />
+      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_artis__Event__16CE6296" Association="TrackerModel.FK__tbl_artis__Event__16CE6296">
+      <End Role="tbl_events" EntitySet="tbl_events" />
+      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_artis__Event__17C286CF" Association="TrackerModel.FK__tbl_artis__Event__17C286CF">
+      <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
+      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_artis__Artis__50FB042B" Association="TrackerModel.FK__tbl_artis__Artis__50FB042B">
+      <End Role="tbl_artists" EntitySet="tbl_artists" />
+      <End Role="tbl_artistImages" EntitySet="tbl_artistImages" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_eventlineup_tbl_eventlineup_ibfk_2" Association="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_2">
+      <End Role="tbl_artists" EntitySet="tbl_artists" />
+      <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_venue__V_Cou__02925FBF" Association="TrackerModel.FK__tbl_venue__V_Cou__02925FBF">
+      <End Role="tbl_countries" EntitySet="tbl_countries" />
+      <End Role="tbl_venues" EntitySet="tbl_venues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_eventhistory_tbl_events" Association="TrackerModel.FK_tbl_eventhistory_tbl_events">
+      <End Role="tbl_events" EntitySet="tbl_events" />
+      <End Role="tbl_eventhistory" EntitySet="tbl_eventhistory" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_eventlineup_tbl_eventlineup_ibfk_1" Association="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_1">
+      <End Role="tbl_events" EntitySet="tbl_events" />
+      <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_events_tbl_venues" Association="TrackerModel.FK_tbl_events_tbl_venues">
+      <End Role="tbl_venues" EntitySet="tbl_venues" />
+      <End Role="tbl_events" EntitySet="tbl_events" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="tbl_artisthistory">
     <Key>
       <PropertyRef Name="ArtistHistory_ID" />
@@ -9,194 +55,31 @@
     <Property Name="Event_ID" Type="Int32" Nullable="false" />
     <Property Name="EventLineup_ID" Type="Int32" Nullable="false" />
     <Property Name="Artist_ID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="tbl_artists" Relationship="Self.FK__tbl_artis__Artis__18B6AB08" FromRole="tbl_artisthistory" ToRole="tbl_artists" />
-    <NavigationProperty Name="tbl_events" Relationship="Self.FK__tbl_artis__Event__16CE6296" FromRole="tbl_artisthistory" ToRole="tbl_events" />
-    <NavigationProperty Name="tbl_eventlineup" Relationship="Self.FK__tbl_artis__Event__17C286CF" FromRole="tbl_artisthistory" ToRole="tbl_eventlineup" />
+    <NavigationProperty Name="tbl_artists" Relationship="TrackerModel.FK__tbl_artis__Artis__18B6AB08" FromRole="tbl_artisthistory" ToRole="tbl_artists" />
+    <NavigationProperty Name="tbl_events" Relationship="TrackerModel.FK__tbl_artis__Event__16CE6296" FromRole="tbl_artisthistory" ToRole="tbl_events" />
+    <NavigationProperty Name="tbl_eventlineup" Relationship="TrackerModel.FK__tbl_artis__Event__17C286CF" FromRole="tbl_artisthistory" ToRole="tbl_eventlineup" />
   </EntityType>
   <EntityType Name="tbl_artistImages">
     <Key>
       <PropertyRef Name="File_ID" />
     </Key>
     <Property Name="File_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="File_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Content_Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="File_Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Content_Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Content" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
     <Property Name="Artist_ID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="tbl_artists" Relationship="Self.FK__tbl_artis__Artis__50FB042B" FromRole="tbl_artistImages" ToRole="tbl_artists" />
+    <NavigationProperty Name="tbl_artists" Relationship="TrackerModel.FK__tbl_artis__Artis__50FB042B" FromRole="tbl_artistImages" ToRole="tbl_artists" />
   </EntityType>
   <EntityType Name="tbl_artists">
     <Key>
       <PropertyRef Name="Artist_ID" />
     </Key>
     <Property Name="Artist_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Artist_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="tbl_artisthistory" Relationship="Self.FK__tbl_artis__Artis__18B6AB08" FromRole="tbl_artists" ToRole="tbl_artisthistory" />
-    <NavigationProperty Name="tbl_artistImages" Relationship="Self.FK__tbl_artis__Artis__50FB042B" FromRole="tbl_artists" ToRole="tbl_artistImages" />
-    <NavigationProperty Name="tbl_eventlineup" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_2" FromRole="tbl_artists" ToRole="tbl_eventlineup" />
+    <Property Name="Artist_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_artisthistory" Relationship="TrackerModel.FK__tbl_artis__Artis__18B6AB08" FromRole="tbl_artists" ToRole="tbl_artisthistory" />
+    <NavigationProperty Name="tbl_artistImages" Relationship="TrackerModel.FK__tbl_artis__Artis__50FB042B" FromRole="tbl_artists" ToRole="tbl_artistImages" />
+    <NavigationProperty Name="tbl_eventlineup" Relationship="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_2" FromRole="tbl_artists" ToRole="tbl_eventlineup" />
   </EntityType>
-  <EntityType Name="tbl_eventhistory">
-    <Key>
-      <PropertyRef Name="History_ID" />
-    </Key>
-    <Property Name="History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="User_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Event_ID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="tbl_events" Relationship="Self.FK_tbl_eventhistory_tbl_events" FromRole="tbl_eventhistory" ToRole="tbl_events" />
-  </EntityType>
-  <EntityType Name="tbl_eventlineup">
-    <Key>
-      <PropertyRef Name="Lineup_ID" />
-    </Key>
-    <Property Name="Lineup_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Event_ID" Type="Int32" Nullable="false" />
-    <Property Name="Artist_ID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="tbl_artisthistory" Relationship="Self.FK__tbl_artis__Event__17C286CF" FromRole="tbl_eventlineup" ToRole="tbl_artisthistory" />
-    <NavigationProperty Name="tbl_artists" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_2" FromRole="tbl_eventlineup" ToRole="tbl_artists" />
-    <NavigationProperty Name="tbl_events" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_eventlineup" ToRole="tbl_events" />
-  </EntityType>
-  <EntityType Name="tbl_events">
-    <Key>
-      <PropertyRef Name="Event_ID" />
-    </Key>
-    <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Event_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Event_Date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Event_Location" Type="Int32" />
-    <NavigationProperty Name="tbl_artisthistory" Relationship="Self.FK__tbl_artis__Event__16CE6296" FromRole="tbl_events" ToRole="tbl_artisthistory" />
-    <NavigationProperty Name="tbl_eventhistory" Relationship="Self.FK_tbl_eventhistory_tbl_events" FromRole="tbl_events" ToRole="tbl_eventhistory" />
-    <NavigationProperty Name="tbl_eventlineup" Relationship="Self.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_events" ToRole="tbl_eventlineup" />
-    <NavigationProperty Name="tbl_venues" Relationship="TrackerModel.FK_tbl_events_tbl_venues" FromRole="tbl_events" ToRole="tbl_venues" />
-  </EntityType>
-  <Association Name="FK__tbl_artis__Artis__18B6AB08">
-    <End Role="tbl_artists" Type="Self.tbl_artists" Multiplicity="1" />
-    <End Role="tbl_artisthistory" Type="Self.tbl_artisthistory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_artists">
-        <PropertyRef Name="Artist_ID" />
-      </Principal>
-      <Dependent Role="tbl_artisthistory">
-        <PropertyRef Name="Artist_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tbl_artis__Event__16CE6296">
-    <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
-    <End Role="tbl_artisthistory" Type="Self.tbl_artisthistory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_events">
-        <PropertyRef Name="Event_ID" />
-      </Principal>
-      <Dependent Role="tbl_artisthistory">
-        <PropertyRef Name="Event_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tbl_artis__Event__17C286CF">
-    <End Role="tbl_eventlineup" Type="Self.tbl_eventlineup" Multiplicity="1" />
-    <End Role="tbl_artisthistory" Type="Self.tbl_artisthistory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_eventlineup">
-        <PropertyRef Name="Lineup_ID" />
-      </Principal>
-      <Dependent Role="tbl_artisthistory">
-        <PropertyRef Name="EventLineup_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__tbl_artis__Artis__50FB042B">
-    <End Role="tbl_artists" Type="Self.tbl_artists" Multiplicity="1" />
-    <End Role="tbl_artistImages" Type="Self.tbl_artistImages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_artists">
-        <PropertyRef Name="Artist_ID" />
-      </Principal>
-      <Dependent Role="tbl_artistImages">
-        <PropertyRef Name="Artist_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="tbl_eventlineup_tbl_eventlineup_ibfk_2">
-    <End Role="tbl_artists" Type="Self.tbl_artists" Multiplicity="1" />
-    <End Role="tbl_eventlineup" Type="Self.tbl_eventlineup" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_artists">
-        <PropertyRef Name="Artist_ID" />
-      </Principal>
-      <Dependent Role="tbl_eventlineup">
-        <PropertyRef Name="Artist_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tbl_eventhistory_tbl_events">
-    <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
-    <End Role="tbl_eventhistory" Type="Self.tbl_eventhistory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_events">
-        <PropertyRef Name="Event_ID" />
-      </Principal>
-      <Dependent Role="tbl_eventhistory">
-        <PropertyRef Name="Event_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="tbl_eventlineup_tbl_eventlineup_ibfk_1">
-    <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
-    <End Role="tbl_eventlineup" Type="Self.tbl_eventlineup" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_events">
-        <PropertyRef Name="Event_ID" />
-      </Principal>
-      <Dependent Role="tbl_eventlineup">
-        <PropertyRef Name="Event_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="TrackerEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" />
-    <EntitySet Name="tbl_artistImages" EntityType="Self.tbl_artistImages" />
-    <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" />
-    <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" />
-    <EntitySet Name="tbl_eventlineup" EntityType="Self.tbl_eventlineup" />
-    <EntitySet Name="tbl_events" EntityType="Self.tbl_events" />
-    <AssociationSet Name="FK__tbl_artis__Artis__18B6AB08" Association="Self.FK__tbl_artis__Artis__18B6AB08">
-      <End Role="tbl_artists" EntitySet="tbl_artists" />
-      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tbl_artis__Event__16CE6296" Association="Self.FK__tbl_artis__Event__16CE6296">
-      <End Role="tbl_events" EntitySet="tbl_events" />
-      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tbl_artis__Event__17C286CF" Association="Self.FK__tbl_artis__Event__17C286CF">
-      <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
-      <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
-    </AssociationSet>
-    <AssociationSet Name="FK__tbl_artis__Artis__50FB042B" Association="Self.FK__tbl_artis__Artis__50FB042B">
-      <End Role="tbl_artists" EntitySet="tbl_artists" />
-      <End Role="tbl_artistImages" EntitySet="tbl_artistImages" />
-    </AssociationSet>
-    <AssociationSet Name="tbl_eventlineup_tbl_eventlineup_ibfk_2" Association="Self.tbl_eventlineup_tbl_eventlineup_ibfk_2">
-      <End Role="tbl_artists" EntitySet="tbl_artists" />
-      <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tbl_eventhistory_tbl_events" Association="Self.FK_tbl_eventhistory_tbl_events">
-      <End Role="tbl_events" EntitySet="tbl_events" />
-      <End Role="tbl_eventhistory" EntitySet="tbl_eventhistory" />
-    </AssociationSet>
-    <AssociationSet Name="tbl_eventlineup_tbl_eventlineup_ibfk_1" Association="Self.tbl_eventlineup_tbl_eventlineup_ibfk_1">
-      <End Role="tbl_events" EntitySet="tbl_events" />
-      <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
-    </AssociationSet>
-    <EntitySet Name="tbl_countries" EntityType="TrackerModel.tbl_countries" />
-    <EntitySet Name="tbl_venues" EntityType="TrackerModel.tbl_venues" />
-    <AssociationSet Name="FK__tbl_venue__V_Cou__02925FBF" Association="TrackerModel.FK__tbl_venue__V_Cou__02925FBF">
-      <End Role="tbl_countries" EntitySet="tbl_countries" />
-      <End Role="tbl_venues" EntitySet="tbl_venues" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tbl_events_tbl_venues" Association="TrackerModel.FK_tbl_events_tbl_venues">
-      <End Role="tbl_venues" EntitySet="tbl_venues" />
-      <End Role="tbl_events" EntitySet="tbl_events" />
-    </AssociationSet>
-  </EntityContainer>
   <EntityType Name="tbl_countries">
     <Key>
       <PropertyRef Name="Country_ID" />
@@ -206,6 +89,40 @@
     <Property Name="C_Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
     <Property Name="C_Iso3" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="tbl_venues" Relationship="TrackerModel.FK__tbl_venue__V_Cou__02925FBF" FromRole="tbl_countries" ToRole="tbl_venues" />
+  </EntityType>
+  <EntityType Name="tbl_eventhistory">
+    <Key>
+      <PropertyRef Name="History_ID" />
+    </Key>
+    <Property Name="History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Event_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_events" Relationship="TrackerModel.FK_tbl_eventhistory_tbl_events" FromRole="tbl_eventhistory" ToRole="tbl_events" />
+  </EntityType>
+  <EntityType Name="tbl_eventlineup">
+    <Key>
+      <PropertyRef Name="Lineup_ID" />
+    </Key>
+    <Property Name="Lineup_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Event_ID" Type="Int32" Nullable="false" />
+    <Property Name="Artist_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_artisthistory" Relationship="TrackerModel.FK__tbl_artis__Event__17C286CF" FromRole="tbl_eventlineup" ToRole="tbl_artisthistory" />
+    <NavigationProperty Name="tbl_artists" Relationship="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_2" FromRole="tbl_eventlineup" ToRole="tbl_artists" />
+    <NavigationProperty Name="tbl_events" Relationship="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_eventlineup" ToRole="tbl_events" />
+  </EntityType>
+  <EntityType Name="tbl_events">
+    <Key>
+      <PropertyRef Name="Event_ID" />
+    </Key>
+    <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Event_Name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Event_Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Event_Location" Type="Int32" Nullable="false" />
+    <Property Name="Event_Cancelled" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tbl_artisthistory" Relationship="TrackerModel.FK__tbl_artis__Event__16CE6296" FromRole="tbl_events" ToRole="tbl_artisthistory" />
+    <NavigationProperty Name="tbl_eventhistory" Relationship="TrackerModel.FK_tbl_eventhistory_tbl_events" FromRole="tbl_events" ToRole="tbl_eventhistory" />
+    <NavigationProperty Name="tbl_eventlineup" Relationship="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_events" ToRole="tbl_eventlineup" />
+    <NavigationProperty Name="tbl_venues" Relationship="TrackerModel.FK_tbl_events_tbl_venues" FromRole="tbl_events" ToRole="tbl_venues" />
   </EntityType>
   <EntityType Name="tbl_venues">
     <Key>
@@ -220,6 +137,66 @@
     <NavigationProperty Name="tbl_countries" Relationship="TrackerModel.FK__tbl_venue__V_Cou__02925FBF" FromRole="tbl_venues" ToRole="tbl_countries" />
     <NavigationProperty Name="tbl_events" Relationship="TrackerModel.FK_tbl_events_tbl_venues" FromRole="tbl_venues" ToRole="tbl_events" />
   </EntityType>
+  <Association Name="FK__tbl_artis__Artis__18B6AB08">
+    <End Type="TrackerModel.tbl_artists" Role="tbl_artists" Multiplicity="1" />
+    <End Type="TrackerModel.tbl_artisthistory" Role="tbl_artisthistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_artists">
+        <PropertyRef Name="Artist_ID" />
+      </Principal>
+      <Dependent Role="tbl_artisthistory">
+        <PropertyRef Name="Artist_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_artis__Event__16CE6296">
+    <End Type="TrackerModel.tbl_events" Role="tbl_events" Multiplicity="1" />
+    <End Type="TrackerModel.tbl_artisthistory" Role="tbl_artisthistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_events">
+        <PropertyRef Name="Event_ID" />
+      </Principal>
+      <Dependent Role="tbl_artisthistory">
+        <PropertyRef Name="Event_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_artis__Event__17C286CF">
+    <End Type="TrackerModel.tbl_eventlineup" Role="tbl_eventlineup" Multiplicity="1" />
+    <End Type="TrackerModel.tbl_artisthistory" Role="tbl_artisthistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_eventlineup">
+        <PropertyRef Name="Lineup_ID" />
+      </Principal>
+      <Dependent Role="tbl_artisthistory">
+        <PropertyRef Name="EventLineup_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_artis__Artis__50FB042B">
+    <End Type="TrackerModel.tbl_artists" Role="tbl_artists" Multiplicity="1" />
+    <End Type="TrackerModel.tbl_artistImages" Role="tbl_artistImages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_artists">
+        <PropertyRef Name="Artist_ID" />
+      </Principal>
+      <Dependent Role="tbl_artistImages">
+        <PropertyRef Name="Artist_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_eventlineup_tbl_eventlineup_ibfk_2">
+    <End Type="TrackerModel.tbl_artists" Role="tbl_artists" Multiplicity="1" />
+    <End Type="TrackerModel.tbl_eventlineup" Role="tbl_eventlineup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_artists">
+        <PropertyRef Name="Artist_ID" />
+      </Principal>
+      <Dependent Role="tbl_eventlineup">
+        <PropertyRef Name="Artist_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__tbl_venue__V_Cou__02925FBF">
     <End Type="TrackerModel.tbl_countries" Role="tbl_countries" Multiplicity="1" />
     <End Type="TrackerModel.tbl_venues" Role="tbl_venues" Multiplicity="*" />
@@ -232,8 +209,32 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tbl_eventhistory_tbl_events">
+    <End Type="TrackerModel.tbl_events" Role="tbl_events" Multiplicity="1" />
+    <End Type="TrackerModel.tbl_eventhistory" Role="tbl_eventhistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_events">
+        <PropertyRef Name="Event_ID" />
+      </Principal>
+      <Dependent Role="tbl_eventhistory">
+        <PropertyRef Name="Event_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_eventlineup_tbl_eventlineup_ibfk_1">
+    <End Type="TrackerModel.tbl_events" Role="tbl_events" Multiplicity="1" />
+    <End Type="TrackerModel.tbl_eventlineup" Role="tbl_eventlineup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_events">
+        <PropertyRef Name="Event_ID" />
+      </Principal>
+      <Dependent Role="tbl_eventlineup">
+        <PropertyRef Name="Event_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tbl_events_tbl_venues">
-    <End Type="TrackerModel.tbl_venues" Role="tbl_venues" Multiplicity="0..1" />
+    <End Type="TrackerModel.tbl_venues" Role="tbl_venues" Multiplicity="1" />
     <End Type="TrackerModel.tbl_events" Role="tbl_events" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_venues">

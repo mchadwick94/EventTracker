@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<Tracker.Data.tbl_artisthistory>
-<link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "GetSeenArtists";
@@ -36,28 +36,28 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_eventlineup.Lineup_ID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
-                @Html.ActionLink("Details", "../Artist/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
-                @Html.ActionLink("Delete", "../Artist/DeleteFromSeenArtists", new { Event_ID = item.Event_ID, Lineup_ID = item.EventLineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode() })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_eventlineup.Lineup_ID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ArtistHistory_ID }) |
+                    @Html.ActionLink("Details", "../Artist/GetSeenArtistDetails", new { ArtistHistory_ID = item.ArtistHistory_ID }) |
+                    @Html.ActionLink("Delete", "../Artist/DeleteFromSeenArtists", new { Event_ID = item.Event_ID, Lineup_ID = item.EventLineup_ID, Artist_ID = item.Artist_ID, User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode() })
+                </td>
+            </tr>
         }
     </table>
 </body>

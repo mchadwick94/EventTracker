@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<Tracker.Data.tbl_artisthistory>
-<link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
 <div class="artist-count-sidebar">
     @{Html.RenderAction("GetUsersArtistCount", "Artist", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }); }
 </div>
@@ -20,17 +20,17 @@
 
     @foreach (var item in Model.OrderByDescending(x => x.tbl_events.Event_Date))
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-        </td>
-        <td>
-            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
-        </td>
-        <td>
-            @Html.ActionLink("Details", "../Event/GetEventDetails", new { Event_ID = item.Event_ID }) |
-            @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+            </td>
+            <td>
+                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
+            </td>
+            <td>
+                @Html.ActionLink("Details", "../Event/GetEventDetails", new { Event_ID = item.Event_ID }) |
+                @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
+            </td>
+        </tr>
     }
 </table>

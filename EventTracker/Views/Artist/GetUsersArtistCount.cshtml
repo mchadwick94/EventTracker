@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<EventTracker.Models.SeenArtistCount>
 
-<link href="~/Content/Stylesheet/StyleSheet.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
 <body>
@@ -22,14 +22,14 @@
         </tr>
         @foreach (var item in Model)
         {
-        <tr class="count-table-row">
-            <td class="count-table-count-col">
-                @Html.DisplayFor(modelItem => item.c)
-            </td>
-            <td class="count-table-artist-col">
-                @Html.ActionLink(item.Artist_Name,"GetSeenArtistHistory", "Artist",  new { Artist_ID = item.Artist_ID, User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }, null)
-            </td>
-        </tr>
+            <tr class="count-table-row">
+                <td class="count-table-count-col">
+                    @Html.DisplayFor(modelItem => item.c)
+                </td>
+                <td class="count-table-artist-col">
+                    @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }, null)
+                </td>
+            </tr>
         }
     </table>
 </body>
