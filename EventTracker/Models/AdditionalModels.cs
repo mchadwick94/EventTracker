@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Tracker.Data;
 
@@ -29,5 +30,7 @@ namespace EventTracker.Models
         public int c { get; set; }
         public virtual tbl_artists tbl_artists { get; set; }
         public virtual tbl_eventlineup tbl_artisthistory { get; set; }
+
+        public virtual tbl_artistImages tbl_artistImages { get; set; }
     }
 }

@@ -179,6 +179,7 @@ namespace EventTracker.Controllers
                 Artist_Name = m.Field<string>("Artist_Name"),
                 c = m.Field<int>("c"),
             }).ToList();
+
             return View(artistCountList);
         }
 

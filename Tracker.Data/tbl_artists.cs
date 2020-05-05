@@ -14,8 +14,9 @@ namespace Tracker.Data
 
 using System;
     using System.Collections.Generic;
-    
-public partial class tbl_artists
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class tbl_artists
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -30,8 +31,8 @@ public partial class tbl_artists
 
     }
 
-
-    public int Artist_ID { get; set; }
+        [Key]
+        public int Artist_ID { get; set; }
 
     public string Artist_Name { get; set; }
 

@@ -14,11 +14,12 @@ namespace Tracker.Data
 
 using System;
     using System.Collections.Generic;
-    
-public partial class tbl_artistImages
-{
+    using System.ComponentModel.DataAnnotations;
 
-    public int File_ID { get; set; }
+    public partial class tbl_artistImages
+{
+        [Key]
+        public int File_ID { get; set; }
 
     public string File_Name { get; set; }
 

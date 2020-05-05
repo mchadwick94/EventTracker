@@ -28,5 +28,7 @@ namespace EventTracker.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<EventTracker.Models.SeenArtistCount> SeenArtistCounts { get; set; }
     }
 }

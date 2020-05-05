@@ -1,36 +1,105 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Tracker.Data
 @model IEnumerable<EventTracker.Models.SeenArtistCount>
 
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
-<!DOCTYPE html>
-<html>
-<body>
 
-    @{
-        ViewBag.Title = "GetSeenArtistsCount";
+@{
+    ViewBag.Title = "GetSeenArtistsCount";
+}
+@if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
+{<body>
+        <div class="body-content" id="index-artist-count-body" position="fixed">
+
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                if (i < 5)
+                {
+                    <div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" style="border-radius: 20px;">
+                                <div class="index-image" id="home-top-seen-card">
+
+                                    <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                                        <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
+                                        
+                                    </a>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    i++;
+                }
+            }
+        </div>
+    </body>
+}
+else
+{
+    
+    <body style="width: 100%">
+        
+        <table class="artist-count-table" style="margin-top: 3%">
+            <tr>
+                <th class="count-table-head" width="2%">
+
+                    <p>Times Seen</p>
+                </th>
+                <th class="count-table-head">
+                    Artist
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr class="count-table-row">
+                    <td class="count-table-count-col">
+                        @Html.DisplayFor(modelItem => item.c)
+                    </td>
+
+                    <td class="count-table-artist-col">
+                        @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    </body>
+}
+
+<style>
+    .count-artist-image {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 3px solid #1f1f1f;
+        border-radius: 20px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
     }
 
-    <h6>Times You've seen DJ's</h6>
-    <table class="artist-count-table">
-        <tr>
-            <th class="count-table-head" width="2%">
-                <p>Times Seen</p>
-            </th>
-            <th class="count-table-head">
-                Artist
-            </th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr class="count-table-row">
-                <td class="count-table-count-col">
-                    @Html.DisplayFor(modelItem => item.c)
-                </td>
-                <td class="count-table-artist-col">
-                    @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }, null)
-                </td>
-            </tr>
-        }
-    </table>
-</body>
-</html>
+    .list-group-item {
+        padding: 0%;
+        height: 100%;
+        width: inherit;
+    }
+
+    .index-image {
+        height: 100%;
+    }
+
+    #artist-count-image-tile {
+        height: inherit;
+        width: 19%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    #index-artist-count-body {
+        height: 100%;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
+</style>

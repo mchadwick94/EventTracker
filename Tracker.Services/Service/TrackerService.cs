@@ -225,5 +225,11 @@ namespace Tracker.Services.Service
         }
 
         //-------------------------------------------------------------------------------
+        // File RELATED FUNCTIONS
+
+        public tbl_artistImages GetImageId(int Artist_ID)
+        {
+            return _TrackerDAO.GetImageId(Artist_ID);
+        }
     }
 }

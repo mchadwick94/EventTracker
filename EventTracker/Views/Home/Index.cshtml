@@ -1,18 +1,25 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+
+@{
     ViewBag.Title = "Home";
+    ViewData["ResourcePath"] = "IndexParentView";
 }
     <div class="body-content" position="fixed" height="100%" width="100%">
         </BR>
         <h1 align="center">Home Page</h1></BR>
+        <p>@ViewData["ResourcePath"].ToString()</p>
+
 
         @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
         {
             <div class="jumbotron" align="center" style="height:20%">
                 <div class="card">UPCOMING EVENTS (3)</div>
             </div>
+            <h3 align="center">Most Seen Artists</h3>
 
-            <div class="jumbotron" align="center" style="height:20%">
-                <div class="card">MOST FREQUENTLY SEEN ARTISTS (5)</div>
+            <div class="jumbotron" id="index-jumbo" align="center" style="height:20%; width: 100%;display:inline-grid">
+                @{Html.RenderAction("GetUsersArtistCount", "Artist", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }); }
+
             </div>
 
             <div style=" width:100%; display:inline; flex-direction:row; margin:0 auto; padding:0.5%" align="center">
@@ -29,6 +36,6 @@
         }
         else
         {
-    <div style="height=90%">@Html.Partial("../Account/Login")</div>
+
         }
     </div>

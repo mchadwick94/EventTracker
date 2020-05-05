@@ -14,8 +14,9 @@ namespace Tracker.Data
 
 using System;
     using System.Collections.Generic;
-    
-public partial class tbl_eventlineup
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class tbl_eventlineup
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,8 +27,8 @@ public partial class tbl_eventlineup
 
     }
 
-
-    public int Lineup_ID { get; set; }
+        [Key]
+        public int Lineup_ID { get; set; }
 
     public int Event_ID { get; set; }
 

@@ -299,5 +299,14 @@ namespace Tracker.Data.DAO
             _Countries = from tbl_countries in _context.tbl_countries select tbl_countries;
             return _Countries.ToList<tbl_countries>();
         }
+
+        //-------------------------------------------------------------------------------
+        // File RELATED FUNCTIONS
+
+        public tbl_artistImages GetImageId(int Artist_ID)
+        {
+            IQueryable<tbl_artistImages> _file = from tbl_artistImages in _context.tbl_artistImages where tbl_artistImages.Artist_ID == Artist_ID select tbl_artistImages;
+            return _file.First<tbl_artistImages>();
+        }
     }
 }

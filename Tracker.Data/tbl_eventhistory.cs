@@ -14,11 +14,12 @@ namespace Tracker.Data
 
 using System;
     using System.Collections.Generic;
-    
-public partial class tbl_eventhistory
-{
+    using System.ComponentModel.DataAnnotations;
 
-    public int History_ID { get; set; }
+    public partial class tbl_eventhistory
+{
+        [Key]
+        public int History_ID { get; set; }
 
     public string User_ID { get; set; }
 

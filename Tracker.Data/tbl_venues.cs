@@ -14,8 +14,9 @@ namespace Tracker.Data
 
 using System;
     using System.Collections.Generic;
-    
-public partial class tbl_venues
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class tbl_venues
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,8 +27,8 @@ public partial class tbl_venues
 
     }
 
-
-    public int Venue_ID { get; set; }
+        [Key]
+        public int Venue_ID { get; set; }
 
     public string V_Name { get; set; }
 

@@ -109,5 +109,8 @@ namespace Tracker.Data.IDAO
         IList<Tracker.Data.tbl_countries> GetCountries();
 
         //-------------------------------------------------------------------------------
+        // File RELATED FUNCTIONS
+
+        tbl_artistImages GetImageId(int Artist_ID);
     }
 }

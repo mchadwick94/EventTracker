@@ -80,7 +80,6 @@ namespace Tracker.Services.IService
 
         IList<tbl_eventlineup> GetAnArtistsEventHistory(int Artist_ID);
 
-
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         IList<Tracker.Data.tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID);
@@ -109,5 +108,8 @@ namespace Tracker.Services.IService
         IList<Tracker.Data.tbl_countries> GetCountries();
 
         //-------------------------------------------------------------------------------
+        // File RELATED FUNCTIONS
+
+        tbl_artistImages GetImageId(int Artist_ID);
     }
 }

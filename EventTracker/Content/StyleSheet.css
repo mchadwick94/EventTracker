@@ -13,6 +13,7 @@
 
 .artist-count-table {
     width: 20%;
+    
     color: white;
     background-color: #222222;
 }
@@ -184,6 +185,10 @@
     width: 48%;
 }
 
+#home-top-seen-card {
+    width: 100%;
+}
+
 
 #profile-table {
     max-height: 35%;
@@ -193,4 +198,14 @@
 
 footer {
     display: none !important;
+}
+
+#index-jumbo.jumbotron {
+    padding: 0% 0% 0% 0% !important;
+    width: 100%;
+    background-position: center center;
+    overflow: hidden;
+    object-fit: cover;
+    background-size: cover;
+    position: center;
 }
