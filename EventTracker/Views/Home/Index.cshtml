@@ -7,8 +7,6 @@
     <div class="body-content" position="fixed" height="100%" width="100%">
         </BR>
         <h1 align="center">Home Page</h1></BR>
-        <p>@ViewData["ResourcePath"].ToString()</p>
-
 
         @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
         {
@@ -36,6 +34,7 @@
         }
         else
         {
+            <div style="height=90%">@Html.Partial("../Account/Login")</div>
 
         }
     </div>
