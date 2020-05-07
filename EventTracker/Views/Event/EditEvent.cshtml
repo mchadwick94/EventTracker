@@ -31,33 +31,28 @@
                 @Html.ValidationMessageFor(model => model.Event_Date, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
 
-    <div>
-        @Html.HiddenFor(model => model.Event_Country, new { htmlAttributes = new { @class = "form-control", @Value = Convert.ToInt32(Request.QueryString["Country_ID"]), @disabled = "true" } })
-        @Html.ValidationMessageFor(model => model.Event_Country, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event_Location, "Event Location", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"))
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Event_Location, "Event Location", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => x.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"))
-
-            @Html.ValidationMessageFor(model => model.Event_Location, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Event_Location, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Event_Cancelled, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(model => Model.Event_Cancelled, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Event_Cancelled, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event_Cancelled, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => Model.Event_Cancelled, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Event_Cancelled, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
         </div>
     </div>
 }

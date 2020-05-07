@@ -13,7 +13,6 @@
 
 .artist-count-table {
     width: 20%;
-    
     color: white;
     background-color: #222222;
 }
@@ -178,7 +177,7 @@
     width: 48%;
     display: inline-block;
     overflow-y: auto;
-    height:inherit;
+    height: inherit;
 }
 
 #profile-card {
@@ -188,7 +187,6 @@
 #home-top-seen-card {
     width: 100%;
 }
-
 
 #profile-table {
     max-height: 35%;

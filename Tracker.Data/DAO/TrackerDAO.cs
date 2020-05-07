@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Tracker.Data.IDAO;
 
 namespace Tracker.Data.DAO
@@ -48,6 +46,7 @@ namespace Tracker.Data.DAO
             _event.Event_Name = _events.Event_Name;
             _event.Event_Location = _events.Event_Location;
             _event.Event_Date = _events.Event_Date;
+            _event.Event_Country = _events.Event_Country;
             _event.Event_Cancelled = _events.Event_Cancelled;
             _context.SaveChanges();
         }

@@ -32,14 +32,17 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.tbl_venues.V_Name), </br>
-            @Html.DisplayFor(model => model.tbl_venues.V_StreetAddress), </br>
-            @Html.DisplayFor(model => model.tbl_venues.V_City)</br>
+            @Html.DisplayFor(model => model.tbl_venues.V_Name), <br />
+            @Html.DisplayFor(model => model.tbl_venues.V_StreetAddress), <br />
+            @Html.DisplayFor(model => model.tbl_venues.V_City)<br />
+            @Html.DisplayFor(model => model.tbl_venues.V_Country)<br />
             @Html.DisplayFor(model => model.tbl_venues.tbl_countries.C_Name) (@Html.DisplayFor(model => model.tbl_venues.tbl_countries.C_Iso3))
         </dd>
+
+        @Html.ActionLink("View on Google Maps", "../Venue/Redirect", new { V_Name = Model.tbl_venues.V_Name, V_StreetAddress = Model.tbl_venues.V_StreetAddress, V_City = Model.tbl_venues.V_City }, new { target = "_blank" })
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "EditEvent", new { Event_ID = Model.Event_ID }) |
+    @Html.ActionLink("Edit", "EditEvent", new { Event_ID = Model.Event_ID, Country_ID = Model.tbl_venues.V_Country }) |
     @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
 </p>

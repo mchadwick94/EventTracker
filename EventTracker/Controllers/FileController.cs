@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -31,12 +28,10 @@ namespace EventTracker.Controllers
             if (_image == null)
             {
                 File_ID = 1209;
-
             }
             else
             {
                 File_ID = _trackerService.GetImageId(Artist_ID).File_ID;
-
             }
             var fileToRetrieve = _context.tbl_artistImages.Find(File_ID);
             return File(fileToRetrieve.Content, fileToRetrieve.Content_Type);

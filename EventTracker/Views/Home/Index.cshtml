@@ -4,36 +4,37 @@
     ViewBag.Title = "Home";
     ViewData["ResourcePath"] = "IndexParentView";
 }
-<div class="body-content" position="fixed" height="100%" width="100%">
-    </BR>
-    <h1 align="center">Home Page</h1></BR>
+    <div class="body-content" position="fixed" height="100%" width="100%">
+        <br />
 
-    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-    {
-        <div class="jumbotron" align="center" style="height:20%">
-            <div class="card">UPCOMING EVENTS (3)</div>
-        </div>
-        <h3 align="center">Most Seen Artists</h3>
+        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            <h2 align="center">Your Upcoming Events</h2>
 
-        <div class="jumbotron" id="index-jumbo" align="center" style="height:20%; width: 100%;display:inline-grid">
-            @{Html.RenderAction("GetUsersArtistCount", "Artist"); }
-        </div>
-
-        <div style=" width:100%; display:inline; flex-direction:row; margin:0 auto; padding:0.5%" align="center">
-            <div class="jumbotron" style=" height:25%;width:31%; display:inline-block">
-                SUGGESTED EVENTS LINK
+            <div class="jumbotron" id="index-jumbo" align="center" style="height:20%; width: 100%;display:inline-grid">
+                @{Html.RenderAction("GetUserEvents", "Event", new { User_ID = User.Identity.GetUserId().ToString() }); }
             </div>
-            <div class="jumbotron" style=" height:25%;width: 31%; display: inline-block; margin: 0% 1% 0% 1%">
-                FOLLOWED VENUES LINK
-            </div>
-            <div class="jumbotron" style=" height: 25%; max-height:25%;width:31%; display:inline-block; word-break:break-word">
-                EVENT ORGANISERS LINK
-            </div>
-        </div>
-    }
-    else
-    {
-        <div style="height=90%">@Html.Partial("../Account/Login")</div>
+            <h2 align="center">Most Seen Artists</h2>
 
-    }
-</div>
+            <div class="jumbotron" id="index-jumbo" align="center" style="height:20%; width: 100%;display:inline-grid">
+                @{Html.RenderAction("GetUsersArtistCount", "Artist"); }
+            </div>
+
+            <div style=" width:100%; display:inline; flex-direction:row; margin:0 auto; padding:0.5%" align="center">
+                <div class="jumbotron" style=" height:25%;width:31%; display:inline-block">
+                    SUGGESTED EVENTS LINK
+                </div>
+                <div class="jumbotron" style=" height:25%;width: 31%; display: inline-block; margin: 0% 1% 0% 1%">
+                    FOLLOWED VENUES LINK
+                </div>
+                <div class="jumbotron" style=" height: 25%; max-height:25%;width:31%; display:inline-block; word-break:break-word">
+                    EVENT ORGANISERS LINK
+                </div>
+            </div>
+        }
+        else
+        {
+            <div style="height=90%">@Html.Partial("../Account/Login")</div>
+
+        }
+    </div>

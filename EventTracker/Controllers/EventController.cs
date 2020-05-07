@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Tracker.Data;
@@ -91,7 +90,8 @@ namespace EventTracker.Controllers
         public ActionResult EditEvent(int Event_ID, int Country_ID)
         {
             List<SelectListItem> VenuesList = new List<SelectListItem>();
-            if (Country_ID == 0 || Country_ID == null)
+
+            if (Country_ID == 0)
             {
                 foreach (var item in _trackerService.GetVenues())
                 {
@@ -101,6 +101,7 @@ namespace EventTracker.Controllers
                             Text = item.V_City.ToUpper() + ": " + item.V_Name,
                             Value = item.Venue_ID.ToString()
                         });
+                    ViewBag.Venues = VenuesList;
                 }
             }
             else
@@ -113,10 +114,10 @@ namespace EventTracker.Controllers
                             Text = item.V_City.ToUpper() + ": " + item.V_Name,
                             Value = item.Venue_ID.ToString()
                         });
+                    ViewBag.Venues = VenuesList;
                 }
             }
 
-            ViewBag.Venues = VenuesList;
             return View(_trackerService.GetEventDetails(Event_ID));
         }
 

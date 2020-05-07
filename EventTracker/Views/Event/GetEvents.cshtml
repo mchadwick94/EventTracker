@@ -31,8 +31,10 @@
 
         <tr id="table-row">
             <td id="event-table-col-1" class="event-table-row">
-                @Html.DisplayFor(modelItem => item.Event_Name)
+                @if (item.Event_Cancelled == true)
+                {<b style="color: darkred">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
             </td>
+
             <td id="event-table-col-2" class="event-table-row">
                 @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
             </td>
@@ -44,7 +46,7 @@
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
                 @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
                 @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.Event_Country }) |
+                @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.V_Country }) |
 
                 @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {@*Checks to see if there is a current user*@
@@ -80,8 +82,9 @@
     {
 
         <tr id="table-row">
-            <td id="event-table-col-1">
-                @Html.DisplayFor(modelItem => item.Event_Name)
+            <td id="event-table-col-1" class="event-table-row">
+                @if (item.Event_Cancelled == true)
+                {<b style="color: darkred">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
             </td>
             <td id="event-table-col-2">
                 @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
@@ -94,7 +97,7 @@
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
                 @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
                 @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.Event_Country }) |
+                @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.V_Country }) |
 
                 @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {@*Checks to see if there is a current user*@

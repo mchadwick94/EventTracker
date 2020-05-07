@@ -12,13 +12,13 @@
         <div class="card" id="profile-card">
             @if (Model.tbl_artistImages.Any())
             {
-                <dd>
-                    <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" />
-                </dd>
+            <dd>
+                <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" />
+            </dd>
             }
             else
             {
-                <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = "1209" })" />
+            <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = "1209" })" />
 
             }
         </div>

@@ -6,7 +6,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services;
@@ -40,10 +39,6 @@ namespace EventTracker.Controllers
         // Retrieves the details of a specific artist
         public ActionResult GetArtistDetails(int Artist_ID)
         {
-            if (Artist_ID == null)
-            {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-            }
             tbl_artists _artist = _context.tbl_artists.Include(s => s.tbl_artistImages).SingleOrDefault(s => s.Artist_ID == Artist_ID); //fetches all files associated with the artist regardless of type.
             if (_artist == null)
             {
@@ -101,10 +96,6 @@ namespace EventTracker.Controllers
         [HttpGet] //Retrieves the details of the event being edited
         public ActionResult EditArtist(int Artist_ID)
         {
-            if (Artist_ID == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             tbl_artists _artist = _context.tbl_artists.Include(s => s.tbl_artistImages).SingleOrDefault(s => s.Artist_ID == Artist_ID); //fetches all files associated with the artist regardless of type.
             if (_artist == null)
             {

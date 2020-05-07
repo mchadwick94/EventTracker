@@ -1,15 +1,4 @@
-﻿using EventTracker.Models;
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Services;
+﻿using System.Web.Mvc;
 using Tracker.Data;
 
 namespace EventTracker.Controllers
@@ -98,7 +87,7 @@ namespace EventTracker.Controllers
             }
         }
 
-        private void Redirect(string V_Name, string V_StreetAddress, string V_City)
+        public void Redirect(string V_Name, string V_StreetAddress, string V_City)
         {
             string SearchName = V_Name + ",+" + V_StreetAddress + ", +" + V_City;
             ViewBag.UrlMapString = "https://google.com/maps/search/" + SearchName;

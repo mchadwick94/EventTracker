@@ -19,13 +19,12 @@
                     <div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" style="border-radius: 20px;">
-                                <div class="index-image" id="home-top-seen-card">
-
-                                    <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                                <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                                    <div class="index-image" id="home-top-seen-card">
                                         <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
                                         <h3 class="artist-count-text"><span id="top-line-span">@item.Artist_Name</span><br /><span id="second-line-span">Times Seen: @item.c</span></h3>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -95,9 +94,12 @@ else
     #artist-count-image-tile {
         height: inherit;
         display: inline-block;
-        width: 19%;
+        max-width: 19%;
+        min-width: 19%;
         padding: 0% 0% 0% 0%;
     }
+
+
 
     #index-artist-count-body {
         height: 100%;

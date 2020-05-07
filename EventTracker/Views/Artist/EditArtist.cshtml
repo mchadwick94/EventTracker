@@ -8,7 +8,7 @@
 
 @using (Html.BeginForm("EditArtist", "Artist", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     <h4>tbl_artists</h4>
@@ -31,16 +31,16 @@
 
         @if (Model.tbl_artistImages.Any())
         {
-            <div class="form-group">
-                <span class="control-label col-md-2"><strong>Current Avatar</strong></span>
-                <div class="col-md-10">
-                    <img src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" style="width:200px; height:180px" />
-                </div>
+        <div class="form-group">
+            <span class="control-label col-md-2"><strong>Current Avatar</strong></span>
+            <div class="col-md-10">
+                <img src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" style="width:200px; height:180px" />
             </div>
+        </div>
         }
         else
         {
-            <img src="@Url.Action("Index", "File", new { File_ID = "1209" })" style="width:200px; height:180px" />
+        <img src="@Url.Action("Index", "File", new { File_ID = "1209" })" style="width:200px; height:180px" />
         }
     </div>
     <div class="form-group">

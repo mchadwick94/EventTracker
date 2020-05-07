@@ -23,9 +23,9 @@
                     <li>@Html.ActionLink("Artists", "../Artist/GetArtists")</li>
                     @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                     {
-                        @*Checks to see if there is a current user*@
-                        <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = User.Identity.GetUserId().ToString() })</li>
-                        <li>@Html.ActionLink("Seen Artists", "../Artist/GetSeenArtists", new { User_ID = User.Identity.GetUserId().ToString() })</li>
+                    @*Checks to see if there is a current user*@
+                    <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = User.Identity.GetUserId().ToString() })</li>
+                    <li>@Html.ActionLink("Seen Artists", "../Artist/GetSeenArtists", new { User_ID = User.Identity.GetUserId().ToString() })</li>
                     }
                     @*Converts the Current Users ID to a hash code to look up their event history.*@
 
