@@ -88,7 +88,7 @@ namespace Tracker.Data.DAO
         public IList<tbl_eventhistory> GetUserEvents(string User_ID)
         {
             IQueryable<tbl_eventhistory> _eventHistory;
-            _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID == User_ID select tbl_eventhistory;
+            _eventHistory = from tbl_eventhistory in _context.tbl_eventhistory where tbl_eventhistory.User_ID.Equals(User_ID) select tbl_eventhistory;
             return _eventHistory.ToList<tbl_eventhistory>();
         }
 
@@ -136,10 +136,10 @@ namespace Tracker.Data.DAO
             _context.SaveChanges();
         }
 
-        public IList<tbl_artisthistory> GetSeenArtists(int User_ID)
+        public IList<tbl_artisthistory> GetSeenArtists(string User_ID)
         {
             IQueryable<tbl_artisthistory> _artists;
-            _artists = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID == User_ID select tbl_artisthistory;
+            _artists = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID.Equals(User_ID) select tbl_artisthistory;
             return _artists.ToList<tbl_artisthistory>();
         }
 
@@ -150,10 +150,10 @@ namespace Tracker.Data.DAO
             return _entry.First<tbl_artisthistory>();
         }
 
-        public tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
+        public tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, string User_ID)
         {
             IQueryable<tbl_artisthistory> _entry;
-            _entry = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID == User_ID & tbl_artisthistory.Event_ID == Event_ID & tbl_artisthistory.EventLineup_ID == Lineup_ID & tbl_artisthistory.Artist_ID == Artist_ID select tbl_artisthistory;
+            _entry = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID.Equals(User_ID) & tbl_artisthistory.Event_ID == Event_ID & tbl_artisthistory.EventLineup_ID == Lineup_ID & tbl_artisthistory.Artist_ID == Artist_ID select tbl_artisthistory;
             return _entry.First<tbl_artisthistory>();
         }
 
@@ -230,10 +230,10 @@ namespace Tracker.Data.DAO
 
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
-        public IList<tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID)
+        public IList<tbl_artisthistory> GetSeenArtistHistory(string User_ID, int Artist_ID)
         {
             IQueryable<tbl_artisthistory> _UsersArtistEvents;
-            _UsersArtistEvents = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID == User_ID & tbl_artisthistory.Artist_ID == Artist_ID select tbl_artisthistory;
+            _UsersArtistEvents = from tbl_artisthistory in _context.tbl_artisthistory where tbl_artisthistory.User_ID.Equals(User_ID) & tbl_artisthistory.Artist_ID == Artist_ID select tbl_artisthistory;
             return _UsersArtistEvents.ToList<tbl_artisthistory>();
         }
 

@@ -21,7 +21,7 @@ namespace EventTracker.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated != false)
             {
-                User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+                User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 List<string> UsersEvents = new List<string>();
                 foreach (var item in _trackerService.GetUserEvents(User_ID))
                 {
@@ -153,7 +153,7 @@ namespace EventTracker.Controllers
             {
                 _event = _trackerService.GetEventHistoryDetails(_event.History_ID);
                 _trackerService.DeleteFromUserHistory(_event);
-                return RedirectToAction("GetUserEvents", new { controller = "Event", User_ID = Convert.ToString(User.Identity.GetUserId()).GetHashCode() });
+                return RedirectToAction("GetUserEvents", new { controller = "Event", User_ID = User.Identity.GetUserId() });
             }
             catch
             {
@@ -164,11 +164,11 @@ namespace EventTracker.Controllers
         //Get an events Lineup through users events page
         public ActionResult GetUsersLineUp(int Event_ID, tbl_events _event)
         {
-            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
             List<string> UsersSeenLineup = new List<string>();
             _event = _trackerService.GetEventDetails(Event_ID);
-            foreach (var item in _trackerService.GetSeenArtists(Convert.ToInt32(User_ID)))
+            foreach (var item in _trackerService.GetSeenArtists(User_ID))
             {
                 if (item.Event_ID == _event.Event_ID)
                 {

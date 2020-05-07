@@ -8,7 +8,7 @@ namespace EventTracker.Models
     public class SeenArtistQuantities
     {
         public int ArtistHistory_ID { get; set; }
-        public int User_ID { get; set; }
+        public string User_ID { get; set; }
         public int Event_ID { get; set; }
         public int EventLineup_ID { get; set; }
         public int Artist_ID { get; set; }

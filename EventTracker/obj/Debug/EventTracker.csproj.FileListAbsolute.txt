@@ -60,3 +60,9 @@ D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTrac
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\obj\Debug\EventTracker.pdb
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Sitecore.FakeDb.dll
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Sitecore.FakeDb.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Konscious.Security.Cryptography.Argon2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Konscious.Security.Cryptography.Blake2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\System.Numerics.Vectors.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Konscious.Security.Cryptography.Argon2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\Konscious.Security.Cryptography.Blake2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\EventTracker\bin\System.Numerics.Vectors.xml

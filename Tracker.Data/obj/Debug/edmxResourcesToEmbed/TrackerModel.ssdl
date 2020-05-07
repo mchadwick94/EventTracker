@@ -5,7 +5,7 @@
       <PropertyRef Name="ArtistHistory_ID" />
     </Key>
     <Property Name="ArtistHistory_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="User_ID" Type="int" Nullable="false" />
+    <Property Name="User_ID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Event_ID" Type="int" Nullable="false" />
     <Property Name="EventLineup_ID" Type="int" Nullable="false" />
     <Property Name="Artist_ID" Type="int" Nullable="false" />
@@ -41,7 +41,7 @@
       <PropertyRef Name="History_ID" />
     </Key>
     <Property Name="History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="User_ID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="User_ID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Event_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_eventlineup">

@@ -2,7 +2,7 @@
 @model IEnumerable<Tracker.Data.tbl_artisthistory>
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 <div class="artist-count-sidebar">
-    @{Html.RenderAction("GetUsersArtistCount", "Artist", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }); }
+    @{Html.RenderAction("GetUsersArtistCount", "Artist", new { User_ID = User.Identity.GetUserId() }); }
 </div>
 </br>
 

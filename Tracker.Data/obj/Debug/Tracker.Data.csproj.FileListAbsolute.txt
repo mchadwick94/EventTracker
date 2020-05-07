@@ -17,3 +17,9 @@ D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.D
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Xamarin.Forms.Xaml.pdb
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Xamarin.Forms.Xaml.xml
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\XamlC.stamp
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Argon2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Blake2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\System.Numerics.Vectors.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Argon2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Blake2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\bin\Debug\System.Numerics.Vectors.xml

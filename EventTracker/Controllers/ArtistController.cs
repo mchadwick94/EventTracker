@@ -31,7 +31,7 @@ namespace EventTracker.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated != false)
             {
-                User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+                User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
             }
             //return View(_trackerService.GetArtists());
             return View(ViewBag.Artists);
@@ -158,19 +158,20 @@ namespace EventTracker.Controllers
 
         //SQL Action to return a grouped list of artists based on how many times a user has seen them
         [WebMethod]
-        public ActionResult GetUsersArtistCount(int User_ID)
+        public ActionResult GetUsersArtistCount(string User_ID)
         {
             string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
+            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
-            SqlConnection MyConn = new SqlConnection(connString);
-            SqlCommand MySqlCmd = MyConn.CreateCommand();
+            SqlConnection sqlConnection = new SqlConnection(connString);
+            SqlCommand MySqlCmd = sqlConnection.CreateCommand();
             SqlDataReader adapter;
-            MySqlCmd.CommandText = @"select [db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name], count(*) AS c from[db_eventtracker].[tbl_artists] left join[db_eventtracker].[tbl_artisthistory] on[db_eventtracker].[tbl_artists].Artist_ID = [db_eventtracker].[tbl_artisthistory].[Artist_ID] where[db_eventtracker].[tbl_artisthistory].[User_ID] = ' " + User_ID + " 'group by[db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name] order by C DESC;";
-            MyConn.Open();
+            MySqlCmd.CommandText = @"	USE [EventTracker] select [db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name], count(*) AS c from[db_eventtracker].[tbl_artists] left join[db_eventtracker].[tbl_artisthistory] on[db_eventtracker].[tbl_artists].Artist_ID = [db_eventtracker].[tbl_artisthistory].[Artist_ID] where[db_eventtracker].[tbl_artisthistory].[User_ID] = '" + User_ID + "' group by[db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name] order by C DESC;";
+            sqlConnection.Open();
             DataTable dt = new DataTable("countTable");
             adapter = MySqlCmd.ExecuteReader();
             dt.Load(adapter);
-            MyConn.Close();
+            sqlConnection.Close();
 
             //Convert DataTable to List
             List<SeenArtistCount> artistCountList = dt.AsEnumerable().Select(m => new SeenArtistCount()
@@ -189,7 +190,7 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetHistoryLineup(EventLineup_ID));
         }
 
-        public ActionResult GetSeenArtists(int User_ID) //Returns indexed view of all artists a user has seen
+        public ActionResult GetSeenArtists(string User_ID) //Returns indexed view of all artists a user has seen
         {
             return View(_trackerService.GetSeenArtists(User_ID));
         }
@@ -199,13 +200,13 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetSeenArtistDetails(ArtistHistory_ID));
         }
 
-        public ActionResult FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
+        public ActionResult FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, string User_ID)
         {
             return View(_trackerService.FindSeenArtistEntry(Lineup_ID, Event_ID, Artist_ID, User_ID));
         }
 
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)] //removes an artist from a users seen history
-        public ActionResult DeleteFromSeenArtists(tbl_artisthistory _entry, tbl_eventlineup _lineup, tbl_events _event, int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
+        public ActionResult DeleteFromSeenArtists(tbl_artisthistory _entry, tbl_eventlineup _lineup, tbl_events _event, int Lineup_ID, int Event_ID, int Artist_ID, string User_ID)
         {
             try
             {
@@ -239,7 +240,7 @@ namespace EventTracker.Controllers
             }
         }
 
-        public ActionResult GetSeenArtistHistory(int User_ID, int Artist_ID)
+        public ActionResult GetSeenArtistHistory(string User_ID, int Artist_ID)
         {
             ViewBag.Artist_Name = _trackerService.GetArtistDetails(Artist_ID).Artist_Name.ToString();
             return View(_trackerService.GetSeenArtistHistory(User_ID, Artist_ID));

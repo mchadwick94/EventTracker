@@ -60,6 +60,8 @@ namespace EventTracker.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        public string salt { get; set; }
     }
 
     public class RegisterViewModel
@@ -69,7 +71,7 @@ namespace EventTracker.Models
         public string UserName { get; set; }
 
         [Required]
-        [EmailAddress]
+        //[EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -83,6 +85,8 @@ namespace EventTracker.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string salt { get; set; }
     }
 
     public class ResetPasswordViewModel

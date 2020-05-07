@@ -52,11 +52,11 @@ namespace Tracker.Services.IService
 
         void AddToArtistHistory(tbl_artisthistory _entry);
 
-        IList<Tracker.Data.tbl_artisthistory> GetSeenArtists(int User_ID);
+        IList<Tracker.Data.tbl_artisthistory> GetSeenArtists(string User_ID);
 
         Tracker.Data.tbl_artisthistory GetSeenArtistDetails(int ArtistHistory_ID);
 
-        Tracker.Data.tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID);
+        Tracker.Data.tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, string User_ID);
 
         void DeleteFromSeenArtists(tbl_artisthistory _entry);
 
@@ -82,7 +82,7 @@ namespace Tracker.Services.IService
 
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
-        IList<Tracker.Data.tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID);
+        IList<Tracker.Data.tbl_artisthistory> GetSeenArtistHistory(string User_ID, int Artist_ID);
 
         //-------------------------------------------------------------------------------
         // USER RELATED FUNCTIONS

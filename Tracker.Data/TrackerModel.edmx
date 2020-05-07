@@ -10,7 +10,7 @@
             <PropertyRef Name="ArtistHistory_ID" />
           </Key>
           <Property Name="ArtistHistory_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Event_ID" Type="int" Nullable="false" />
           <Property Name="EventLineup_ID" Type="int" Nullable="false" />
           <Property Name="Artist_ID" Type="int" Nullable="false" />
@@ -46,7 +46,7 @@
             <PropertyRef Name="History_ID" />
           </Key>
           <Property Name="History_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="User_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_ID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Event_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_eventlineup">
@@ -287,7 +287,7 @@
             <PropertyRef Name="ArtistHistory_ID" />
           </Key>
           <Property Name="ArtistHistory_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Event_ID" Type="Int32" Nullable="false" />
           <Property Name="EventLineup_ID" Type="Int32" Nullable="false" />
           <Property Name="Artist_ID" Type="Int32" Nullable="false" />
@@ -331,7 +331,7 @@
             <PropertyRef Name="History_ID" />
           </Key>
           <Property Name="History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_ID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Event_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_events" Relationship="TrackerModel.FK_tbl_eventhistory_tbl_events" FromRole="tbl_eventhistory" ToRole="tbl_events" />
         </EntityType>
@@ -481,7 +481,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

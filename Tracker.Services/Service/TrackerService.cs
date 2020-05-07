@@ -107,7 +107,7 @@ namespace Tracker.Services.Service
             _TrackerDAO.AddToArtistHistory(_entry);
         }
 
-        public IList<tbl_artisthistory> GetSeenArtists(int User_ID)
+        public IList<tbl_artisthistory> GetSeenArtists(string User_ID)
         {
             return _TrackerDAO.GetSeenArtists(User_ID);
         }
@@ -117,7 +117,7 @@ namespace Tracker.Services.Service
             return _TrackerDAO.GetSeenArtistDetails(ArtistHistory_ID);
         }
 
-        public tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, int User_ID)
+        public tbl_artisthistory FindSeenArtistEntry(int Lineup_ID, int Event_ID, int Artist_ID, string User_ID)
         {
             return _TrackerDAO.FindSeenArtistEntry(Lineup_ID, Event_ID, Artist_ID, User_ID);
         }
@@ -175,7 +175,7 @@ namespace Tracker.Services.Service
 
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
-        public IList<tbl_artisthistory> GetSeenArtistHistory(int User_ID, int Artist_ID)
+        public IList<tbl_artisthistory> GetSeenArtistHistory(string User_ID, int Artist_ID)
         {
             return _TrackerDAO.GetSeenArtistHistory(User_ID, Artist_ID);
         }

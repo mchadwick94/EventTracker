@@ -26,7 +26,7 @@ namespace EventTracker.Controllers
 
         public class RetrieveCurrentUser
         {
-            public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString();
+            public string User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
         }
     }
 }

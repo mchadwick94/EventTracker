@@ -15,6 +15,8 @@ namespace EventTracker.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string salt { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

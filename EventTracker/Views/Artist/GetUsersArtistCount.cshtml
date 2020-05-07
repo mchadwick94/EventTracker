@@ -23,9 +23,8 @@
 
                                     <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
                                         <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
-                                        
+                                        <h3 class="artist-count-text"><span id="top-line-span">@item.Artist_Name</span><br /><span id="second-line-span">Times Seen: @item.c</span></h3>
                                     </a>
-
                                 </div>
                             </li>
                         </ul>
@@ -38,9 +37,9 @@
 }
 else
 {
-    
+
     <body style="width: 100%">
-        
+
         <table class="artist-count-table" style="margin-top: 3%">
             <tr>
                 <th class="count-table-head" width="2%">
@@ -59,7 +58,7 @@ else
                     </td>
 
                     <td class="count-table-artist-col">
-                        @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId().GetHashCode().ToString() }, null)
+                        @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = User.Identity.GetUserId() }, null)
                     </td>
                 </tr>
             }
@@ -89,10 +88,13 @@ else
 
     .index-image {
         height: 100%;
+        position: relative;
+        width: 100%;
     }
 
     #artist-count-image-tile {
         height: inherit;
+        display: inline-block;
         width: 19%;
         padding: 0% 0% 0% 0%;
     }
@@ -101,5 +103,56 @@ else
         height: 100%;
         width: 100%;
         padding: 0% 0% 0% 0%;
+    }
+
+    .artist-count-text {
+        position: absolute;
+        top: 46%;
+        width: 100%;
+        text-align: left;
+        font-size: 1.4em;
+        font-size-adjust: inherit;
+    }
+
+    span {
+        padding: 0% 6% 0% 2%;
+    }
+
+    .list-group-item, span {
+        letter-spacing: -1px;
+        background: #000000; /* fallback color */
+        opacity: 0.8;
+        color: white;
+        height: 100%;
+        width: 100%;
+        position: inherit;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #top-line-span {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
+        overflow: hidden;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #second-line-span {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        overflow: hidden;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
     }
 </style>

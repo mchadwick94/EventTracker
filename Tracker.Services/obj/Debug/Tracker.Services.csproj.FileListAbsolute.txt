@@ -9,3 +9,9 @@ D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.S
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\obj\Debug\Tracker.Services.csproj.CopyComplete
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\obj\Debug\Tracker.Services.dll
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\obj\Debug\Tracker.Services.pdb
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\bin\Debug\Konscious.Security.Cryptography.Argon2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\bin\Debug\Konscious.Security.Cryptography.Blake2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\bin\Debug\System.Numerics.Vectors.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\bin\Debug\Konscious.Security.Cryptography.Argon2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\bin\Debug\Konscious.Security.Cryptography.Blake2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Services\bin\Debug\System.Numerics.Vectors.xml

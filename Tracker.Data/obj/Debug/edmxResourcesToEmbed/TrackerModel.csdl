@@ -51,7 +51,7 @@
       <PropertyRef Name="ArtistHistory_ID" />
     </Key>
     <Property Name="ArtistHistory_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="User_ID" Type="Int32" Nullable="false" />
+    <Property Name="User_ID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="Event_ID" Type="Int32" Nullable="false" />
     <Property Name="EventLineup_ID" Type="Int32" Nullable="false" />
     <Property Name="Artist_ID" Type="Int32" Nullable="false" />
@@ -95,7 +95,7 @@
       <PropertyRef Name="History_ID" />
     </Key>
     <Property Name="History_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="User_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User_ID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="Event_ID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tbl_events" Relationship="TrackerModel.FK_tbl_eventhistory_tbl_events" FromRole="tbl_eventhistory" ToRole="tbl_events" />
   </EntityType>

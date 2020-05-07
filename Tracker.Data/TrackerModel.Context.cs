@@ -47,7 +47,8 @@ public partial class TrackerEntities : DbContext
     public virtual DbSet<tbl_events> tbl_events { get; set; }
 
     public virtual DbSet<tbl_venues> tbl_venues { get; set; }
-    }
+
+}
 
 }
 

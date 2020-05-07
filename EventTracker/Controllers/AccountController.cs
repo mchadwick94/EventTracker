@@ -1,9 +1,16 @@
 ﻿using EventTracker.Models;
+using Konscious.Security.Cryptography;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -71,6 +78,39 @@ namespace EventTracker.Controllers
                 return View(model);
             }
 
+            //var context = new ApplicationDbContext();
+            //var salt = context.Users.Where(c => c.UserName == model.UserName).Select(a => a.salt).FirstOrDefault();
+
+            string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection MyConn = new SqlConnection(connString);
+            SqlCommand MySqlCmd = MyConn.CreateCommand();
+            SqlDataReader adapter;
+            MySqlCmd.CommandText = @"select [aspnet-EventTracker-20200130120606].[dbo].[AspNetUsers].[salt] from [aspnet-EventTracker-20200130120606].[dbo].[AspNetUsers] where [aspnet-EventTracker-20200130120606].[dbo].[AspNetUsers].[UserName] = '" + model.UserName + "';";
+            DataTable dt = new DataTable("saltTable");
+            MyConn.Open();
+
+            adapter = MySqlCmd.ExecuteReader();
+            dt.Load(adapter);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                model.salt = (string)row[0];
+            }
+            Response.Write("Salt retrived is" + model.salt);
+
+            MyConn.Close();
+
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(model.Password));
+            argon2.Salt = Encoding.UTF8.GetBytes(model.salt);
+            argon2.DegreeOfParallelism = 8; // four cores
+            argon2.Iterations = 6;
+            argon2.MemorySize = 1024 * 1024; // 1 GB
+
+            var hashedPassword = argon2.GetBytes(16);
+
+            string completePassword = Convert.ToBase64String(hashedPassword);
+            model.Password = completePassword;
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
@@ -88,6 +128,7 @@ namespace EventTracker.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", model.salt);
                     return View(model);
             }
         }
@@ -154,7 +195,12 @@ namespace EventTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var salt = CreateSalt();
+                var hashedPassword = HashPassword(model.Password, Convert.ToBase64String(salt));
+                string completePassword = Convert.ToBase64String(hashedPassword);
+                model.Password = completePassword;
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, salt = Convert.ToBase64String(salt) };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -168,6 +214,7 @@ namespace EventTracker.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
@@ -427,6 +474,57 @@ namespace EventTracker.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        private byte[] CreateSalt()
+        {
+            var buffer = new byte[16];
+            var rng = new RNGCryptoServiceProvider();
+            rng.GetBytes(buffer);
+            return buffer;
+        }
+
+        private byte[] HashPassword(string passWord, string salt)
+        {
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(passWord));
+            argon2.Salt = Encoding.UTF8.GetBytes(salt);
+            argon2.DegreeOfParallelism = 8; // four cores
+            argon2.Iterations = 6;
+            argon2.MemorySize = 1024 * 1024; // 1 GB
+
+            return argon2.GetBytes(16);
+        }
+
+        private bool VerifyHash(string passWord, string salt, byte[] hash)
+        {
+            var newHash = HashPassword(passWord, salt);
+            return hash.SequenceEqual(newHash);
+        }
+
+        public void Run()
+        {
+            var password = "Hello World!";
+            var stopwatch = Stopwatch.StartNew();
+
+            Console.WriteLine($"Creating hash for password '{ password }'.");
+
+            var salt = CreateSalt();
+            Console.WriteLine($"Using salt '{ Convert.ToBase64String(salt) }'.");
+
+            var hash = HashPassword(password, Convert.ToBase64String(salt));
+            Console.WriteLine($"Hash is '{ Convert.ToBase64String(hash) }'.");
+
+            stopwatch.Stop();
+            Console.WriteLine($"Process took { stopwatch.ElapsedMilliseconds / 1024.0 } s");
+
+            stopwatch = Stopwatch.StartNew();
+            Console.WriteLine($"Verifying hash...");
+
+            var success = VerifyHash(password, Convert.ToBase64String(salt), hash);
+            Console.WriteLine(success ? "Success!" : "Failure!");
+
+            stopwatch.Stop();
+            Console.WriteLine($"Process took { stopwatch.ElapsedMilliseconds / 1024.0 } s");
         }
 
         #region Helpers

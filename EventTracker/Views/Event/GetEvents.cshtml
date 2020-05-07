@@ -29,32 +29,30 @@
     @foreach (var item in Model.Where(x => x.Event_Date >= System.DateTime.Now).OrderBy(x => x.Event_Date))
     {
 
-        <tr>
-
-            <td>
+        <tr id="table-row">
+            <td id="event-table-col-1" class="event-table-row">
                 @Html.DisplayFor(modelItem => item.Event_Name)
             </td>
-            <td>
+            <td id="event-table-col-2" class="event-table-row">
                 @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
             </td>
-            <td>
+            <td id="event-table-col-3" class="event-table-row">
                 <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_countries.C_Iso3)
                 @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
             </td>
-            <td>
+            <td id="event-table-col-4" class="event-table-row">
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
                 @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID, Event_Name = item.Event_Name }) |
+                @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
                 @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.Event_Country }) |
 
                 @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {@*Checks to see if there is a current user*@
-
                 if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
                 { }
                 else
                 {
-                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = item.Event_ID })}
+                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
             }
             @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
             </td>
@@ -81,38 +79,34 @@
     @foreach (var item in Model.Where(x => x.Event_Date < System.DateTime.Now))
     {
 
-            <tr>
-                <td id="event-table-col-1">
-                    @Html.DisplayFor(modelItem => item.Event_Name)
-                </td>
-                <td id="event-table-col-2">
-                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-                </td>
-                <td id="event-table-col-3">
-                    <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_countries.C_Iso3)
-                    @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
-                </td>
-                <td id="event-table-col-4">
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-                    @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
-                    @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-                    @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.Event_Country }) |
+        <tr id="table-row">
+            <td id="event-table-col-1">
+                @Html.DisplayFor(modelItem => item.Event_Name)
+            </td>
+            <td id="event-table-col-2">
+                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+            </td>
+            <td id="event-table-col-3">
+                <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_countries.C_Iso3)
+                @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
+            </td>
+            <td id="event-table-col-4">
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
+                @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
+                @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
+                @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.Event_Country }) |
 
-                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                    {@*Checks to see if there is a current user*@
-                    if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
-                    { }
-                    else
-                    {
-                        @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = Convert.ToString(System.Web.HttpContext.Current.User.Identity.GetUserId()).GetHashCode(), Event_ID = item.Event_ID })}
-                }
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
-                </td>
-                </tr>
-                
-
+                @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {@*Checks to see if there is a current user*@
+                if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                { }
+                else
+                {
+                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
             }
-        </table>
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+            </td>
+        </tr>
 
-<script>
-</script>
+    }
+</table>
