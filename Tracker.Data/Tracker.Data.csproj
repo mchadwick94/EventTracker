@@ -94,6 +94,9 @@
     <Compile Include="tbl_eventhistory.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_eventImages.cs">
+      <DependentUpon>TrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_eventlineup.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>

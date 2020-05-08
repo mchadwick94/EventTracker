@@ -49,6 +49,16 @@
           <Property Name="User_ID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Event_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="tbl_eventImages">
+          <Key>
+            <PropertyRef Name="File_ID" />
+          </Key>
+          <Property Name="File_ID" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="File_Name" Nullable="false" MaxLength="255" Type="nvarchar" />
+          <Property Name="Content_Type" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Content" Nullable="false" Type="varbinary(max)" />
+          <Property Name="Event_ID" Nullable="false" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_eventlineup">
           <Key>
             <PropertyRef Name="Lineup_ID" />
@@ -150,6 +160,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbl_eventImages_tbl_events">
+          <End Type="Self.tbl_events" Multiplicity="1" Role="tbl_events" />
+          <End Type="Self.tbl_eventImages" Multiplicity="*" Role="tbl_eventImages" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_events">
+              <PropertyRef Name="Event_ID" />
+            </Principal>
+            <Dependent Role="tbl_eventImages">
+              <PropertyRef Name="Event_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_events_tbl_venues">
           <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="1" />
           <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="*" />
@@ -192,6 +214,7 @@
           <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_countries" EntityType="Self.tbl_countries" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" Schema="db_eventtracker" store:Type="Tables" />
+          <EntitySet Name="tbl_eventImages" EntityType="Self.tbl_eventImages" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_eventlineup" EntityType="Self.tbl_eventlineup" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_events" EntityType="Self.tbl_events" Schema="db_eventtracker" store:Type="Tables" />
           <EntitySet Name="tbl_venues" EntityType="Self.tbl_venues" Schema="db_eventtracker" store:Type="Tables" />
@@ -218,6 +241,10 @@
           <AssociationSet Name="FK_tbl_eventhistory_tbl_events" Association="Self.FK_tbl_eventhistory_tbl_events">
             <End Role="tbl_events" EntitySet="tbl_events" />
             <End Role="tbl_eventhistory" EntitySet="tbl_eventhistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_eventImages_tbl_events" Association="Self.FK_tbl_eventImages_tbl_events">
+            <End EntitySet="tbl_events" Role="tbl_events" />
+            <End EntitySet="tbl_eventImages" Role="tbl_eventImages" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_events_tbl_venues" Association="Self.FK_tbl_events_tbl_venues">
             <End Role="tbl_venues" EntitySet="tbl_venues" />
@@ -280,6 +307,11 @@
           <AssociationSet Name="FK_tbl_events_tbl_venues" Association="TrackerModel.FK_tbl_events_tbl_venues">
             <End Role="tbl_venues" EntitySet="tbl_venues" />
             <End Role="tbl_events" EntitySet="tbl_events" />
+          </AssociationSet>
+          <EntitySet Name="tbl_eventImages" EntityType="TrackerModel.tbl_eventImages" />
+          <AssociationSet Name="FK_EventImage" Association="TrackerModel.FK_EventImage">
+            <End EntitySet="tbl_events" Role="tbl_events" />
+            <End EntitySet="tbl_eventImages" Role="tbl_eventImages" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_artisthistory">
@@ -359,6 +391,7 @@
           <NavigationProperty Name="tbl_eventhistory" Relationship="TrackerModel.FK_tbl_eventhistory_tbl_events" FromRole="tbl_events" ToRole="tbl_eventhistory" />
           <NavigationProperty Name="tbl_eventlineup" Relationship="TrackerModel.tbl_eventlineup_tbl_eventlineup_ibfk_1" FromRole="tbl_events" ToRole="tbl_eventlineup" />
           <NavigationProperty Name="tbl_venues" Relationship="TrackerModel.FK_tbl_events_tbl_venues" FromRole="tbl_events" ToRole="tbl_venues" />
+          <NavigationProperty Name="tbl_eventImages" Relationship="TrackerModel.FK_EventImage" FromRole="tbl_events" ToRole="tbl_eventImages" />
         </EntityType>
         <EntityType Name="tbl_venues">
           <Key>
@@ -481,6 +514,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tbl_eventImages">
+          <Key>
+            <PropertyRef Name="File_ID" />
+          </Key>
+          <Property Name="File_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="File_Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Content_Type" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Content" Nullable="false" MaxLength="Max" FixedLength="false" Type="Binary" />
+          <Property Name="Event_ID" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="tbl_events" Relationship="TrackerModel.FK_EventImage" FromRole="tbl_eventImages" ToRole="tbl_events" />
+        </EntityType>
+        <Association Name="FK_EventImage">
+          <End Type="TrackerModel.tbl_events" Multiplicity="1" Role="tbl_events" />
+          <End Type="TrackerModel.tbl_eventImages" Multiplicity="*" Role="tbl_eventImages" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_events">
+              <PropertyRef Name="Event_ID" />
+            </Principal>
+            <Dependent Role="tbl_eventImages">
+              <PropertyRef Name="Event_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -565,6 +621,17 @@
                 <ScalarProperty Name="V_StreetAddress" ColumnName="V_StreetAddress" />
                 <ScalarProperty Name="V_Name" ColumnName="V_Name" />
                 <ScalarProperty Name="Venue_ID" ColumnName="Venue_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_eventImages">
+            <EntityTypeMapping TypeName="TrackerModel.tbl_eventImages">
+              <MappingFragment StoreEntitySet="tbl_eventImages">
+                <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Content_Type" ColumnName="Content_Type" />
+                <ScalarProperty Name="File_Name" ColumnName="File_Name" />
+                <ScalarProperty Name="File_ID" ColumnName="File_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

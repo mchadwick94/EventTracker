@@ -48,6 +48,8 @@ public partial class TrackerEntities : DbContext
 
     public virtual DbSet<tbl_venues> tbl_venues { get; set; }
 
+    public virtual DbSet<tbl_eventImages> tbl_eventImages { get; set; }
+
 }
 
 }

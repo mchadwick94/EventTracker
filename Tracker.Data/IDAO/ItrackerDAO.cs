@@ -29,6 +29,12 @@ namespace Tracker.Data.IDAO
         //Removes an artist from a specific events lineup
         void DeleteFromLineup(tbl_eventlineup _lineup);
 
+        void AddEventImage(tbl_eventImages image);
+
+        void EditEventImage(tbl_eventImages oldImage, tbl_eventImages newImage);
+
+        void RemoveEventImage(tbl_eventImages image);
+
         //-----------------------------------------------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         // Returns a list of all the events for a specific user.
@@ -112,5 +118,7 @@ namespace Tracker.Data.IDAO
         // File RELATED FUNCTIONS
 
         tbl_artistImages GetImageId(int Artist_ID);
+
+        tbl_eventImages GetEventImageId(int Event_ID);
     }
 }

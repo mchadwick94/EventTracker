@@ -19,12 +19,14 @@
                     <div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" style="border-radius: 20px;">
-                                <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
-                                    <div class="index-image" id="home-top-seen-card">
+                                
+                                <div class="index-image" id="home-top-seen-card">
+                                    <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
                                         <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
                                         <h3 class="artist-count-text"><span id="top-line-span">@item.Artist_Name</span><br /><span id="second-line-span">Times Seen: @item.c</span></h3>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
+                                
                             </li>
                         </ul>
                     </div>
@@ -89,6 +91,8 @@ else
         height: 100%;
         position: relative;
         width: 100%;
+        padding: 0% 0% 0% 0%;
+
     }
 
     #artist-count-image-tile {

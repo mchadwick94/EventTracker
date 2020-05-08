@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -9,10 +12,12 @@ namespace EventTracker.Controllers
     {
         public int _eventID;
         protected string User_ID;
+        private TrackerEntities _context;
 
         public EventController()
         {
             ViewBag.Lineup = _trackerService.GetLineUp(_eventID);
+            _context = new TrackerEntities();
         }
 
         // GET: Complete Event List
@@ -57,16 +62,45 @@ namespace EventTracker.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateEvent(tbl_events _event)
+        public ActionResult CreateEvent(tbl_events _event, HttpPostedFileBase upload, tbl_eventImages image)
         {
             try
             {
-                _trackerService.CreateEvent(_event);
+                if (String.IsNullOrEmpty(_event.Event_Name))//Checks if the field 'Artist_Name' is null, if so, throws an error.
+                {
+                    ModelState.AddModelError("Artist_Name", "Need an Artists Name");
+                }
+
+                var doesArtistExist = _context.tbl_events.Any(x => x.Event_Name == _event.Event_Name); //Creates a variable which is assigned the value of any Event in tbl_events matching the Event_Name given in the form (_event)
+                if (doesArtistExist) //If there is a value assigned to the variable
+                {
+                    ModelState.AddModelError("Event_Name", "This Event already exists"); //throw an error
+                    return View();
+                }
+                //______________________________________________________
+
+                _trackerService.CreateEvent(_event); //Else add a new artist to the database with the Artist_Name given in the form.
+
+                //====================== THIS BLOCK IS REGARDING ADDING IMAGES TO ARTIST
+
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    image.Event_ID = _event.Event_ID;
+                    image.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                    image.Content_Type = upload.ContentType;
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        image.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    _trackerService.AddEventImage(image);
+                }
+                //=========================
+
                 return RedirectToAction("GetEvents");
             }
             catch
             {
-                return View();
+                return RedirectToAction("GetEvents");
             }
         }
 
@@ -91,47 +125,78 @@ namespace EventTracker.Controllers
         {
             List<SelectListItem> VenuesList = new List<SelectListItem>();
 
-            if (Country_ID == 0)
-            {
-                foreach (var item in _trackerService.GetVenues())
+                if (Country_ID == 0)
                 {
-                    VenuesList.Add(
-                        new SelectListItem()
-                        {
-                            Text = item.V_City.ToUpper() + ": " + item.V_Name,
-                            Value = item.Venue_ID.ToString()
-                        });
-                    ViewBag.Venues = VenuesList;
+                    foreach (var item in _trackerService.GetVenues())
+                    {
+                        VenuesList.Add(
+                            new SelectListItem()
+                            {
+                                Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                                Value = item.Venue_ID.ToString()
+                            });
+                        ViewBag.Venues = VenuesList;
+                    }
                 }
-            }
-            else
-            {
-                foreach (var item in _trackerService.GetVenuesByCountry(Country_ID))
+                else
                 {
-                    VenuesList.Add(
-                        new SelectListItem()
-                        {
-                            Text = item.V_City.ToUpper() + ": " + item.V_Name,
-                            Value = item.Venue_ID.ToString()
-                        });
-                    ViewBag.Venues = VenuesList;
+                    foreach (var item in _trackerService.GetVenuesByCountry(Country_ID))
+                    {
+                        VenuesList.Add(
+                            new SelectListItem()
+                            {
+                                Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                                Value = item.Venue_ID.ToString()
+                            });
+                        ViewBag.Venues = VenuesList;
+                    }
                 }
-            }
 
-            return View(_trackerService.GetEventDetails(Event_ID));
+                return View(_trackerService.GetEventDetails(Event_ID));
+
         }
 
         [HttpPost] //Posts the new variables into the database at the specific event being edited
-        public ActionResult EditEvent(int Event_ID, tbl_events _event)
+        public ActionResult EditEvent(int Event_ID, tbl_events _event,  HttpPostedFileBase upload, tbl_eventImages newImage, tbl_eventImages oldImage)
         {
+            var Model = new TrackerEntities();
+
             try
             {
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    if (_context.tbl_eventImages.Any(f => f.Event_ID == _event.Event_ID))
+                    {
+                        oldImage = _context.tbl_eventImages.FirstOrDefault(s => s.Event_ID == Event_ID);
+
+                        newImage.Event_ID = _event.Event_ID;
+                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                        newImage.Content_Type = upload.ContentType;
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            newImage.Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                        _trackerService.EditEventImage(oldImage, newImage);
+                    }
+                    else
+                    {
+                        newImage.Event_ID = _event.Event_ID;
+                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                        newImage.Content_Type = upload.ContentType;
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            newImage.Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                        _trackerService.AddEventImage(newImage);
+                    }
+                    _trackerService.EditEvent(_event);
+                }
                 _trackerService.EditEvent(_event);
                 return RedirectToAction("GetEvents");
             }
             catch
             {
-                return View(_trackerService.GetEventDetails(Event_ID));
+                return RedirectToAction("GetEvents");
             }
         }
 

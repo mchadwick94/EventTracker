@@ -37,6 +37,29 @@ namespace Tracker.Data.DAO
             _context.SaveChanges();
         }
 
+        public void AddEventImage(tbl_eventImages image)
+        {
+            _context.tbl_eventImages.Add(image);
+            _context.SaveChanges();
+        }
+
+        public void EditEventImage(tbl_eventImages oldImage, tbl_eventImages newImage)
+        {
+            tbl_eventImages imageEntry = _context.tbl_eventImages.FirstOrDefault(s => s.File_ID == oldImage.File_ID);
+            _context.tbl_eventImages.Remove(imageEntry);
+            imageEntry.Content = newImage.Content;
+            imageEntry.Content_Type = newImage.Content_Type;
+            imageEntry.File_Name = newImage.File_Name;
+            _context.tbl_eventImages.Add(newImage);
+            _context.SaveChanges();
+        }
+
+        public void RemoveEventImage(tbl_eventImages image)
+        {
+            _context.tbl_eventImages.Remove(image);
+            _context.SaveChanges();
+        }
+
         //Edits the details of a specific event.
         public void EditEvent(tbl_events _events)
         {
@@ -46,7 +69,7 @@ namespace Tracker.Data.DAO
             _event.Event_Name = _events.Event_Name;
             _event.Event_Location = _events.Event_Location;
             _event.Event_Date = _events.Event_Date;
-            _event.Event_Country = _events.Event_Country;
+            _event.Event_Location = _events.Event_Location;
             _event.Event_Cancelled = _events.Event_Cancelled;
             _context.SaveChanges();
         }
@@ -306,6 +329,13 @@ namespace Tracker.Data.DAO
         {
             IQueryable<tbl_artistImages> _file = from tbl_artistImages in _context.tbl_artistImages where tbl_artistImages.Artist_ID == Artist_ID select tbl_artistImages;
             return _file.First<tbl_artistImages>();
+        }
+
+        public tbl_eventImages GetEventImageId(int Event_ID)
+
+        {
+            IQueryable<tbl_eventImages> _file = from tbl_eventImages in _context.tbl_eventImages where tbl_eventImages.Event_ID == Event_ID select tbl_eventImages;
+            return _file.First<tbl_eventImages>();
         }
     }
 }

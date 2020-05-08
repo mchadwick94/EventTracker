@@ -16,7 +16,7 @@ using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class tbl_artistImages
+    public partial class tbl_eventImages
 {
         [Key]
 
@@ -28,11 +28,11 @@ using System;
 
     public byte[] Content { get; set; }
 
-    public int Artist_ID { get; set; }
+    public int Event_ID { get; set; }
 
 
 
-    public virtual tbl_artists tbl_artists { get; set; }
+    public virtual tbl_events tbl_events { get; set; }
 
 }
 

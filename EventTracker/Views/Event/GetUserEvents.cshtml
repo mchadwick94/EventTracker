@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<Tracker.Data.tbl_eventhistory>
-<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+<link href="~/Content/StyleSheet.css" rel="stylesheet"/>
 
 @{
     ViewBag.Title = Request.QueryString["Event_Name"];
@@ -20,9 +20,8 @@
                             <div class="index-image" id="home-top-seen-card">
 
                                 @*FOR WHEN EVENT IMAGES ARE IMPLEMENTED*@
-                                @*<img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" /> *@
+                                <img class="profile-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_events.tbl_eventImages.First(f => f.Event_ID == item.tbl_events.Event_ID).File_ID })" />
                                 <h3 class="artist-count-text"><span id="top-line-span">@item.tbl_events.Event_Name</span><br /><span id="second-line-span">@item.tbl_events.tbl_venues.V_City, @item.tbl_events.tbl_venues.tbl_countries.C_Name</span></h3>
-
                             </div>
                         </a>
                     </li>
@@ -34,8 +33,6 @@
 }
 else
 {
-
-
 
     <h1>@User.Identity.GetUserName().ToUpper()'s events</h1>
 
@@ -154,7 +151,6 @@ else
         padding: 0% 0% 0% 0%;
     }
 
-
     .count-artist-image {
         display: inline-block;
         width: 100%;
@@ -195,7 +191,7 @@ else
         font-size-adjust: inherit;
     }
 
-    span {
+    .index-image, h3 {
         padding: 0% 6% 0% 2%;
     }
 
@@ -220,13 +216,14 @@ else
         border-top-right-radius: 10px;
         display: flex; /*added*/
         flex-direction: inherit; /*added*/
-        overflow: hidden;
         display: inline-block;
         margin: 0px;
         background-position: center center;
         overflow: hidden;
         object-fit: cover;
         background-size: cover;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     #second-line-span {

@@ -64,6 +64,21 @@ namespace Tracker.Services.Service
             _TrackerDAO.DeleteFromLineup(_lineup);
         }
 
+        public void AddEventImage(tbl_eventImages image)
+        {
+            _TrackerDAO.AddEventImage(image);
+        }
+
+        public void EditEventImage(tbl_eventImages oldImage, tbl_eventImages newImage)
+        {
+            _TrackerDAO.EditEventImage(oldImage, newImage);
+        }
+
+        public void RemoveEventImage(tbl_eventImages image)
+        {
+            _TrackerDAO.RemoveEventImage(image);
+        }
+
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Displays the full list of events for a specific user.
@@ -230,6 +245,11 @@ namespace Tracker.Services.Service
         public tbl_artistImages GetImageId(int Artist_ID)
         {
             return _TrackerDAO.GetImageId(Artist_ID);
+        }
+
+        public tbl_eventImages GetEventImageId(int Event_ID)
+        {
+            return _TrackerDAO.GetEventImageId(Event_ID);
         }
     }
 }
