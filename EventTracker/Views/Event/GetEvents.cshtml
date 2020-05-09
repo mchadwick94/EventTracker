@@ -29,10 +29,10 @@
     @foreach (var item in Model.Where(x => x.Event_Date >= System.DateTime.Now).OrderBy(x => x.Event_Date))
     {
 
-        <tr id="table-row">
+        <tr class="table-row">
             <td id="event-table-col-1" class="event-table-row">
                 @if (item.Event_Cancelled == true)
-                {<b style="color: darkred">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
+                {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
             </td>
 
             <td id="event-table-col-2" class="event-table-row">
@@ -65,7 +65,7 @@
 <br />
 <br />
 <table class="table" id="event-table">
-    <tr>
+    <tr >
         <h2>Past Events</h2>
         <th id="event-table-col-1">
             Event Name:
@@ -81,10 +81,10 @@
     @foreach (var item in Model.Where(x => x.Event_Date < System.DateTime.Now))
     {
 
-        <tr id="table-row">
-            <td id="event-table-col-1" class="event-table-row">
+        <tr  class="table-row">
+            <td id="event-table-col-1">
                 @if (item.Event_Cancelled == true)
-                {<b style="color: darkred">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
+                {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
             </td>
             <td id="event-table-col-2">
                 @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@

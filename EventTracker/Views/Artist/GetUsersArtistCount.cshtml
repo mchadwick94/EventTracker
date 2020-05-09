@@ -23,7 +23,7 @@
                                 <div class="index-image" id="home-top-seen-card">
                                     <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
                                         <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
-                                        <h3 class="artist-count-text"><span id="top-line-span">@item.Artist_Name</span><br /><span id="second-line-span">Times Seen: @item.c</span></h3>
+                                        <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.Artist_Name</span><br /><span class="overlay-span" id="second-line-span">Times Seen: @item.c</span></h3>
                                     </a>
                                 </div>
                                 
@@ -98,8 +98,8 @@ else
     #artist-count-image-tile {
         height: inherit;
         display: inline-block;
-        max-width: 19%;
-        min-width: 19%;
+        max-width: 20%;
+        min-width: 20%;
         padding: 0% 0% 0% 0%;
     }
 

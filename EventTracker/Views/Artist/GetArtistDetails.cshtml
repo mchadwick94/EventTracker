@@ -18,8 +18,7 @@
             }
             else
             {
-            <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = "1209" })" />
-
+            <img class="profile-image" src="@Url.Content("~/Content/images/default-profile.png")" />
             }
         </div>
         <div class="card" id="profile-history-card">
@@ -31,6 +30,6 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Artist_ID }) |
+    @Html.ActionLink("Edit", "../Artist/EditArtist", new { Artist_ID = Model.Artist_ID }) |
     @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
 </p>

@@ -134,4 +134,9 @@
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties content_4bootstrap_1css_1map__JsonSchema="" content_4bootstrap_1min_1css_1map__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

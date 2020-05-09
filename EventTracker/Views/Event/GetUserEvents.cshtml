@@ -18,10 +18,8 @@
                     <li class="list-group-item" style="border-radius: 20px;">
                         <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
                             <div class="index-image" id="home-top-seen-card">
-
-                                @*FOR WHEN EVENT IMAGES ARE IMPLEMENTED*@
                                 <img class="profile-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_events.tbl_eventImages.First(f => f.Event_ID == item.tbl_events.Event_ID).File_ID })" />
-                                <h3 class="artist-count-text"><span id="top-line-span">@item.tbl_events.Event_Name</span><br /><span id="second-line-span">@item.tbl_events.tbl_venues.V_City, @item.tbl_events.tbl_venues.tbl_countries.C_Name</span></h3>
+                                <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.tbl_events.Event_Name</span><br /><span class="overlay-span" id="second-line-span">@item.tbl_events.tbl_venues.V_City, @item.tbl_events.tbl_venues.tbl_countries.C_Name</span></h3>
                             </div>
                         </a>
                     </li>
@@ -142,95 +140,3 @@ else
         document.getElementById("table_header").innerHTML = res;
     }
 </script>
-<style>
-    #upcoming-event-image-tile {
-        height: inherit;
-        display: inline-block;
-        min-width: 32%;
-        max-width: 32%;
-        padding: 0% 0% 0% 0%;
-    }
-
-    .count-artist-image {
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-        margin: 0px;
-        border: 3px solid #1f1f1f;
-        border-radius: 20px;
-        background-position: center center;
-        overflow: hidden;
-        object-fit: cover;
-        background-size: cover;
-    }
-
-    .list-group-item {
-        padding: 0%;
-        height: 100%;
-        width: inherit;
-    }
-
-    .index-image {
-        height: 100%;
-        position: relative;
-        width: 100%;
-    }
-
-    #index-artist-count-body {
-        height: 100%;
-        width: 100%;
-        padding: 0% 0% 0% 0%;
-    }
-
-    .artist-count-text {
-        position: absolute;
-        top: 46%;
-        width: 100%;
-        text-align: left;
-        font-size: 1.4em;
-        font-size-adjust: inherit;
-    }
-
-    .index-image, h3 {
-        padding: 0% 6% 0% 2%;
-    }
-
-    .list-group-item, span {
-        letter-spacing: -1px;
-        background: #000000; /* fallback color */
-        opacity: 0.8;
-        color: white;
-        height: 100%;
-        width: 100%;
-        position: inherit;
-        display: inline-block;
-        margin: 0px;
-        background-position: center center;
-        overflow: hidden;
-        object-fit: cover;
-        background-size: cover;
-    }
-
-    #top-line-span {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        display: flex; /*added*/
-        flex-direction: inherit; /*added*/
-        display: inline-block;
-        margin: 0px;
-        background-position: center center;
-        overflow: hidden;
-        object-fit: cover;
-        background-size: cover;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    #second-line-span {
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        overflow: hidden;
-        display: flex; /*added*/
-        flex-direction: inherit; /*added*/
-    }
-</style>

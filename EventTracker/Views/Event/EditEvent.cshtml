@@ -5,82 +5,81 @@
 }
 
 <h2>EditEvent</h2>
+<body>
+    @using (Html.BeginForm("EditEvent", "Event", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("EditEvent", "Event", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>tbl_events</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Event_ID)
+        <div class="form-horizontal">
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Event_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Event_Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Event_Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Event_ID)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Event_Date, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => Model.Event_Date, new { htmlAttributes = new { @class = "datepicker", @Value = Model.Event_Date.ToString("yyyy/MM/dd") } })
-            @Html.ValidationMessageFor(model => model.Event_Date, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Event_Location, "Event Location", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => x.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"))
-
-            @Html.ValidationMessageFor(model => model.Event_Location, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Event_Cancelled, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(model => Model.Event_Cancelled, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Event_Cancelled, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-group">
-            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="Avatar" name="upload" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Event_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Event_Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Event_Name, "", new { @class = "text-danger" })
+                </div>
             </div>
-            @if (Model.tbl_eventImages.Any())
-            {
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Event_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => Model.Event_Date, new { htmlAttributes = new { @class = "datepicker", @Value = Model.Event_Date.ToString("yyyy/MM/dd") } })
+                    @Html.ValidationMessageFor(model => model.Event_Date, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Event_Location, "Event Location", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => x.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"))
+
+                    @Html.ValidationMessageFor(model => model.Event_Location, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Event_Cancelled, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => Model.Event_Cancelled, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Event_Cancelled, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="form-group">
-                    <span class="control-label col-md-2"><strong>Current Avatar</strong></span>
+                    @Html.Label("Avatar", new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <img src="@Url.Action("Index", "File", new { File_ID = Model.tbl_eventImages.First(f => f.Event_ID == Model.Event_ID).File_ID })" style="width:200px; height:180px" />
+                        <input type="file" id="Avatar" name="upload" />
+                    </div>
+                    @if (Model.tbl_eventImages.Any())
+                    {
+                        <div class="form-group">
+                            <span class="control-label col-md-2"><strong>Current Avatar</strong></span>
+                            <div class="col-md-10">
+                                <img src="@Url.Action("EventImageIndex", "File", new { File_ID = Model.tbl_eventImages.First(f => f.Event_ID == Model.Event_ID).File_ID })" style="width:200px; height:180px" />
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <img class="event-details-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                    }
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
                     </div>
                 </div>
-            }
-            else
-            {
-                <img src="@Url.Action("Index", "File", new { File_ID = "1209" })" style="width:200px; height:180px" />
-            }
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-    </div>
-    </div>
-    
+
     }
     <div>
         @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
     </div>
-
+</body>
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 
     @*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@

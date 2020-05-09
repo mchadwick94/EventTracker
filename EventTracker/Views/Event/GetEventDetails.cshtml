@@ -1,57 +1,183 @@
 ﻿@model Tracker.Data.tbl_events
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
+<body class="event-lineup-body">
+    @{
+        ViewBag.Title = "GetEventDetails";
+    }
+    <div class="event-jumbotron" id="event-jumbotron" align="left">
+        <div class="card" id="event-card">
+            <div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="border-radius: 20px;">
+                            <div class="event-details-image" id="home-top-seen-card">
+                                @if (Model.tbl_eventImages.Any())
+                                {
+                                    <img class="event-details-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = Model.tbl_eventImages.First(f => f.Event_ID == Model.Event_ID).File_ID })" />
+                                }
+                                else
+                                {
+                                    <img class="event-details-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                }
+                                <h3 class="event-details-text">
+                                    <span class="overlay-span" id="top-line-span">@Model.Event_Name - @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Event_Date))</span><br />
+                                    <span class="overlay-span" id="second-line-span">
 
-@{
-    ViewBag.Title = "GetEventDetails";
-}
-
-<h2>GetEventDetails</h2>
-
-<div>
-    <h4>tbl_events</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Event_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Event_Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event_Date)
-        </dt>
-
-        <dd>
-            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", Model.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event_Location)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.tbl_venues.V_Name), <br />
-            @Html.DisplayFor(model => model.tbl_venues.V_StreetAddress), <br />
-            @Html.DisplayFor(model => model.tbl_venues.V_City)<br />
-            @Html.DisplayFor(model => model.tbl_venues.tbl_countries.C_Name) (@Html.DisplayFor(model => model.tbl_venues.tbl_countries.C_Iso3))
-        </dd>
-        <dt>
-            Event Flyer:
-        </dt>
-
-
-
-            <dd>
-                <img class="profile-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = Model.tbl_eventImages.First(f => f.Event_ID == Model.Event_ID).File_ID })" />
-            </dd>
-       
-
-            @Html.ActionLink("View on Google Maps", "../Venue/Redirect", new { V_Name = Model.tbl_venues.V_Name, V_StreetAddress = Model.tbl_venues.V_StreetAddress, V_City = Model.tbl_venues.V_City }, new { target = "_blank" })
-        </dl>
+                                        <a href="@Url.Action("Redirect", "Venue", new { V_Name = Model.tbl_venues.V_Name, V_StreetAddress = Model.tbl_venues.V_StreetAddress, V_City = Model.tbl_venues.V_City })" target="_blank"> @Model.tbl_venues.V_Name, @Model.tbl_venues.V_City, @Model.tbl_venues.tbl_countries.C_Name</a>
+                                    </span>
+                                </h3>
+                            </div>
+                    
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+    <br />
     <p>
         @Html.ActionLink("Edit", "EditEvent", new { Event_ID = Model.Event_ID, Country_ID = Model.tbl_venues.V_Country }) |
         @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
     </p>
+    <br />
+
+    <div class="jumbotron" id="index-jumbo" align="center">
+        @{int i = 0;}
+        @foreach (var item in Model.tbl_eventlineup)
+        {
+            <div class="col-sm-8 col-md-4 mmt-2" id="lineup-image-tile">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="border-radius: 20px;">
+                        <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+
+                            <div class="event-details-image" id="home-top-seen-card">
+
+                                    @if (item.tbl_artists.tbl_artistImages.Any())
+                                    {
+                                        <dd>
+                                            <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = item.tbl_artists.tbl_artistImages.First(f => f.Artist_ID == item.Artist_ID).File_ID })" />
+                                        </dd>
+                                    }
+                                    else
+                                    {
+                                        <img class="profile-image" src="@Url.Content("~/Content/images/default-profile.png")" />
+                                    }
+                                    <h3 class="lineup-text">
+                                        <span class="overlay-span" id="top-line-span">@item.tbl_artists.Artist_Name</span><br />
+                                        <span class="overlay-span" id="second-line-span">
+
+                                        </span>
+                                    </h3>
+                            </div>
+                            </a>
+                    </li>
+                </ul>
+            </div>
+        }
+    </div>
+</body>
+<style>
+
+    .count-artist-image {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 3px solid #1f1f1f;
+        border-radius: 20px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    .list-group-item {
+        padding: 0%;
+        height: 100%;
+        width: inherit;
+    }
+
+    .lineup-image {
+        height: 100%;
+        position: relative;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    #lineup-image-tile {
+        height: 25%;
+        display: inline-block;
+        max-width: 20%;
+        min-width: 20%;
+        padding: 0% 0% 0% 0%;
+    }
+
+
+    #index-jumbo{
+        width: 100%;
+        display:inline-block;
+        height: auto;
+        overflow: visible;
+        background-color: inherit;
+    }
+    #index-artist-count-body {
+        height: 100%;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    .lineup-text {
+        position: absolute;
+        top: 46%;
+        width: 100%;
+        text-align: left;
+        font-size: 1.4em;
+        font-size-adjust: inherit;
+        padding-left: 0;
+    }
+
+    .overlay-span {
+        padding: 0% 0% 0% 2%;
+        width: 100%
+    }
+
+    .list-group-item, span {
+        letter-spacing: -1px;
+        background: #000000; /* fallback color */
+        opacity: 0.8;
+        color: white;
+        height: 100%;
+        width: 100%;
+        position: inherit;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #top-line-span {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
+        overflow: hidden;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #second-line-span {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        overflow: hidden;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
+    }
+    .event-lineup-body{
+        height: fit-content;
+    }
+</style>
+</style>

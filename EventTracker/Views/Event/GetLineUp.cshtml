@@ -6,6 +6,26 @@
     ViewBag.Title = Request.QueryString["Event_Name"];
 }
 
+
+
+
+}
+
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 <h1>Lineup for @ViewBag.Title</h1>
 @Html.ActionLink("Back To Events", "../Event/GetEvents")
 
@@ -20,16 +40,16 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+            </td>
 
-        <td align="right">
-            @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
-            @Html.ActionLink("Delete", "../Event/DeleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
-        </td>
-    </tr>
+            <td align="right">
+                @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
+                @Html.ActionLink("Delete", "../Event/DeleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
+            </td>
+        </tr>
     }
 </table>
 <br />
@@ -47,14 +67,14 @@
                 { }
                 else
                 {
-            <tr>
-                <td>
-                    @item2.Artist_Name
-                </td>
-                <td align="right">
-                    @Html.ActionLink("Add To Lineup", "../Event/AddToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
-                </td>
-            </tr>
+                    <tr>
+                        <td>
+                            @item2.Artist_Name
+                        </td>
+                        <td align="right">
+                            @Html.ActionLink("Add To Lineup", "../Event/AddToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
+                        </td>
+                    </tr>
                 }
             }
         </table>
@@ -83,3 +103,101 @@
         }
     }
 </script>
+<style>
+
+    .count-artist-image {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 3px solid #1f1f1f;
+        border-radius: 20px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    .list-group-item {
+        padding: 0%;
+        height: 100%;
+        width: inherit;
+    }
+
+    .lineup-image {
+        height: 100%;
+        position: relative;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    #lineup-image-tile {
+        height: 25%;
+        display: inline-block;
+        max-width: 20%;
+        min-width: 20%;
+        padding: 0% 0% 0% 0%;
+    }
+
+
+
+    #index-artist-count-body {
+        height: 100%;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    .lineup-text {
+        position: absolute;
+        top: 46%;
+        width: 100%;
+        text-align: left;
+        font-size: 1.4em;
+        font-size-adjust: inherit;
+        padding-left: 0;
+    }
+
+    .overlay-span {
+        padding: 0% 0% 0% 2%;
+        width: 100%
+    }
+
+    .list-group-item, span {
+        letter-spacing: -1px;
+        background: #000000; /* fallback color */
+        opacity: 0.8;
+        color: white;
+        height: 100%;
+        width: 100%;
+        position: inherit;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #top-line-span {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
+        overflow: hidden;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #second-line-span {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        overflow: hidden;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
+    }
+</style>
+</style>

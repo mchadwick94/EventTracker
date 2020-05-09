@@ -322,6 +322,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\6099f305983371dadaceae99f5c905bf.png" />
     <Content Include="Content\images\default-profile.png" />
+    <Content Include="Content\images\default_image.jpg" />
     <Content Include="Content\images\search.jpg" />
     <Content Include="Content\images\search.png" />
     <Content Include="Content\StyleSheet.css" />
