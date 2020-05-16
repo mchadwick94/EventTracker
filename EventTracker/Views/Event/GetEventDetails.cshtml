@@ -34,7 +34,7 @@
         </div>
         <br />
         <p>
-            @Html.ActionLink("Edit", "EditEvent", new { Event_ID = Model.Event_ID, Country_ID = Model.tbl_venues.V_Country }) |
+            @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = Model.Event_ID, Country_ID = Model.tbl_venues.V_Country }) |
             @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
         </p>
 
@@ -78,58 +78,55 @@
                 {
                 <h2>Lineup not added yet...</h2>
                 }
-
-
-            </div>
         </div>
-
+    </div>
 </body>
 <style>
 
     .count-artist-image {
-                            display: inline-block;
-                            width: 100%;
-                            height: 100%;
-                            margin: 0px;
-                            border: 3px solid #1f1f1f;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 3px solid #1f1f1f;
         border-radius: 20px;
-                            background-position: center center;
-                            overflow: hidden;
-                            object-fit: cover;
-                            background-size: cover;
-                        }
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
 
     .list-group-item {
-                            padding: 0%;
-                            height: 100%;
-                            width: inherit;
-                        }
+        padding: 0%;
+        height: 100%;
+        width: inherit;
+    }
 
     .lineup-image {
-                            height: 100%;
-                            position: relative;
-                            width: 100%;
-                            padding: 0% 0% 0% 0%;
-                        }
+        height: 100%;
+        position: relative;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
 
-#lineup-image-tile {
-                        height: 25%;
-                        display: inline-block;
-                        max-width: 20%;
-                        min-width: 20%;
-                        padding: 0% 0% 0% 0%;
-                    }
+    #lineup-image-tile {
+        height: 25%;
+        display: inline-block;
+        max-width: 20%;
+        min-width: 20%;
+        padding: 0% 0% 0% 0%;
+    }
 
-#index-jumbo {
-                    width: 100%;
-                    display: inline-block;
-                    height: auto;
-                    overflow: visible;
-                    background-color: inherit;
-                }
+    #index-jumbo {
+        width: 100%;
+        display: inline-block;
+        height: auto;
+        overflow: visible;
+        background-color: inherit;
+    }
 
-#index-artist-count-body {
-                height: 100%;
+    #index-artist-count-body {
+        height: 100%;
         width: 100%;
         padding: 0% 0% 0% 0%;
     }
@@ -188,6 +185,6 @@
     }
 
     .event-lineup-body {
-            height: fit-content;
-        }
+        height: fit-content;
+    }
 </style>

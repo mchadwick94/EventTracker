@@ -2,9 +2,9 @@
 using Tracker.Data;
 
 namespace Tracker.Services.IService
-{
-    public interface ITrackerService
     {
+    public interface ITrackerService
+        {
         //EVENT RELATED FUNCTIONS
         //Get a list of all the events within the database.
         IList<Tracker.Data.tbl_events> GetEvents();
@@ -119,5 +119,5 @@ namespace Tracker.Services.IService
         tbl_artistImages GetImageId(int Artist_ID);
 
         tbl_eventImages GetEventImageId(int Event_ID);
+        }
     }
-}

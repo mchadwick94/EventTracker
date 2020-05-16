@@ -19,22 +19,20 @@
                 </th>
                 <th></th>
             </tr>
-            <div class="table-body">
-                @foreach (var item in Model)
-                    {
+            @foreach (var item in Model)
+                {
 
-                    <tr class="table-row">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Artist_Name)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "../Admin/ArtistEdit", new { Artist_ID = item.Artist_ID }) |
-                            @Html.ActionLink("Details", "../Artist/GetArtistDetails", new { Artist_ID = item.Artist_ID }) |
-                            @Html.ActionLink("Delete", "../Artist/Delete", new { id = item.Artist_ID })
-                        </td>
-                    </tr>
-                    }
-            </div>
+                <tr class="table-row">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Artist_Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "../Admin/ArtistEdit", new { Artist_ID = item.Artist_ID }) |
+                        @Html.ActionLink("Details", "../Artist/GetArtistDetails", new { Artist_ID = item.Artist_ID }) |
+                        @Html.ActionLink("Delete", "../Artist/Delete", new { id = item.Artist_ID })
+                    </td>
+                </tr>
+                }
         </table>
     </div>
 </body>

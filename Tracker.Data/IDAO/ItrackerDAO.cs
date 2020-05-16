@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
 namespace Tracker.Data.IDAO
-{
-    public interface ITrackerDAO
     {
+    public interface ITrackerDAO
+        {
         //EVENT RELATED FUNCTIONS
         //Get a list of all the events within the database.
         IList<Tracker.Data.tbl_events> GetEvents();
@@ -120,5 +120,5 @@ namespace Tracker.Data.IDAO
         tbl_artistImages GetImageId(int Artist_ID);
 
         tbl_eventImages GetEventImageId(int Event_ID);
+        }
     }
-}

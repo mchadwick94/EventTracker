@@ -3,60 +3,39 @@
 @{
     ViewBag.Title = "GetArtists";
 }
-
-<h2>GetArtists</h2>
-
-<p>
-    @Html.ActionLink("Create New", "NewArtist")
-</p>
-
-<div class="card">
-    <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for an Artist.." title="Type in an Artist" , name="myInput">
-    <div class="card-body" id="table-card-body">
-        <table class="table" id="myTable">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Artist_Name)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
+<h2>Artists</h2>
+<div class="body-content" id="artist-body">
+    <div class="card" id="artist-index-filter-card">
+        @for (char c = 'A'; c <= 'Z'; c++)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Artist_Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "../Artist/EditArtist", new { Artist_ID = item.Artist_ID }) |
-                    @Html.ActionLink("Details", "GetArtistDetails", new { Artist_ID = item.Artist_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Artist_ID })
-                </td>
-            </tr>
+            <a href="#@c"><h3>@c</h3></a> 
+            <h3> / </h3>
             }
-        </table>
+        <a href="#0-9"><h3>0-9</h3></a>
+    </div>
+    <div class="artist-index-body">
+
+
+        @for (char c = 'A'; c <= 'Z'; c++)
+
+            {
+            <a name="@c"><h1>@c</h1></a>
+            <div class="grid-container" id="artistgrid">
+                @foreach (var item in Model.Where(i => i.Artist_Name.StartsWith(c.ToString())))
+                    {
+                    <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                        <div class="grid-item" id="griditem">
+                            @item.Artist_Name <br />
+                        </div>
+                    </a>
+                    }
+            </div>
+            }
     </div>
 </div>
 
-<script>
-    function myFunction() { // Script found at https://www.w3schools.com/howto/howto_js_filter_table.asp
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
 
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0]
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
 
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
+<style>
+
+</style>

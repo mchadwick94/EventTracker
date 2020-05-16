@@ -528,3 +528,43 @@ td {
     overflow: hidden;
     height: 50% !important;
 }
+
+#artist-index-filter-card h3 {
+    padding: 1px;
+    text-align: center;
+}
+
+#artist-body {
+    text-align: center;
+    width: 100%;
+}
+
+.artist-index-body {
+    border: 2px solid inherit;
+    text-align: center;
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+#artist-index-filter-card {
+    width: auto;
+    border: none;
+    display: inline-flex;
+    height: 4vh;
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    background-color: inherit;
+    padding: 2px;
+}
+
+.grid-item {
+    background-color: #222222;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 5px;
+    font-size: large;
+    text-align: center;
+}

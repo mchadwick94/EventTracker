@@ -539,7 +539,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Artist\GetArtists.cshtml" />
-    <Content Include="Views\Event\EditEvent.cshtml" />
+    <Content Include="Views\Admin\EventEdit.cshtml" />
     <Content Include="Views\Event\GetEventDetails.cshtml" />
     <Content Include="Views\Admin\EventIndex.cshtml" />
     <Content Include="Views\Event\GetLineUp.cshtml" />
@@ -548,7 +548,6 @@
     <Content Include="Views\Admin\GetUsers.cshtml" />
     <Content Include="Views\Event\GetLineupDetails.cshtml" />
     <Content Include="Views\Event\GetEventHistoryDetails.cshtml" />
-    <Content Include="Views\Artist\ArtistCreate.cshtml" />
     <Content Include="Views\Event\GetUsersLineUp.cshtml" />
     <Content Include="Views\Artist\AddToArtistHistory.cshtml" />
     <Content Include="Views\Artist\GetSeenArtists.cshtml" />
@@ -577,7 +576,6 @@
     <Content Include="Views\Admin\AdminHome.cshtml" />
     <Content Include="Views\Admin\ArtistIndex.cshtml" />
     <Content Include="Views\Admin\ArtistEdit.cshtml" />
-    <Content Include="Views\Admin\EventCreateOld.cshtml" />
     <Content Include="Views\Event\GetEvents.cshtml" />
     <Content Include="Views\Admin\EventCreate.cshtml" />
     <Content Include="Views\Admin\ArtistCreate.cshtml" />
