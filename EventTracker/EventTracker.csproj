@@ -320,9 +320,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\images\6099f305983371dadaceae99f5c905bf.png" />
-    <Content Include="Content\images\default-profile.png" />
+    <Content Include="Content\images\calendar-icon.png" />
+    <Content Include="Content\images\default-profile.jpeg" />
     <Content Include="Content\images\default_image.jpg" />
+    <Content Include="Content\images\location-pin.png" />
     <Content Include="Content\images\search.jpg" />
     <Content Include="Content\images\search.png" />
     <Content Include="Content\StyleSheet.css" />
@@ -538,21 +539,16 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Artist\GetArtists.cshtml" />
-    <Content Include="Views\Event\CreateEvent.cshtml" />
     <Content Include="Views\Event\EditEvent.cshtml" />
     <Content Include="Views\Event\GetEventDetails.cshtml" />
-    <Content Include="Views\Event\GetEvents.cshtml" />
+    <Content Include="Views\Admin\EventIndex.cshtml" />
     <Content Include="Views\Event\GetLineUp.cshtml" />
     <Content Include="Views\Event\GetUserEvents.cshtml" />
     <Content Include="Views\User\GetUsers.cshtml" />
     <Content Include="Views\Admin\GetUsers.cshtml" />
-    <Content Include="Views\Event\AddToUser.cshtml" />
     <Content Include="Views\Event\GetLineupDetails.cshtml" />
-    <Content Include="Views\Event\DeleteFromLineup.cshtml" />
     <Content Include="Views\Event\GetEventHistoryDetails.cshtml" />
-    <Content Include="Views\Event\DeleteFromUserHistory.cshtml" />
-    <Content Include="Views\Event\AddToLineup.cshtml" />
-    <Content Include="Views\Artist\NewArtist.cshtml" />
+    <Content Include="Views\Artist\ArtistCreate.cshtml" />
     <Content Include="Views\Event\GetUsersLineUp.cshtml" />
     <Content Include="Views\Artist\AddToArtistHistory.cshtml" />
     <Content Include="Views\Artist\GetSeenArtists.cshtml" />
@@ -561,12 +557,11 @@
     <Content Include="Views\Artist\GetUsersArtistCount.cshtml" />
     <Content Include="Views\Artist\FindSeenArtistEntry.cshtml" />
     <Content Include="Views\Artist\GetSeenArtistHistory.cshtml" />
-    <Content Include="Views\Artist\EditArtist.cshtml" />
     <Content Include="Views\Artist\GetArtistDetails.cshtml" />
     <Content Include="Views\Venue\GetVenues.cshtml" />
     <Content Include="Views\Venue\GetVenueDetails.cshtml" />
     <Content Include="Views\Venue\EditVenue.cshtml" />
-    <Content Include="Views\Application\GetCountries.cshtml" />
+    <Content Include="Views\Admin\CountryIndex.cshtml" />
     <Content Include="Views\Venue\CreateVenue.cshtml" />
     <Content Include="Views\Artist\GetAnArtistsEventHistory.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -579,10 +574,18 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Admin\AdminHome.cshtml" />
+    <Content Include="Views\Admin\ArtistIndex.cshtml" />
+    <Content Include="Views\Admin\ArtistEdit.cshtml" />
+    <Content Include="Views\Admin\EventCreateOld.cshtml" />
+    <Content Include="Views\Event\GetEvents.cshtml" />
+    <Content Include="Views\Admin\EventCreate.cshtml" />
+    <Content Include="Views\Admin\ArtistCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\Application\" />
     <Folder Include="Views\File\" />
   </ItemGroup>
   <ItemGroup>

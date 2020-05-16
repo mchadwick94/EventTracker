@@ -29,7 +29,15 @@
                         <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = User.Identity.GetUserId().ToString() })</li>
                         <li>@Html.ActionLink("Seen Artists", "../Artist/GetSeenArtists", new { User_ID = User.Identity.GetUserId().ToString() })</li>
                     }
-                    @*Converts the Current Users ID to a hash code to look up their event history.*@
+                    
+                    <li class="dropdown">@Html.ActionLink("Admin Area ▼", "../Admin/AdminHome")
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("Artist Admin", "../Admin/ArtistIndex")
+                            @Html.ActionLink("Users", "../Admin/GetUsers")
+                            @Html.ActionLink("Users", "../Admin/GetUsers")
+
+                        </div>    
+                    </li> @*Admin Page/Drop Down. On Click redirect to admin home page*@
 
                     @Html.Partial("_LoginPartial")
                 </ul>
@@ -38,13 +46,14 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        @if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
-        {
-        }
-        else
-        {
+        @if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Home")
+            {
             <hr />
-        }
+            }
+        else
+            {
+
+            }
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
@@ -54,3 +63,48 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<style>
+     li {
+         height: 100%;
+     }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        border: 4px;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: hotpink;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+                width: auto;
+
+    }
+
+        .dropdown-menu a {
+            color: inherit;
+            padding: 5px 7px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .navbar-nav li:hover, .dropdown-menu li:hover {
+                background-color: #171616;
+                
+            }
+            .navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: #171616;
+}
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        background-color: #1f1f1f;
+        color: inherit;
+    }
+     .navbar-right {
+         margin-bottom: 0;
+     }
+</style>

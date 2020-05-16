@@ -4,11 +4,10 @@
     ViewBag.Title = "Home";
     ViewData["ResourcePath"] = "IndexParentView";
 }
-    <div class="body-content" position="fixed" height="100%" width="100%">
-        <br />
-
+<body id="index-body">
+    <div class="body-content" id="home-content">
         @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-        {
+            {
             <h2 align="center">Your Upcoming Events</h2>
 
             <div class="jumbotron" id="index-jumbo" align="center" style="height:20%; width: 100%;display:inline-grid">
@@ -19,6 +18,7 @@
             <div class="jumbotron" id="index-jumbo" align="center" style="height:20%; width: 100%;display:inline-grid">
                 @{Html.RenderAction("GetUsersArtistCount", "Artist"); }
             </div>
+            <h2 align="center">Other Links</h2>
 
             <div style=" width:100%; display:inline; flex-direction:row; margin:0 auto; padding:0.5%" align="center">
                 <div class="jumbotron" style=" height:25%;width:31%; display:inline-block">
@@ -31,10 +31,10 @@
                     EVENT ORGANISERS LINK
                 </div>
             </div>
-        }
+            }
         else
-        {
-            <div style="height=90%">@Html.Partial("../Account/Login")</div>
-
-        }
+            {
+            <div style="height:90%">@Html.Partial("../Account/Login")</div>
+            }
     </div>
+</body>

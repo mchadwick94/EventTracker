@@ -1,0 +1,114 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<Tracker.Data.tbl_events>
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "GetEvents";
+}
+<p>
+    @Html.ActionLink("Add New Event", "../Admin/CountryIndex/")
+</p>
+<h1>GetEvents</h1>
+<h2 align="center">Upcoming Events</h2>
+<div class="card-body" id="event-table-body">
+    <table class="table" id="event-table">
+        <tr>
+
+            <th id="event-table-col-1">
+                Event Name:
+            </th>
+            <th id="event-table-col-2">
+                Date of Event:
+            </th>
+            <th id="event-table-col-3">
+                Location:
+            </th>
+            <th id="event-table-col-4"></th>
+        </tr>
+        @foreach (var item in Model.Where(x => x.Event_Date >= System.DateTime.Now).OrderBy(x => x.Event_Date))
+            {
+            <tr class="table-row">
+                <td id="event-table-col-1" class="event-table-row">
+                    @if (item.Event_Cancelled == true)
+                        {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
+                    </td>
+
+                    <td id="event-table-col-2" class="event-table-row">
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+                    </td>
+                    <td id="event-table-col-3" class="event-table-row">
+                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_countries.C_Iso3)
+                        @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
+                    </td>
+                    <td id="event-table-col-4" class="event-table-row">
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
+                        @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
+                        @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
+                        @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.V_Country }) |
+
+                        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                            {@*Checks to see if there is a current user*@
+                            if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                { }
+                            else
+                                {
+                                @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
+                            }
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+                    </td>
+                </tr>
+
+                }
+    </table>
+</div>
+
+<h2 align="center">Past Events</h2>
+<div class="card-body" id="event-table-body">
+    <table class="table" id="event-table">
+        <tr>
+            <th id="event-table-col-1">
+                Event Name:
+            </th>
+            <th id="event-table-col-2">
+                Date of Event:
+            </th>
+            <th id="event-table-col-3">
+                Location:
+            </th>
+            <th id="event-table-col-4"></th>
+        </tr>
+        @foreach (var item in Model.Where(x => x.Event_Date < System.DateTime.Now))
+            {
+
+            <tr class="table-row">
+                <td id="event-table-col-1">
+                    @if (item.Event_Cancelled == true)
+                        {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
+                    </td>
+                    <td id="event-table-col-2">
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+                    </td>
+                    <td id="event-table-col-3">
+                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_countries.C_Iso3)
+                        @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
+                    </td>
+                    <td id="event-table-col-4">
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
+                        @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
+                        @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
+                        @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.V_Country }) |
+
+                        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                            {@*Checks to see if there is a current user*@
+                            if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                { }
+                            else
+                                {
+                                @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
+                            }
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+                    </td>
+                </tr>
+                }
+    </table>
+</div>

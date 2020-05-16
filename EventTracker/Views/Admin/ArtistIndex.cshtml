@@ -1,49 +1,62 @@
 ﻿@model IEnumerable<Tracker.Data.tbl_artists>
 
 @{
-    ViewBag.Title = "GetArtists";
+    ViewBag.Title = "ArtistIndex";
 }
 
-<h2>GetArtists</h2>
+<h2>GetArtistList</h2>
+<body>
+    <p>
+        @Html.ActionLink("Add New Artist", "../Admin/ArtistCreate/")
+    </p>
 
-<p>
-    @Html.ActionLink("Create New", "NewArtist")
-</p>
-
-<div class="card">
     <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for an Artist.." title="Type in an Artist" , name="myInput">
     <div class="card-body" id="table-card-body">
-        <table class="table" id="myTable">
+        <table class="table" id="artist-table">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Artist_Name)
                 </th>
                 <th></th>
             </tr>
+            <div class="table-body">
+                @foreach (var item in Model)
+                    {
 
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Artist_Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "../Artist/EditArtist", new { Artist_ID = item.Artist_ID }) |
-                    @Html.ActionLink("Details", "GetArtistDetails", new { Artist_ID = item.Artist_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Artist_ID })
-                </td>
-            </tr>
-            }
+                    <tr class="table-row">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Artist_Name)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "../Admin/ArtistEdit", new { Artist_ID = item.Artist_ID }) |
+                            @Html.ActionLink("Details", "../Artist/GetArtistDetails", new { Artist_ID = item.Artist_ID }) |
+                            @Html.ActionLink("Delete", "../Artist/Delete", new { id = item.Artist_ID })
+                        </td>
+                    </tr>
+                    }
+            </div>
         </table>
     </div>
-</div>
+</body>
+
+<style>
+    .table-body {
+        overflow-y: scroll;
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        width: 100%;
+    }
+</style>
 
 <script>
     function myFunction() { // Script found at https://www.w3schools.com/howto/howto_js_filter_table.asp
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
+        table = document.getElementById("artist-table");
         tr = table.getElementsByTagName("tr");
 
         for (i = 0; i < tr.length; i++) {

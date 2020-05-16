@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = "GetArtistDetails";
 }
-<div class="body-content" position="fixed" height="100%" width="100%">
     <h1 align="center">
         <b>@Html.DisplayFor(model => model.Artist_Name)</b>
     </h1>
@@ -12,22 +11,21 @@
         <div class="card" id="profile-card">
             @if (Model.tbl_artistImages.Any())
             {
-            <dd>
-                <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" />
-            </dd>
+                <dd>
+                    <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" />
+                </dd>
             }
             else
             {
-            <img class="profile-image" src="@Url.Content("~/Content/images/default-profile.png")" />
+                <img class="profile-image" src="@Url.Content("~/Content/images/default-profile.jpeg")" />
             }
         </div>
         <div class="card" id="profile-history-card">
-            <div class="body-content">
+            <div class="body-content" style="background-color: transparent;">
                 @{Html.RenderAction("GetAnArtistsEventHistory", "Artist", new { Artist_ID = Model.Artist_ID }); }
             </div>
         </div>
     </div>
-</div>
 
 <p>
     @Html.ActionLink("Edit", "../Artist/EditArtist", new { Artist_ID = Model.Artist_ID }) |

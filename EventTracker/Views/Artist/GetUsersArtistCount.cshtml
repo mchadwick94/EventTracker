@@ -7,12 +7,10 @@
 @{
     ViewBag.Title = "GetSeenArtistsCount";
 }
-@if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
-{<body>
-        <div class="body-content" id="index-artist-count-body" position="fixed">
-
-            @{int i = 0;}
-            @foreach (var item in Model)
+@if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Artist")
+{
+            int i = 0;
+            foreach (var item in Model)
             {
                 if (i < 5)
                 {
@@ -33,8 +31,7 @@
                     i++;
                 }
             }
-        </div>
-    </body>
+
 }
 else
 {
@@ -111,14 +108,6 @@ else
         padding: 0% 0% 0% 0%;
     }
 
-    .artist-count-text {
-        position: absolute;
-        top: 46%;
-        width: 100%;
-        text-align: left;
-        font-size: 1.4em;
-        font-size-adjust: inherit;
-    }
 
     span {
         padding: 0% 6% 0% 2%;

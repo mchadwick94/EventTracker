@@ -1,24 +1,31 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<Tracker.Data.tbl_eventhistory>
-<link href="~/Content/StyleSheet.css" rel="stylesheet"/>
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = Request.QueryString["Event_Name"];
 }
 
-@if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Home")
-{
+@if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Event")
+    {
     int i = 0;
     foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now && m.tbl_events.Event_Cancelled == false).OrderBy(m => m.tbl_events.Event_Date))
-    {
-        if (i < 3)
         {
+        if (i < 4)
+            {
             <div class="col-sm-8 col-md-4 mmt-2" id="upcoming-event-image-tile">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" style="border-radius: 20px;">
                         <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
                             <div class="index-image" id="home-top-seen-card">
-                                <img class="profile-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_events.tbl_eventImages.First(f => f.Event_ID == item.tbl_events.Event_ID).File_ID })" />
+                                @if (item.tbl_events.tbl_eventImages.Any())
+                                    {
+                                    <img class="event-details-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_events.tbl_eventImages.First(f => f.Event_ID == item.tbl_events.Event_ID).File_ID })" />
+                                    }
+                                else
+                                    {
+                                    <img class="event-details-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                    }
                                 <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.tbl_events.Event_Name</span><br /><span class="overlay-span" id="second-line-span">@item.tbl_events.tbl_venues.V_City, @item.tbl_events.tbl_venues.tbl_countries.C_Name</span></h3>
                             </div>
                         </a>
@@ -26,113 +33,96 @@
                 </ul>
             </div>
             i++;
+            }
         }
     }
-}
 else
-{
+    {
 
     <h1>@User.Identity.GetUserName().ToUpper()'s events</h1>
+    <h2 align="center">Upcoming Events</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <h2>Upcoming Events</h2>
-            @*<th>
-                        @Html.DisplayNameFor(model => model.tbl_users.User_Username)
-                    </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tbl_events.Event_ID)
-                </th>*@
-            <th>
-                Event Name
-            </th>
-            <th>
-                Location
-            </th>
-            <th>
-                Date
-            </th>
-            <th></th>
-        </tr>
+    <div class="card-body" id="event-table-body">
+        <table class="table" id="event-table">
+            <tr>
+                <th id="event-table-col-1">
+                    Event Name:
+                </th>
+                <th id="event-table-col-2">
+                    Date of Event:
+                </th>
+                <th id="event-table-col-3">
+                    Location:
+                </th>
+                <th id="event-table-col-4"></th>
+            </tr>
 
-        @foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now).OrderBy(m => m.tbl_events.Event_Date))
-        {@*This orders the records by Event Date in descending order, rather than it being done within the model.*@
-        <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
-                </td>*@
-            <td>
-                @if (item.tbl_events.Event_Cancelled == true)
-                {<b style="color: darkred">CANCELLED: </b>}@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tbl_events.Event_Location)
-            </td>
-            <td>
-                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-            </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-                @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.tbl_events.Event_ID }) |
-                @Html.ActionLink("View Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
-                @Html.ActionLink("Remove Event", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
-            </td>
-        </tr>
-    }
-    </table>
-    <br />
-    <div class="card">
-        <h2 align="center">Past Events</h2>
-        <div class="card-body" id="event-card-body" position="fixed">
-            <table class="table" id="event-table">
-                <tr>
-
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.tbl_events.Event_ID)
-                        </th>*@
-                    <th>
-                        Event Name
-                    </th>
-                    <th>
-                        Location
-                    </th>
-                    <th>
-                        Date
-                    </th>
-                    <th></th>
-                </tr>
-
-                @foreach (var item in Model.Where(m => m.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(m => m.tbl_events.Event_Date))
+            @foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now).OrderBy(m => m.tbl_events.Event_Date))
                 {@*This orders the records by Event Date in descending order, rather than it being done within the model.*@
-                <tr>
-                    @* <td>
-                            @Html.DisplayFor(modelItem => item.tbl_events.Event_ID)
-                        </td>*@
-                    <td>
+                <tr class="table-row">
+                    <td id="event-table-col-1">
                         @if (item.tbl_events.Event_Cancelled == true)
-                        {<b style="color: darkred">CANCELLED: </b>}@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tbl_events.Event_Location)
-                    </td>
-                    <td>
-                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-                        @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
-                        @Html.ActionLink("View Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
-                        @Html.ActionLink("Remove Event", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
-                    </td>
-                </tr>
-            }
-            </table>
-        </div>
+                            {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+                        </td>
+                        <td id="event-table-col-2">
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+                        </td>
+                        <td id="event-table-col-3">
+                            <b>@Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_countries.C_Iso3)
+                            @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_events.tbl_venues.Venue_ID })
+                        </td>
+                        <td id="event-table-col-4">
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
+                            @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.tbl_events.Event_ID }) |
+                            @Html.ActionLink("View Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
+                            @Html.ActionLink("Remove Event", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
+                        </td>
+                    </tr>
+                    }
+        </table>
     </div>
-}
+    <h2 align="center">Past Events</h2>
+    <div class="card-body" id="event-table-body">
+        <table class="table" id="event-table">
+            <tr>
+                <th id="event-table-col-1">
+                    Event Name:
+                </th>
+                <th id="event-table-col-2">
+                    Date of Event:
+                </th>
+                <th id="event-table-col-3">
+                    Location:
+                </th>
+                <th id="event-table-col-4"></th>
+            </tr>
+
+            @foreach (var item in Model.Where(m => m.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(m => m.tbl_events.Event_Date))
+                {@*This orders the records by Event Date in descending order, rather than it being done within the model.*@
+                <tr class="table-row">
+                    <td id="event-table-col-1">
+                        @if (item.tbl_events.Event_Cancelled == true)
+                            {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
+                        </td>
+                        <td id="event-table-col-2">
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
+                        </td>
+                        <td id="event-table-col-3">
+                            <b>@Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_countries.C_Iso3)
+                            @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_events.tbl_venues.Venue_ID })
+                        </td>
+                        <td id="event-table-col-4">
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
+                            @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.tbl_events.Event_ID }) |
+                            @Html.ActionLink("View Lineup", "../Event/GetUsersLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
+                            @Html.ActionLink("Remove Event", "../Event/DeleteFromUserHistory", new { History_ID = item.History_ID })
+                        </td>
+                    </tr>
+                    }
+        </table>
+    </div>
+
+    }
 <script>
     function myFunction() {
         var str = document.getElementById("table-header").innerHTML;

@@ -6,206 +6,45 @@
     ViewBag.Title = "GetEvents";
 }
 
-<h2>GetEvents</h2>
+<div class="body-content">
+    <div class="event-index-body">
 
-<p>
-    @Html.ActionLink("Create New", "../Application/GetCountries")
-</p>
-<table class="table" id="event-table">
-    <tr>
-        <h2>Upcoming Events</h2>
-        <th id="event-table-col-1">
-            Event Name:
-        </th>
-        <th id="event-table-col-2">
-            Date of Event:
-        </th>
-        <th id="event-table-col-3">
-            Location:
-        </th>
-        <th id="event-table-col-4"></th>
-    </tr>
+        <div class="card" id="event-index-filter-card">
+            FILTER OPTIONS HERE
+        </div>
+        <div class="card" id="user-event-card">
 
-    @foreach (var item in Model.Where(x => x.Event_Date >= System.DateTime.Now).OrderBy(x => x.Event_Date))
-    {
-
-        <tr class="table-row">
-            <td id="event-table-col-1" class="event-table-row">
-                @if (item.Event_Cancelled == true)
-                {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
-            </td>
-
-            <td id="event-table-col-2" class="event-table-row">
-                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-            </td>
-            <td id="event-table-col-3" class="event-table-row">
-                <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_countries.C_Iso3)
-                @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
-            </td>
-            <td id="event-table-col-4" class="event-table-row">
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-                @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.V_Country }) |
-
-                @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                {@*Checks to see if there is a current user*@
-                if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
-                { }
-                else
+            @foreach (var item in Model.Where(x => x.Event_Date > System.DateTime.Now).OrderBy(x => x.Event_Date))
                 {
-                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
-            }
-            @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
-            </td>
-        </tr>
-    }
-</table>
-
-<br />
-<br />
-<table class="table" id="event-table">
-    <tr >
-        <h2>Past Events</h2>
-        <th id="event-table-col-1">
-            Event Name:
-        </th>
-        <th id="event-table-col-2">
-            Date of Event:
-        </th>
-        <th id="event-table-col-3">
-            Location:
-        </th>
-        <th id="event-table-col-4"></th>
-    </tr>
-    @foreach (var item in Model.Where(x => x.Event_Date < System.DateTime.Now))
-    {
-
-        <tr  class="table-row">
-            <td id="event-table-col-1">
-                @if (item.Event_Cancelled == true)
-                {<b style="color: #b08c00">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
-            </td>
-            <td id="event-table-col-2">
-                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-            </td>
-            <td id="event-table-col-3">
-                <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_countries.C_Iso3)
-                @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
-            </td>
-            <td id="event-table-col-4">
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-                @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-                @Html.ActionLink("Edit", "../Event/EditEvent", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.V_Country }) |
-
-                @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                {@*Checks to see if there is a current user*@
-                if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
-                { }
-                else
-                {
-                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
-            }
-            @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
-            </td>
-        </tr>
-
-    }
-</table>
-
+                <div class="card" id="event-tile-card">
+                    <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                        <div class="card-body">
+                            <div class="event-index-image" id="home-top-seen-card">
+                                @if (item.tbl_eventImages.Any())
+                                    {
+                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                    }
+                                else
+                                    {
+                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                    }
+                            </div>
+                            <ul class="list-group list-group-flush" id="event-index-details">
+                                <li class="list-group-item" id="event-index-name"><b>@Html.DisplayFor(modelItem => item.Event_Name)</b></li>
+                                <li class="list-group-item" id="event-index-location">
+                                    <span><img id="event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_venues.V_Name,</span> <br /><span id="second-line-span">@item.tbl_venues.V_City, @item.tbl_venues.tbl_countries.C_Name</span>
+                                </li>
+                                <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date))</span></li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+                }
+        </div>
+    </div>
+</div>
 
 <style>
-        #upcoming-event-image-tile {
-        height: inherit;
-        display: inline-block;
-        min-width: 32%;
-        max-width: 32%;
-        padding: 0% 0% 0% 0%;
-    }
 
-        
-    .count-artist-image {
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-        margin: 0px;
-        border: 3px solid #1f1f1f;
-        border-radius: 20px;
-        background-position: center center;
-        overflow: hidden;
-        object-fit: cover;
-        background-size: cover;
-    }
 
-    .list-group-item {
-        padding: 0%;
-        height: 100%;
-        width: inherit;
-    }
-
-    .index-image {
-        height: 100%;
-        position: relative;
-        width: 100%;
-    }
-
-    #index-artist-count-body {
-        height: 100%;
-        width: 100%;
-        padding: 0% 0% 0% 0%;
-    }
-
-    .artist-count-text {
-        position: absolute;
-        top: 46%;
-        width: 100%;
-        text-align: left;
-        font-size: 1.4em;
-        font-size-adjust: inherit;
-    }
-
-    span {
-        padding: 0% 6% 0% 2%;
-    }
-
-    .list-group-item, span {
-        letter-spacing: -1px;
-        background: #000000; /* fallback color */
-        opacity: 0.8;
-        color: white;
-        height: 100%;
-        width: 100%;
-        position: inherit;
-        display: inline-block;
-        margin: 0px;
-        background-position: center center;
-        overflow: hidden;
-        object-fit: cover;
-        background-size: cover;
-    }
-
-    #top-line-span {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        display: flex; /*added*/
-        flex-direction: inherit; /*added*/
-        display: inline-block;
-        margin: 0px;
-        background-position: center center;
-        overflow:  visible;
-        object-fit: cover;
-        background-size: cover;
-            text-overflow: ellipsis;
-    white-space:  nowrap;
-    }
-
-    #second-line-span {
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        overflow: hidden;
-        display: flex; /*added*/
-        flex-direction: inherit; /*added*/
-    }
-</style>
 </style>
