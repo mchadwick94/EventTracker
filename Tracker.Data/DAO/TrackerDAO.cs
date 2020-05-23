@@ -69,7 +69,6 @@ namespace Tracker.Data.DAO
             _event.Event_Name = _events.Event_Name;
             _event.Event_Location = _events.Event_Location;
             _event.Event_Date = _events.Event_Date;
-            _event.Event_Location = _events.Event_Location;
             _event.Event_Cancelled = _events.Event_Cancelled;
             _context.SaveChanges();
             }
@@ -270,13 +269,13 @@ namespace Tracker.Data.DAO
             {
             IQueryable<tbl_venues> _Venues;
             _Venues = from tbl_venues in _context.tbl_venues select tbl_venues;
-            return _Venues.OrderBy(i => i.V_City).ThenBy(n => n.V_Name).ToList<tbl_venues>();
+            return _Venues.OrderBy(i => i.tbl_cities.C_Name).ThenBy(n => n.V_Name).ToList<tbl_venues>();
             }
 
-        public IList<tbl_venues> GetVenuesByCountry(int Country_ID)
+        public IList<tbl_venues> GetVenuesByCountry(string C_Iso)
             {
             IQueryable<tbl_venues> _Venues;
-            _Venues = from tbl_venues in _context.tbl_venues where tbl_venues.V_Country == Country_ID select tbl_venues;
+            _Venues = from tbl_venues in _context.tbl_venues where tbl_venues.tbl_cities.CC_ISO == C_Iso select tbl_venues;
             return _Venues.OrderBy(i => i.V_City).ThenBy(n => n.V_Name).ToList<tbl_venues>();
             }
 
@@ -301,7 +300,7 @@ namespace Tracker.Data.DAO
             _venue.V_StreetAddress = _venues.V_StreetAddress;
             _venue.V_City = _venues.V_City;
             _venue.V_Postcode = _venues.V_Postcode;
-            _venue.V_Country = _venues.V_Country;
+            _venue.V_City = _venues.V_City;
 
             _context.SaveChanges();
             }
@@ -319,7 +318,14 @@ namespace Tracker.Data.DAO
             {
             IQueryable<tbl_countries> _Countries;
             _Countries = from tbl_countries in _context.tbl_countries select tbl_countries;
-            return _Countries.ToList<tbl_countries>();
+            return _Countries.OrderBy(x => x.C_Name).ToList<tbl_countries>();
+            }
+
+        public IList<tbl_cities> GetCities(string Country_ISO)
+            {
+            IQueryable<tbl_cities> _Cities;
+            _Cities = from tbl_cities in _context.tbl_cities where tbl_cities.CC_ISO == Country_ISO select tbl_cities;
+            return _Cities.OrderBy(x => x.C_Name).ToList<tbl_cities>();
             }
 
         //-------------------------------------------------------------------------------

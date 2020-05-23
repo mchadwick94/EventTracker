@@ -27,11 +27,19 @@
     <Property Name="Artist_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Artist_Name" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="tbl_cities">
+    <Key>
+      <PropertyRef Name="City_ID" />
+    </Key>
+    <Property Name="City_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CC_FIPS" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CC_ISO" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="C_Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="tbl_countries">
     <Key>
-      <PropertyRef Name="Country_ID" />
+      <PropertyRef Name="C_Iso" />
     </Key>
-    <Property Name="Country_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="C_Iso" Type="char" MaxLength="2" Nullable="false" />
     <Property Name="C_Name" Type="varchar" MaxLength="80" Nullable="false" />
     <Property Name="C_Iso3" Type="char" MaxLength="3" />
@@ -48,11 +56,11 @@
     <Key>
       <PropertyRef Name="File_ID" />
     </Key>
-    <Property Name="File_ID" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-    <Property Name="File_Name" Nullable="false" MaxLength="255" Type="nvarchar" />
-    <Property Name="Content_Type" Nullable="false" MaxLength="100" Type="nvarchar" />
-    <Property Name="Content" Nullable="false" Type="varbinary(max)" />
-    <Property Name="Event_ID" Nullable="false" Type="int" />
+    <Property Name="File_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="File_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Content_Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Event_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_eventlineup">
     <Key>
@@ -79,8 +87,7 @@
     <Property Name="Venue_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="V_Name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="V_StreetAddress" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="V_City" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="V_Country" Type="int" Nullable="false" />
+    <Property Name="V_City" Type="int" Nullable="false" />
     <Property Name="V_Postcode" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <Association Name="FK__tbl_artis__Artis__18B6AB08">
@@ -131,18 +138,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__tbl_venue__V_Cou__02925FBF">
-    <End Role="tbl_countries" Type="Self.tbl_countries" Multiplicity="1" />
-    <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_countries">
-        <PropertyRef Name="Country_ID" />
-      </Principal>
-      <Dependent Role="tbl_venues">
-        <PropertyRef Name="V_Country" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tbl_eventhistory_tbl_events">
     <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
     <End Role="tbl_eventhistory" Type="Self.tbl_eventhistory" Multiplicity="*" />
@@ -156,8 +151,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_eventImages_tbl_events">
-    <End Type="Self.tbl_events" Multiplicity="1" Role="tbl_events" />
-    <End Type="Self.tbl_eventImages" Multiplicity="*" Role="tbl_eventImages" />
+    <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
+    <End Role="tbl_eventImages" Type="Self.tbl_eventImages" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_events">
         <PropertyRef Name="Event_ID" />
@@ -176,6 +171,30 @@
       </Principal>
       <Dependent Role="tbl_events">
         <PropertyRef Name="Event_Location" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_venues_tbl_cities">
+    <End Role="tbl_cities" Type="Self.tbl_cities" Multiplicity="1" />
+    <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_cities">
+        <PropertyRef Name="City_ID" />
+      </Principal>
+      <Dependent Role="tbl_venues">
+        <PropertyRef Name="V_City" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_tbl_countriesFK_tbl_cities">
+    <End Role="tbl_countries" Type="Self.tbl_countries" Multiplicity="1" />
+    <End Role="tbl_cities" Type="Self.tbl_cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_countries">
+        <PropertyRef Name="C_Iso" />
+      </Principal>
+      <Dependent Role="tbl_cities">
+        <PropertyRef Name="CC_ISO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -207,6 +226,7 @@
     <EntitySet Name="tbl_artisthistory" EntityType="Self.tbl_artisthistory" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_artistImages" EntityType="Self.tbl_artistImages" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_artists" EntityType="Self.tbl_artists" Schema="db_eventtracker" store:Type="Tables" />
+    <EntitySet Name="tbl_cities" EntityType="Self.tbl_cities" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_countries" EntityType="Self.tbl_countries" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_eventhistory" EntityType="Self.tbl_eventhistory" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_eventImages" EntityType="Self.tbl_eventImages" Schema="db_eventtracker" store:Type="Tables" />
@@ -229,21 +249,25 @@
       <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
       <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
     </AssociationSet>
-    <AssociationSet Name="FK__tbl_venue__V_Cou__02925FBF" Association="Self.FK__tbl_venue__V_Cou__02925FBF">
-      <End Role="tbl_countries" EntitySet="tbl_countries" />
-      <End Role="tbl_venues" EntitySet="tbl_venues" />
-    </AssociationSet>
     <AssociationSet Name="FK_tbl_eventhistory_tbl_events" Association="Self.FK_tbl_eventhistory_tbl_events">
       <End Role="tbl_events" EntitySet="tbl_events" />
       <End Role="tbl_eventhistory" EntitySet="tbl_eventhistory" />
     </AssociationSet>
     <AssociationSet Name="FK_tbl_eventImages_tbl_events" Association="Self.FK_tbl_eventImages_tbl_events">
-      <End EntitySet="tbl_events" Role="tbl_events" />
-      <End EntitySet="tbl_eventImages" Role="tbl_eventImages" />
+      <End Role="tbl_events" EntitySet="tbl_events" />
+      <End Role="tbl_eventImages" EntitySet="tbl_eventImages" />
     </AssociationSet>
     <AssociationSet Name="FK_tbl_events_tbl_venues" Association="Self.FK_tbl_events_tbl_venues">
       <End Role="tbl_venues" EntitySet="tbl_venues" />
       <End Role="tbl_events" EntitySet="tbl_events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_venues_tbl_cities" Association="Self.FK_tbl_venues_tbl_cities">
+      <End Role="tbl_cities" EntitySet="tbl_cities" />
+      <End Role="tbl_venues" EntitySet="tbl_venues" />
+    </AssociationSet>
+    <AssociationSet Name="PK_tbl_countriesFK_tbl_cities" Association="Self.PK_tbl_countriesFK_tbl_cities">
+      <End Role="tbl_countries" EntitySet="tbl_countries" />
+      <End Role="tbl_cities" EntitySet="tbl_cities" />
     </AssociationSet>
     <AssociationSet Name="tbl_eventlineup$tbl_eventlineup_ibfk_1" Association="Self.tbl_eventlineup$tbl_eventlineup_ibfk_1">
       <End Role="tbl_events" EntitySet="tbl_events" />

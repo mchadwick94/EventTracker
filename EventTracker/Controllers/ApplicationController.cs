@@ -10,9 +10,6 @@ namespace EventTracker.Controllers
             {
             _trackerService = new Tracker.Services.Service.TrackerService();
             ViewBag.Artists = _trackerService.GetArtists();
-            ViewBag.Countries = _trackerService.GetCountries();
             }
-
-        // GET: Application
         }
     }

@@ -134,8 +134,8 @@ namespace EventTracker.Controllers
                             }
                         _trackerService.AddArtistImage(newImage);
                         }
-                    _trackerService.EditArtist(_artist);
                     }
+                _trackerService.EditArtist(_artist);
 
                 return RedirectToAction("ArtistIndex");
                 }
@@ -166,15 +166,15 @@ namespace EventTracker.Controllers
 
         //CREATE a new event
         [HttpGet]
-        public ActionResult EventCreate(int Country_ID)
+        public ActionResult EventCreate(string C_Iso)
             {
             List<SelectListItem> VenuesList = new List<SelectListItem>();
-            foreach (var item in _trackerService.GetVenuesByCountry(Country_ID))
+            foreach (var item in _trackerService.GetVenuesByCountry(C_Iso))
                 {
                 VenuesList.Add(
                     new SelectListItem()
                         {
-                        Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                        Text = item.tbl_cities.C_Name.ToUpper() + ": " + item.V_Name,
                         Value = item.Venue_ID.ToString()
                         });
                 }
@@ -192,8 +192,8 @@ namespace EventTracker.Controllers
                     ModelState.AddModelError("Event_Name", "Need an Event Name");
                     }
 
-                var doesArtistExist = _context.tbl_events.Any(x => x.Event_Name == _event.Event_Name); //Creates a variable which is assigned the value of any Event in tbl_events matching the Event_Name given in the form (_event)
-                if (doesArtistExist) //If there is a value assigned to the variable
+                var doesEventExist = _context.tbl_events.Any(x => x.Event_Name == _event.Event_Name); //Creates a variable which is assigned the value of any Event in tbl_events matching the Event_Name given in the form (_event)
+                if (doesEventExist) //If there is a value assigned to the variable
                     {
                     ModelState.AddModelError("Event_Name", "This Event already exists"); //throw an error
                     return View();
@@ -227,20 +227,19 @@ namespace EventTracker.Controllers
                 }
             }
 
-        //Edits the details of an event
         [HttpGet] //Retrieves the details of the event being edited
-        public ActionResult EventEdit(int Event_ID, int Country_ID)
+        public ActionResult EventEdit(int Event_ID, string Country_ID)
             {
             List<SelectListItem> VenuesList = new List<SelectListItem>();
 
-            if (Country_ID == 0)
+            if (string.IsNullOrEmpty(Country_ID))
                 {
                 foreach (var item in _trackerService.GetVenues())
                     {
                     VenuesList.Add(
                         new SelectListItem()
                             {
-                            Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                            Text = item.tbl_cities.C_Name.ToUpper() + ": " + item.V_Name,
                             Value = item.Venue_ID.ToString()
                             });
                     ViewBag.Venues = VenuesList;
@@ -253,7 +252,7 @@ namespace EventTracker.Controllers
                     VenuesList.Add(
                         new SelectListItem()
                             {
-                            Text = item.V_City.ToUpper() + ": " + item.V_Name,
+                            Text = item.tbl_cities.C_Name.ToUpper() + ": " + item.V_Name,
                             Value = item.Venue_ID.ToString()
                             });
                     ViewBag.Venues = VenuesList;
@@ -261,6 +260,7 @@ namespace EventTracker.Controllers
                 }
 
             return View(_trackerService.GetEventDetails(Event_ID));
+
             }
 
         [HttpPost] //Posts the new variables into the database at the specific event being edited
@@ -299,7 +299,7 @@ namespace EventTracker.Controllers
                     _trackerService.EditEvent(_event);
                     }
                 _trackerService.EditEvent(_event);
-                return RedirectToAction("EventIndex");
+                return RedirectToAction("GetEventDetails", "Event", new { Event_ID = Event_ID });
                 }
             catch
                 {

@@ -88,6 +88,9 @@
     <Compile Include="tbl_artists.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_cities.cs">
+      <DependentUpon>TrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_countries.cs">
       <DependentUpon>TrackerModel.tt</DependentUpon>
     </Compile>

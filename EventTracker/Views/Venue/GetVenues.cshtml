@@ -24,12 +24,12 @@
             @Html.DisplayNameFor(model => model.V_Postcode)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tbl_countries.C_Name)
+            @Html.DisplayNameFor(model => model.tbl_cities.tbl_countries.C_Name)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model.OrderBy(a => a.tbl_countries.C_Name).ThenBy(b => b.V_City).ThenBy(c => c.V_Name))
+    @foreach (var item in Model.OrderBy(a => a.tbl_cities.tbl_countries.C_Name).ThenBy(b => b.V_City).ThenBy(c => c.V_Name))
     {
     <tr>
         <td>
@@ -45,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.V_Postcode)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.tbl_countries.C_Name)
+            @Html.DisplayFor(modelItem => item.tbl_cities.tbl_countries.C_Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "EditVenue", new { Venue_ID = item.Venue_ID }) |

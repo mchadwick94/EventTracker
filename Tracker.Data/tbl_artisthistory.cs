@@ -19,7 +19,7 @@ using System;
     public partial class tbl_artisthistory
 {
         [Key]
-    public int ArtistHistory_ID { get; set; }
+        public int ArtistHistory_ID { get; set; }
 
     public string User_ID { get; set; }
 

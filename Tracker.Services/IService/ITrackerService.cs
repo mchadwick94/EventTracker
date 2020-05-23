@@ -98,7 +98,7 @@ namespace Tracker.Services.IService
         // VENUE RELATED FUNCTIONS
         IList<Tracker.Data.tbl_venues> GetVenues();
 
-        IList<tbl_venues> GetVenuesByCountry(int Country_ID);
+        IList<tbl_venues> GetVenuesByCountry(string C_Iso);
 
         Tracker.Data.tbl_venues GetVenueDetails(int Venue_ID);
 
@@ -112,6 +112,8 @@ namespace Tracker.Services.IService
         // Country RELATED FUNCTIONS
         //Gets a list of all the countries within the database.
         IList<Tracker.Data.tbl_countries> GetCountries();
+
+        IList<tbl_cities> GetCities(string Country_ISO);
 
         //-------------------------------------------------------------------------------
         // File RELATED FUNCTIONS

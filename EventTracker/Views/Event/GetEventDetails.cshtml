@@ -23,7 +23,7 @@
                                     <span class="overlay-span" id="top-line-span">@Model.Event_Name - @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Event_Date))</span><br />
                                     <span class="overlay-span" id="second-line-span">
 
-                                        <a href="@Url.Action("Redirect", "Venue", new { V_Name = Model.tbl_venues.V_Name, V_StreetAddress = Model.tbl_venues.V_StreetAddress, V_City = Model.tbl_venues.V_City })" target="_blank"> @Model.tbl_venues.V_Name, @Model.tbl_venues.V_City, @Model.tbl_venues.tbl_countries.C_Name</a>
+                                        <a href="@Url.Action("Redirect", "Venue", new { V_Name = Model.tbl_venues.V_Name, V_StreetAddress = Model.tbl_venues.V_StreetAddress, V_City = Model.tbl_venues.tbl_cities.C_Name })" target="_blank"> @Model.tbl_venues.V_Name, @Model.tbl_venues.tbl_cities.C_Name, @Model.tbl_venues.tbl_cities.tbl_countries.C_Name </a>
                                     </span>
                                 </h3>
                             </div>
@@ -34,7 +34,7 @@
         </div>
         <br />
         <p>
-            @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = Model.Event_ID, Country_ID = Model.tbl_venues.V_Country }) |
+            @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = Model.Event_ID, C_ISO = Model.tbl_venues.tbl_cities.tbl_countries.C_Iso }) |
             @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
         </p>
 

@@ -23,15 +23,12 @@ using System;
     public tbl_countries()
     {
 
-        this.tbl_venues = new HashSet<tbl_venues>();
+        this.tbl_cities = new HashSet<tbl_cities>();
 
     }
 
         [Key]
-
-        public int Country_ID { get; set; }
-
-    public string C_Iso { get; set; }
+        public string C_Iso { get; set; }
 
     public string C_Name { get; set; }
 
@@ -41,7 +38,7 @@ using System;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<tbl_venues> tbl_venues { get; set; }
+    public virtual ICollection<tbl_cities> tbl_cities { get; set; }
 
 }
 

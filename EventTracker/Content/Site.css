@@ -14,10 +14,8 @@
 /* Set padding to keep content from hitting the edges */
 .body-content {
     width: 100%;
-    padding: 1% 5% 1% 5%;
+    padding: 1% 0% 1% 5%;
     min-height: fit-content;
-    max-height: 100vw;
-
 }
 
 .container body-content {
@@ -37,7 +35,7 @@
 input {
     max-width: 100% !important;
     color: #898989 !important;
-    background-color: inherit !important;
+    background-color: #222222 !important;
     border-color: #6d6d6d !important;
 }
 #index-body {
@@ -56,13 +54,37 @@ button {
 }
 
 .center-h1 {
-    color: #b08c00;
+    color: #68bc51;
     text-transform: uppercase;
     font-size: 4em;
-text-align: center;
+    text-align: center;
 }
 
-h1, h2, h3, h4 {
-    color: #b08c00 !important;
+h1 {
+    color: #68bc51 !important;
     margin-top: 0;
+}
+.navbar-header {
+    width: 20%;
+}
+
+.nav-container a, .navbar-inverse .navbar-nav > li > a {
+    text-decoration: none !important;
+    font-weight: bold;
+    color: #ffffff !important;
+}
+
+
+
+.body-content a {
+    color: #abff94 !important;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #ffffff !important;
+}
+
+a:visited, a:focus {
+    color: #abff94 !important;
 }

@@ -38,17 +38,19 @@ public partial class TrackerEntities : DbContext
 
     public virtual DbSet<tbl_artists> tbl_artists { get; set; }
 
-    public virtual DbSet<tbl_countries> tbl_countries { get; set; }
-
     public virtual DbSet<tbl_eventhistory> tbl_eventhistory { get; set; }
 
     public virtual DbSet<tbl_eventlineup> tbl_eventlineup { get; set; }
 
     public virtual DbSet<tbl_events> tbl_events { get; set; }
 
-    public virtual DbSet<tbl_venues> tbl_venues { get; set; }
-
     public virtual DbSet<tbl_eventImages> tbl_eventImages { get; set; }
+
+    public virtual DbSet<tbl_cities> tbl_cities { get; set; }
+
+    public virtual DbSet<tbl_countries> tbl_countries { get; set; }
+
+    public virtual DbSet<tbl_venues> tbl_venues { get; set; }
 
 }
 

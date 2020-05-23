@@ -19,7 +19,6 @@ using System;
     public partial class tbl_artistImages
 {
         [Key]
-
         public int File_ID { get; set; }
 
     public string File_Name { get; set; }

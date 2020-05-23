@@ -99,7 +99,7 @@ namespace Tracker.Data.IDAO
         // VENUE RELATED FUNCTIONS
         IList<Tracker.Data.tbl_venues> GetVenues();
 
-        IList<tbl_venues> GetVenuesByCountry(int Country_ID);
+        IList<tbl_venues> GetVenuesByCountry(string C_Iso);
 
         void CreateVenue(tbl_venues _venue);
 
@@ -113,6 +113,8 @@ namespace Tracker.Data.IDAO
         // Country RELATED FUNCTIONS
         //Gets a list of all the countries within the database.
         IList<Tracker.Data.tbl_countries> GetCountries();
+
+        IList<tbl_cities> GetCities(string Country_ISO);
 
         //-------------------------------------------------------------------------------
         // File RELATED FUNCTIONS

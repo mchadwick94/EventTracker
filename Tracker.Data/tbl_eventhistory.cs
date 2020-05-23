@@ -19,7 +19,6 @@ using System;
     public partial class tbl_eventhistory
 {
         [Key]
-
         public int History_ID { get; set; }
 
     public string User_ID { get; set; }

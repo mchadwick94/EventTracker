@@ -44,17 +44,25 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.tbl_countries.C_Iso)
+            @Html.DisplayNameFor(model => model.tbl_cities.C_Name)
+
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tbl_cities.C_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_cities.tbl_countries.C_Iso)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.tbl_countries.C_Iso)
+            @Html.DisplayFor(model => model.tbl_cities.tbl_countries.C_Iso)
         </dd>
 
         @Html.ActionLink("View on Google Maps", "../Venue/Redirect", new { V_Name = Model.V_Name, V_StreetAddress = Model.V_StreetAddress, V_City = Model.V_City }, new { target = "_blank" })
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Venue_ID }) |
+    @Html.ActionLink("Edit", "EditVenue", new { Venue_ID = Model.Venue_ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

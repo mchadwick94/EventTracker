@@ -16,35 +16,33 @@ using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class tbl_venues
+    public partial class tbl_cities
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public tbl_venues()
+    public tbl_cities()
     {
 
-        this.tbl_events = new HashSet<tbl_events>();
+        this.tbl_venues = new HashSet<tbl_venues>();
 
     }
 
         [Key]
-        public int Venue_ID { get; set; }
+        public int City_ID { get; set; }
 
-    public string V_Name { get; set; }
+    public string CC_FIPS { get; set; }
 
-    public string V_StreetAddress { get; set; }
+    public string CC_ISO { get; set; }
 
-    public int V_City { get; set; }
-
-    public string V_Postcode { get; set; }
+    public string C_Name { get; set; }
 
 
-
-    public virtual tbl_cities tbl_cities { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<tbl_events> tbl_events { get; set; }
+    public virtual ICollection<tbl_venues> tbl_venues { get; set; }
+
+    public virtual tbl_countries tbl_countries { get; set; }
 
 }
 

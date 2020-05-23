@@ -34,7 +34,6 @@ using System;
     }
 
         [Key]
-
         public int Event_ID { get; set; }
 
     public string Event_Name { get; set; }
@@ -42,7 +41,6 @@ using System;
     public System.DateTime Event_Date { get; set; }
 
     public int Event_Location { get; set; }
-        public int Event_Country { get; set; }
 
     public bool Event_Cancelled { get; set; }
 
@@ -60,11 +58,11 @@ using System;
 
     public virtual ICollection<tbl_eventlineup> tbl_eventlineup { get; set; }
 
-    public virtual tbl_venues tbl_venues { get; set; }
-
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<tbl_eventImages> tbl_eventImages { get; set; }
+
+    public virtual tbl_venues tbl_venues { get; set; }
 
 }
 

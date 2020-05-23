@@ -202,6 +202,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VenueController.cs" />
+    <Compile Include="EventBusinessLogic.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -320,12 +321,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\calendar-icon-dark.png" />
     <Content Include="Content\images\calendar-icon.png" />
     <Content Include="Content\images\default-profile.jpeg" />
     <Content Include="Content\images\default_image.jpg" />
     <Content Include="Content\images\location-pin.png" />
+    <Content Include="Content\images\name-icon.png" />
     <Content Include="Content\images\search.jpg" />
     <Content Include="Content\images\search.png" />
+    <Content Include="Content\purged.css" />
     <Content Include="Content\StyleSheet.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -539,7 +543,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Artist\GetArtists.cshtml" />
-    <Content Include="Views\Admin\EventEdit.cshtml" />
     <Content Include="Views\Event\GetEventDetails.cshtml" />
     <Content Include="Views\Admin\EventIndex.cshtml" />
     <Content Include="Views\Event\GetLineUp.cshtml" />
@@ -579,6 +582,9 @@
     <Content Include="Views\Event\GetEvents.cshtml" />
     <Content Include="Views\Admin\EventCreate.cshtml" />
     <Content Include="Views\Admin\ArtistCreate.cshtml" />
+    <Content Include="Views\Event\GetEventsPartial.cshtml" />
+    <Content Include="Views\Event\GetFilteredEvents.cshtml" />
+    <Content Include="Views\Admin\EventEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

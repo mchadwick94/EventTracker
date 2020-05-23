@@ -28,7 +28,6 @@ using System;
     }
 
         [Key]
-
         public int Lineup_ID { get; set; }
 
     public int Event_ID { get; set; }

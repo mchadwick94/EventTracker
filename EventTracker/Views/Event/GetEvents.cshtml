@@ -5,46 +5,180 @@
 @{
     ViewBag.Title = "GetEvents";
 }
+<body class="event-index-body-class">
+    <div class="body-content">
+        <div class="event-index-body" id="events-body-content">
 
-<div class="body-content">
-    <div class="event-index-body">
+            <div class="card" id="event-index-filter-card">
+                <header class="filter-header" id="event-index-filter-header"><h3>Filter Options</h3></header>
+                <div class="container" id="event-index-filter-body">
+                    <div class="header" id="event-index-filter-label">
+                        <h4>Select Country:</h4>
+                    </div>
 
-        <div class="card" id="event-index-filter-card">
-            FILTER OPTIONS HERE
-        </div>
-        <div class="card" id="user-event-card">
+                    <div class="container" id="event-filter-options">
+                        @Html.DropDownList("countries", new SelectList(ViewBag.Countries, "Value", "Text"), "- Select A Country -", new { @class = "container", @id = "event-filter-country" })
+                    </div>
+                    <div class="header" id="event-index-filter-label">
+                        <h4>Select City:</h4>
+                    </div>
+                    <div class="container" id="event-filter-options">
+                        @Html.DropDownList("cities", new SelectList(ViewBag.Cities, "Value", "Text"), "- Select A City -", new { @class = "container", @id = "event-filter-city" })
+                    </div>
 
-            @foreach (var item in Model.Where(x => x.Event_Date > System.DateTime.Now).OrderBy(x => x.Event_Date))
-                {
-                <div class="card" id="event-tile-card">
-                    <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
-                        <div class="card-body">
-                            <div class="event-index-image" id="home-top-seen-card">
-                                @if (item.tbl_eventImages.Any())
-                                    {
-                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
-                                    }
-                                else
-                                    {
-                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
-                                    }
-                            </div>
-                            <ul class="list-group list-group-flush" id="event-index-details">
-                                <li class="list-group-item" id="event-index-name"><b>@Html.DisplayFor(modelItem => item.Event_Name)</b></li>
-                                <li class="list-group-item" id="event-index-location">
-                                    <span><img id="event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_venues.V_Name,</span> <br /><span id="second-line-span">@item.tbl_venues.V_City, @item.tbl_venues.tbl_countries.C_Name</span>
-                                </li>
-                                <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date))</span></li>
-                            </ul>
-                        </div>
-                    </a>
+                    <div class="header" id="event-index-filter-label">
+                        <h4>Select Venue:</h4>
+                    </div>
+                    <div class="container" id="event-filter-options">
+                        @Html.DropDownList("venues", new SelectList(ViewBag.Venues, "Value", "Text"), "- Select A Venue -", new { @class = "container", @id = "event-filter-venue" })
+                    </div>
+                    @*<div class="grid-container" id="event-filter-label-grid">
+                    <div class="header" id="event-index-filter-label-50">
+                        <h4>Start Date:</h4>
+                    </div>
+                    <div class="header" id="event-index-filter-label-50">
+                        <h4>End Date:</h4>
+                    </div>
                 </div>
-                }
+                <div class="grid-container" id="event-filter-options-50">
+            <input class="datepicker" />
+            <button type="button" class="ui-datepicker-trigger">
+                <img src="~/Content/images/calendar-icon-dark.png" id="event-filter-date-image" />
+            </button>
+            <input class="datepicker" />
+            <button type="button" class="ui-datepicker-trigger">
+                <img src="~/Content/images/calendar-icon-dark.png" id="event-filter-date-image" />
+            </button>
+        </div><br /><br />
+        <div class="header" id="event-index-filter-label">
+            <h4>Filter By Artists:</h4>
+        </div>
+        <div class="container" id="event-filter-options">
+            <input type="search" />
+        </div>
+        <div class="container" id="event-filter-artists">
+            <table id="event-filter-by-artist-display">
+                @*For (var item in viewbag.selectedArtists)* @
+                <tr>
+                    <td>◘</td>
+                    <td>Artist Name</td>
+                </tr>
+                <tr>
+                    <td>◘</td>
+                    <td>Artist Name</td>
+                </tr>
+                <tr>
+                    <td>◘</td>
+                    <td>Artist Name</td>
+                </tr>
+                <tr>
+                    <td>◘</td>
+                    <td>Artist Name</td>
+                </tr>
+                </table>
+            </div>*@
+                </div>
+            </div>
+            <div class="card" id="user-event-card">
+                @{Html.RenderAction("GetFilteredEvents", "Event");} @*TEST FOR EVENT FILTERING*@
+            </div>
         </div>
     </div>
-</div>
-
+</body>
 <style>
-
-
 </style>
+<script>
+ @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
+    $(function () {
+        var cityModel = $('#event-filter-city'); // cache it
+        var venueModel = $('#event-filter-venue'); // cache it
+
+        $('#event-filter-country').change(function () { //if #event-filter-country dropdown changes
+            venueModel.empty(); // clear existing options
+            cityModel.empty(); // clear existing options
+            var CityOption = $('<option>- Select A City -</option>').attr('value', 0);
+            var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
+            cityModel.append(CityOption); //modify the model with the variable 'option' added.
+            venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+            var id = $(this).val(); //var id == set to dropdown selected item.
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCities")', //calls ActionResult GetCities form Event Controller
+                dataType: 'json',
+                data: { id: id },
+                success: function (data) {
+                    
+                    $.each(data, function (val, city) { //on each row of data in the model, carry out a function
+                        var CityOption = $('<option>' + city.Text + '</option>').attr('Value', city.Value); //populate a var named 'option' with the value of country.Country_Name
+                        cityModel.append(CityOption); //modify the model with the variable 'option' added.
+                    });
+                }
+            });
+        });
+
+ @*Script from https://stackoverflow.com/questions/38511098/refreshing-mvc-partialview-with-new-model-on-dropdownlist-change *@
+        $(function () {
+            $("#event-filter-city").change(function (e) { //On #event-filter-city change.
+                var str = $("#event-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
+                var cityval = str.replace(/ /g, '&');
+
+                if ($("#event-filter-city option:selected").val() == 0) {
+
+                    var str3 = $("#event-filter-country").val(); //val is set to the value of the country dropdown.;
+                    var countryval2 = str3.replace(/ /g, '&');
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval2);//reload Partial View with no City Parameter (using the country parameter).
+                }
+                else {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval); //Partial View of GetFilteredEvents is rendered with val being passed as parameter.
+                }
+                var id = $(this).val(); //var id == set to dropdown selected item.
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetVenues")', //calls ActionResult GetCities form Event Controller
+                    dataType: 'json',
+                    data: { id: id },
+                    success: function (data) {
+                        venueModel.empty(); // clear existing options
+                        var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
+                        venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+                        $.each(data, function (val, venue) { //on each row of data in the model, carry out a function
+
+                            var VenueOption = $('<option>' + venue.V_Name + '</option>').attr('value', venue.V_Value).text(venue.text); //populate a var named 'option' with the value of country.Country_Name
+                            venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+
+                            console.warn(cityval);//Fpr testing the value is being selected correctly. Delete once finished.
+
+                    });
+                }
+            });
+        });
+    });
+
+    $("#event-filter-country").change(function (e) { //On #event-filter-change.
+        var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
+        if ($("#event-filter-country option:selected").text() == 0)
+        {
+            $("#user-event-card").load("GetfilteredEvents");//reload Partial View with no City Parameter.
+        }
+        else
+        {
+            $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval); //Partial View of  GetEvents Partial is rendered with val being passed as parameter.
+        }
+        console.warn(countryval);//Fpr testing the value is being selected correctly. Delete once finished.
+    });
+
+    $("#event-filter-venue").change(function (e) { //On #event-filter-venue change.
+        var str = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
+        var venueval = str.replace(/ /g, '&');
+        if ($("#event-filter-venue option:selected").val() == 0) {
+            var str2 = $("#event-filter-city").val(); //val is set to the text value of the dropdown.;
+            var cityval2 = str2.replace(/ /g, '&');
+            $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval2);//reload Partial View with no Venue Parameter.
+        }
+                    else {
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval); //Partial View of  GetFiltered is rendered with val being passed as parameter.
+                }
+                console.warn(venueval);//Fpr testing the value is being selected correctly. Delete once finished.
+            });
+        });
+</script>

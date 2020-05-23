@@ -32,7 +32,6 @@ using System;
     }
 
         [Key]
-
         public int Artist_ID { get; set; }
 
     public string Artist_Name { get; set; }

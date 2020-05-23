@@ -6,8 +6,8 @@
 
 <h2>EditEvent</h2>
 <body>
-    @using (Html.BeginForm("EditEvent", "Event", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
+    @using (Html.BeginForm("EventEdit", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -34,7 +34,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Event_Location, "Event Location", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(x => x.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"))
+                    @Html.DropDownListFor(model => Model.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"))
 
                     @Html.ValidationMessageFor(model => model.Event_Location, "", new { @class = "text-danger" })
                 </div>
@@ -54,18 +54,18 @@
                         <input type="file" id="Avatar" name="upload" />
                     </div>
                     @if (Model.tbl_eventImages.Any())
-                    {
+                        {
                         <div class="form-group">
                             <span class="control-label col-md-2"><strong>Current Avatar</strong></span>
                             <div class="col-md-10">
                                 <img src="@Url.Action("EventImageIndex", "File", new { File_ID = Model.tbl_eventImages.First(f => f.Event_ID == Model.Event_ID).File_ID })" style="width:200px; height:180px" />
                             </div>
                         </div>
-                    }
+                        }
                     else
-                    {
+                        {
                         <img class="event-details-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
-                    }
+                        }
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -75,27 +75,27 @@
             </div>
         </div>
 
-    }
+        }
     <div>
         @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
     </div>
 </body>
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 
-    @*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-        <script>
-            $(function () {
-                $(".datepicker").datepicker({
-                    dateFormat: "yy/mm/dd",
-                    changeMonth: true,
-                    changeYear: true,
-                    //yearRange: "-0:+2",
-                    showOn: "both",
-                    buttonText: "Select Date"
-                });
-            })
-        </script>
-    }
+@*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy/mm/dd",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange: "-0:+2",
+                showOn: "both",
+                buttonText: "Select Date"
+            });
+        })
+    </script>
+}
