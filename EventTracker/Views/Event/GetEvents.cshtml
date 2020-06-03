@@ -23,62 +23,57 @@
                         <h4>Select City:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.DropDownList("cities", new SelectList(ViewBag.Cities, "Value", "Text"), "- Select A City -", new { @class = "container", @id = "event-filter-city" })
+                        @Html.DropDownList("cities", Enumerable.Empty<SelectListItem>(), "- Select A City -", new { @class = "container", @id = "event-filter-city" })
                     </div>
 
                     <div class="header" id="event-index-filter-label">
                         <h4>Select Venue:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.DropDownList("venues", new SelectList(ViewBag.Venues, "Value", "Text"), "- Select A Venue -", new { @class = "container", @id = "event-filter-venue" })
+                        @Html.DropDownList("venues", Enumerable.Empty<SelectListItem>(), "- Select A Venue -", new { @class = "container", @id = "event-filter-venue" })
                     </div>
-                    @*<div class="grid-container" id="event-filter-label-grid">
-                    <div class="header" id="event-index-filter-label-50">
+                    <div class="container" id="event-filter-options">
                         <h4>Start Date:</h4>
                     </div>
-                    <div class="header" id="event-index-filter-label-50">
+                    <div class="container" id="event-filter-options">
+                        @Html.Editor("Start Date", new { htmlAttributes = new { @class = "datepicker", @id = "startdatepicker", @style="width: 60%"} })
+                    </div>
+                    <div class="container" id="event-filter-options">
                         <h4>End Date:</h4>
                     </div>
-                </div>
-                <div class="grid-container" id="event-filter-options-50">
-            <input class="datepicker" />
-            <button type="button" class="ui-datepicker-trigger">
-                <img src="~/Content/images/calendar-icon-dark.png" id="event-filter-date-image" />
-            </button>
-            <input class="datepicker" />
-            <button type="button" class="ui-datepicker-trigger">
-                <img src="~/Content/images/calendar-icon-dark.png" id="event-filter-date-image" />
-            </button>
-        </div><br /><br />
-        <div class="header" id="event-index-filter-label">
-            <h4>Filter By Artists:</h4>
-        </div>
-        <div class="container" id="event-filter-options">
-            <input type="search" />
-        </div>
-        <div class="container" id="event-filter-artists">
-            <table id="event-filter-by-artist-display">
-                @*For (var item in viewbag.selectedArtists)* @
-                <tr>
-                    <td>◘</td>
-                    <td>Artist Name</td>
-                </tr>
-                <tr>
-                    <td>◘</td>
-                    <td>Artist Name</td>
-                </tr>
-                <tr>
-                    <td>◘</td>
-                    <td>Artist Name</td>
-                </tr>
-                <tr>
-                    <td>◘</td>
-                    <td>Artist Name</td>
-                </tr>
-                </table>
-            </div>*@
-                </div>
+                        <div class="container" id="event-filter-options">
+                            @Html.Editor("End Date", new { htmlAttributes = new { @class = "datepicker", @id = "enddatepicker", @style="width: 60%"} })
+                        </div>
+                        <br /><br />@*
+            <div class="header" id="event-index-filter-label">
+                <h4>Filter By Artists:</h4>
             </div>
+            <div class="container" id="event-filter-options">
+                <input type="search" />
+            </div>
+            <div class="container" id="event-filter-artists">
+                <table id="event-filter-by-artist-display">
+                    @*For (var item in viewbag.selectedArtists)* @
+                    <tr>
+                        <td>◘</td>
+                        <td>Artist Name</td>
+                    </tr>
+                    <tr>
+                        <td>◘</td>
+                        <td>Artist Name</td>
+                    </tr>
+                    <tr>
+                        <td>◘</td>
+                        <td>Artist Name</td>
+                    </tr>
+                    <tr>
+                        <td>◘</td>
+                        <td>Artist Name</td>
+                    </tr>
+                    </table>
+                </div>*@
+                    </div>
+                </div>
             <div class="card" id="user-event-card">
                 @{Html.RenderAction("GetFilteredEvents", "Event");} @*TEST FOR EVENT FILTERING*@
             </div>
@@ -87,49 +82,113 @@
 </body>
 <style>
 </style>
-<script>
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+
  @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
-    $(function () {
+    <script>
+        $(function ()
+        {
         var cityModel = $('#event-filter-city'); // cache it
         var venueModel = $('#event-filter-venue'); // cache it
-
-        $('#event-filter-country').change(function () { //if #event-filter-country dropdown changes
-            venueModel.empty(); // clear existing options
+            $("#event-filter-country").change(function (e) { //On #event-filter-change.
+                            venueModel.empty(); // clear existing options
             cityModel.empty(); // clear existing options
             var CityOption = $('<option>- Select A City -</option>').attr('value', 0);
             var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
             cityModel.append(CityOption); //modify the model with the variable 'option' added.
             venueModel.append(VenueOption); //modify the model with the variable 'option' added.
-            var id = $(this).val(); //var id == set to dropdown selected item.
+                var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
+                var startDateObject = $('#startdatepicker').datepicker('getDate');
+                var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+                var endDateObject = $('#enddatepicker').datepicker('getDate');
+                var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+                if ($("#event-filter-country option:selected").text() == 0) {
+                    if ((startDateObject == null) && (endDateObject == null)) { //NO CONUTRY, NO START DATE, NO END DATE
+                        $("#user-event-card").load("GetfilteredEvents");//reload Partial View with no City Parameter.
+                    }
+                    else if ((startDateObject != null) && (endDateObject == null)) { //NO COUNTRY, START DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Search_Start_Date=" + startDate);
+                    }
+                    else if ((startDateObject == null) && (endDateObject != null)) {//NO COUNTRY, END DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Search_End_Date=" + endDate);
+                    }
+                    else if ((startDateObject != null) && (endDateObject != null)) { //NO COUNTRY, START AND END CHOSEN
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                    }
+                }
+                else {
+                    if ((startDateObject == null) && (endDateObject == null)) { //COUNTRY ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval); //Partial View of  GetEvents Partial is rendered with val being passed as parameter.
+                    }
+                    else if ((startDateObject != null) && (endDateObject == null)) {// COUNTRY, START DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval +"&Search_Start_Date=" + startDate);
+                    }
+                    else if ((startDateObject == null) && (endDateObject != null)) {// COUNTRY, END DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval +"&Search_End_Date=" + endDate);
+                    }
+                    else if ((startDateObject != null) && (endDateObject != null)) {// COUNTRY, START DATE AND END DATE
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval +"&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                    }
+                }
+                            var id = $(this).val(); //var id == set to dropdown selected item.
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetCities")', //calls ActionResult GetCities form Event Controller
                 dataType: 'json',
                 data: { id: id },
                 success: function (data) {
-                    
+
                     $.each(data, function (val, city) { //on each row of data in the model, carry out a function
                         var CityOption = $('<option>' + city.Text + '</option>').attr('Value', city.Value); //populate a var named 'option' with the value of country.Country_Name
                         cityModel.append(CityOption); //modify the model with the variable 'option' added.
                     });
                 }
             });
-        });
+            });
 
- @*Script from https://stackoverflow.com/questions/38511098/refreshing-mvc-partialview-with-new-model-on-dropdownlist-change *@
-        $(function () {
             $("#event-filter-city").change(function (e) { //On #event-filter-city change.
+                var startDateObject = $('#startdatepicker').datepicker('getDate');
+                var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+                var endDateObject = $('#enddatepicker').datepicker('getDate');
+                var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
                 var str = $("#event-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
                 var cityval = str.replace(/ /g, '&');
-
+                venueModel.empty(); // clear existing options
                 if ($("#event-filter-city option:selected").val() == 0) {
-
                     var str3 = $("#event-filter-country").val(); //val is set to the value of the country dropdown.;
                     var countryval2 = str3.replace(/ /g, '&');
+
+
+                    if ((startDateObject == null) && (endDateObject == null)) { //NO CONUTRY, NO START DATE, NO END DATE
                     $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval2);//reload Partial View with no City Parameter (using the country parameter).
+                    }
+                    else if ((startDateObject != null) && (endDateObject == null)) { //NO COUNTRY, START DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval2 +"&Search_Start_Date=" + startDate);
+                    }
+                    else if ((startDateObject == null) && (endDateObject != null)) {//NO COUNTRY, END DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval2 + "&Search_End_Date=" + endDate);
+                    }
+                    else if ((startDateObject != null) && (endDateObject != null)) { //NO COUNTRY, START AND END CHOSEN
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval2 +"&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                    }
                 }
                 else {
-                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval); //Partial View of GetFilteredEvents is rendered with val being passed as parameter.
+                    if ((startDateObject == null) && (endDateObject == null)) { //NO CONUTRY, NO START DATE, NO END DATE
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval);//reload Partial View with no City Parameter (using the country parameter).
+                    }
+                    else if ((startDateObject != null) && (endDateObject == null)) { //NO COUNTRY, START DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval +"&Search_Start_Date=" + startDate);
+                    }
+                    else if ((startDateObject == null) && (endDateObject != null)) {//NO COUNTRY, END DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval + "&Search_End_Date=" + endDate);
+                    }
+                    else if ((startDateObject != null) && (endDateObject != null)) { //NO COUNTRY, START AND END CHOSEN
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval +"&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                    }
                 }
                 var id = $(this).val(); //var id == set to dropdown selected item.
                 $.ajax({
@@ -142,43 +201,185 @@
                         var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
                         venueModel.append(VenueOption); //modify the model with the variable 'option' added.
                         $.each(data, function (val, venue) { //on each row of data in the model, carry out a function
-
                             var VenueOption = $('<option>' + venue.V_Name + '</option>').attr('value', venue.V_Value).text(venue.text); //populate a var named 'option' with the value of country.Country_Name
                             venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+                        });
+                    }
+                });
+            });
 
-                            console.warn(cityval);//Fpr testing the value is being selected correctly. Delete once finished.
+            $("#event-filter-venue").change(function (e) { //On #event-filter-venue change.
+                var startDateObject = $('#startdatepicker').datepicker('getDate');
+                var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+                var endDateObject = $('#enddatepicker').datepicker('getDate');
+                var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+                var str = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
+                var venueval = str.replace(/ /g, '&');
 
-                    });
+                if ($("#event-filter-venue option:selected").val() == 0) {
+                    var str2 = $("#event-filter-city").val(); //val is set to the text value of the dropdown.;
+                    var cityval2 = str2.replace(/ /g, '&');
+                    if ((startDateObject == null) && (endDateObject == null)) { //NO VENUE, NO START DATE, NO END DATE
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval2);//reload Partial View with no City Parameter (using the country parameter).
+                    }
+                    else if ((startDateObject != null) && (endDateObject == null)) { //NO VENUE, START DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval2 +"&Search_Start_Date=" + startDate);
+                    }
+                    else if ((startDateObject == null) && (endDateObject != null)) {//NO VENUE, END DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval2 + "&Search_End_Date=" + endDate);
+                    }
+                    else if ((startDateObject != null) && (endDateObject != null)) { //NO VENUE, START AND END CHOSEN
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval2 +"&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                    }
+                }
+                else {
+                    if ((startDateObject == null) && (endDateObject == null)) { //VENUE, NO START DATE, NO END DATE
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval);//reload Partial View with no City Parameter (using the country parameter).
+                    }
+                    else if ((startDateObject != null) && (endDateObject == null)) { //VENUE, START DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval +"&Search_Start_Date=" + startDate);
+                    }
+                    else if ((startDateObject == null) && (endDateObject != null)) {//VENUE, END DATE ONLY
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval +"&Search_End_Date=" + endDate);
+                    }
+                    else if ((startDateObject != null) && (endDateObject != null)) { //VENUE, START AND END CHOSEN
+                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval +"&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                    }
                 }
             });
-        });
-    });
 
-    $("#event-filter-country").change(function (e) { //On #event-filter-change.
-        var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
-        if ($("#event-filter-country option:selected").text() == 0)
-        {
-            $("#user-event-card").load("GetfilteredEvents");//reload Partial View with no City Parameter.
-        }
-        else
-        {
-            $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval); //Partial View of  GetEvents Partial is rendered with val being passed as parameter.
-        }
-        console.warn(countryval);//Fpr testing the value is being selected correctly. Delete once finished.
-    });
+        });//END OF WHOLE FUNCTION. INSERT NEW FUNCTIONS WHICH ARE A PART OF THE OVERALL FUNCTION IMMEDIATELY ABOVE THIS LINE
+        
+    </script>
 
-    $("#event-filter-venue").change(function (e) { //On #event-filter-venue change.
-        var str = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
-        var venueval = str.replace(/ /g, '&');
-        if ($("#event-filter-venue option:selected").val() == 0) {
-            var str2 = $("#event-filter-city").val(); //val is set to the text value of the dropdown.;
-            var cityval2 = str2.replace(/ /g, '&');
-            $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval2);//reload Partial View with no Venue Parameter.
-        }
-                    else {
-                        $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval); //Partial View of  GetFiltered is rendered with val being passed as parameter.
-                }
-                console.warn(venueval);//Fpr testing the value is being selected correctly. Delete once finished.
+
+
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    @*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#startdatepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange: "-0:+2",
+                showOn: "both",
+                buttonText: "Select",
+               
             });
-        });
-</script>
+        })
+        $(function () {
+            $("#enddatepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange: "-0:+2",
+                showOn: "both",
+                buttonText: "Select"
+            });
+        })
+    </script>
+    <script>
+        $('#startdatepicker').change(function (e) {
+            var startDateObject = $('#startdatepicker').datepicker('getDate');
+            var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+            var endDateObject = $('#enddatepicker').datepicker('getDate');
+            var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+
+            var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
+
+            var citystr = $("#event-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
+            var cityval = citystr.replace(/ /g, '&');
+
+            var venuestr = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
+            var venueval = venuestr.replace(/ /g, '&');
+
+            if (countryval == null) {
+                if (endDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Search_Start_Date=" + startDate);
+                }
+                else if (endDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            else if ((countryval != null) && (cityval == 0)) {
+                if (endDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval + "&Search_Start_Date=" + startDate);
+                }
+                else if (endDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            else if ((cityval != 0) && (venueval == 0)){
+                if (endDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval + "&Search_Start_Date=" + startDate);
+                }
+                else if (endDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            else if (venueval != 0) {
+                if (endDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval + "&Search_Start_Date=" + startDate);
+                }
+                else if (endDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            $("#enddatepicker").datepicker("option", "minDate", startDateObject);
+
+        
+        });</script>
+    <script>
+        $('#enddatepicker').change(function (e) {
+           var startDateObject = $('#startdatepicker').datepicker('getDate');
+            var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+            var endDateObject = $('#enddatepicker').datepicker('getDate');
+            var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+
+            var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
+
+            var citystr = $("#event-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
+            var cityval = citystr.replace(/ /g, '&');
+
+            var venuestr = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
+            var venueval = venuestr.replace(/ /g, '&');
+
+            if (countryval == null) {
+                if (startDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Search_End_Date=" + endDate);
+                }
+                else if (startDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            else if ((countryval != null) && (cityval == 0)) {
+                if (startDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval + "&Search_End_Date=" + endDate);
+                }
+                else if (startDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Country=" + countryval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            else if ((cityval != 0) && (venueval == 0)){
+                if (startDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval + "&Search_End_Date=" + endDate);
+                }
+                else if (startDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_City=" + cityval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            else if (venueval != 0) {
+                if (startDateObject == null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval + "&Search_End_Date=" + endDate);
+                }
+                else if (startDateObject != null) {
+                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Venue=" + venueval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+                }
+            }
+            $("#startdatepicker").datepicker("option", "maxDate", endDateObject);
+
+        });</script>
+}

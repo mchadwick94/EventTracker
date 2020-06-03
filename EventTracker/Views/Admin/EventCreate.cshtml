@@ -29,24 +29,31 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Event_Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Event_Date, new { htmlAttributes = new { @class = "datepicker" } })
+                @Html.Editor("Start Date", new { htmlAttributes = new { @class = "datepicker" } })
                 @Html.ValidationMessageFor(model => model.Event_Date, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div>
-            @Html.HiddenFor(model => model.Event_Country, new { htmlAttributes = new { @class = "form-control", @Value = Convert.ToInt32(Request.QueryString["Country_ID"]), @disabled = "true" } })
-            @Html.ValidationMessageFor(model => model.Event_Country, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <h4 class="control-label col-md-2">Select Country:</h4>
+            <div class="col-md-10">
+                @Html.DropDownList("countries", new SelectList(ViewBag.Countries, "Value", "Text"), "- Select A Country -", new { @class = "form-control", @id = "country" })
+            </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Event_Location, "Event Location", htmlAttributes: new { @class = "control-label col-md-2" })
+            <h4 class="control-label col-md-2">Select City:</h4>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => x.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"))
-
-                @Html.ValidationMessageFor(model => model.Event_Location, "", new { @class = "text-danger" })
+                @Html.DropDownList("cities", Enumerable.Empty<SelectListItem>(), "- Select A City -", new { @class = "form-control", @id = "city" })
             </div>
         </div>
+
+        <div class="form-group">
+            <h4 class="control-label col-md-2">Select Venue:</h4>
+            <div class="col-md-10">
+                @Html.DropDownList("cities", Enumerable.Empty<SelectListItem>(), "- Select A Venue -", new { @class = "form-control", @id = "venue" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.Label("Avatar", new { @class = "control-label col-md-2" })
@@ -69,9 +76,10 @@
 
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 @*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@
-
 @section Scripts {
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script>
         $(function () {
@@ -84,5 +92,64 @@
                 buttonText: "Select Date"
             });
         })
+    </script>
+
+    <script>
+ @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
+    $(function () {
+        var cityModel = $('#city'); // cache it
+        var venueModel = $('#venue'); // cache it
+
+        $('#country').change(function () { //if #event-filter-country dropdown changes
+            venueModel.empty(); // clear existing options
+            cityModel.empty(); // clear existing options
+            var CityOption = $('<option>- Select A City -</option>').attr('value', 0);
+            var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
+            cityModel.append(CityOption); //modify the model with the variable 'option' added.
+            venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+            var id = $(this).val(); //var id == set to dropdown selected item.
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("../Application/GetAllCities")', //calls ActionResult GetCities form Event Controller
+                dataType: 'json',
+                data: { id: id },
+                success: function (data) {
+
+                    $.each(data, function (val, city) { //on each row of data in the model, carry out a function
+                        var CityOption = $('<option>' + city.Text + '</option>').attr('Value', city.Value); //populate a var named 'option' with the value of country.Country_Name
+                        cityModel.append(CityOption); //modify the model with the variable 'option' added.
+                    });
+                }
+            });
+        });
+
+ @*Script from https://stackoverflow.com/questions/38511098/refreshing-mvc-partialview-with-new-model-on-dropdownlist-change *@
+        $(function () {
+            $("#city").change(function (e) { //On #event-filter-city change.
+                var str = $("#city option:selected").val(); //val is set to the text value of the dropdown.;
+                var cityval = str.replace(/ /g, '&');
+                var id = $(this).val(); //var id == set to dropdown selected item.
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("../Event/GetVenues")', //calls ActionResult GetCities form Event Controller
+                    dataType: 'json',
+                    data: { id: id },
+                    success: function (data) {
+                        venueModel.empty(); // clear existing options
+                        var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
+                        venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+                        $.each(data, function (val, venue) { //on each row of data in the model, carry out a function
+
+                            var VenueOption = $('<option>' + venue.V_Name + '</option>').attr('value', venue.V_Value).text(venue.text); //populate a var named 'option' with the value of country.Country_Name
+                            venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+
+                            console.warn(cityval);//Fpr testing the value is being selected correctly. Delete once finished.
+
+                        });
+                    }
+                });
+            });
+        });
+    });
     </script>
 }

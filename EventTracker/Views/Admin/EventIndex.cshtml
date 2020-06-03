@@ -42,9 +42,9 @@
                     </td>
                     <td id="event-table-col-4" class="event-table-row">
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-                        @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
+                        @Html.ActionLink("Details", "../Event/GetEventDetails", new { Event_ID = item.Event_ID }) |
                         @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-                        @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.tbl_cities.CC_ISO }) |
+                        @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.tbl_cities.tbl_countries.C_Iso, City_ID = item.tbl_venues.tbl_cities.City_ID }) |
 
                         @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                             {@*Checks to see if there is a current user*@
@@ -94,18 +94,10 @@
                     </td>
                     <td id="event-table-col-4">
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) | *@
-                        @Html.ActionLink("Details", "GetEventDetails", new { Event_ID = item.Event_ID }) |
+                        @Html.ActionLink("Details", "../Event/GetEventDetails", new { Event_ID = item.Event_ID }) |
                         @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID }) |
-                        @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.tbl_cities.tbl_countries.C_Iso }) |
+                        @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = item.Event_ID, Country_ID = item.tbl_venues.tbl_cities.tbl_countries.C_Iso, City_ID = item.tbl_venues.tbl_cities.City_ID }) |
 
-                        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                            {@*Checks to see if there is a current user*@
-                            if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
-                                { }
-                            else
-                                {
-                                @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
-                            }
                         @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
                     </td>
                 </tr>

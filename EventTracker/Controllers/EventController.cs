@@ -14,6 +14,7 @@ namespace EventTracker.Controllers
     public class EventController : ApplicationController
         {
         public int _eventID;
+        public string Country_ISO;
         protected string User_ID;
         private TrackerEntities _context;
 
@@ -80,27 +81,14 @@ namespace EventTracker.Controllers
                         });
                 ViewBag.Countries = CountriesList;
                 }
-            List<SelectListItem> CityList = new List<SelectListItem>();
-            foreach (var item in _trackerService.GetVenues().GroupBy(c => c.V_City).Select(o => new { V_City = o.Key }).ToList())
-                {
-                CityList.Add(
-                    new SelectListItem()
-                        {
-                        Value = item.V_City.ToString()
-                        });
-                ViewBag.Cities = CityList;
-                }
-            List<SelectListItem> VenuesList = new List<SelectListItem>();
-            foreach (var item in _trackerService.GetVenues())
-                {
-                VenuesList.Add(
-                    new SelectListItem()
-                        {
-                        Text = item.tbl_cities.C_Name.ToUpper() + ": " + item.V_Name,
-                        Value = item.Venue_ID.ToString()
-                        });
-                ViewBag.Venues = VenuesList;
-                }
+
+            return View();
+            }
+
+        //___---------------------
+
+        public ActionResult GetFilteredEvents(SearchEventModel searchModel)
+            {
             if (HttpContext.User.Identity.IsAuthenticated != false)
                 {
                 User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -111,14 +99,6 @@ namespace EventTracker.Controllers
                     }
                 ViewBag.MyEvents = UsersEvents;
                 }
-
-            return View();
-            }
-
-        //___---------------------
-
-        public ActionResult GetFilteredEvents(SearchEventModel searchModel)
-            {
             var business = new EventBusinessLogic();
             var model = business.GetFilteredEvents(searchModel);
             return View(model);
@@ -138,12 +118,13 @@ namespace EventTracker.Controllers
             {
             try
                 {
+                _event.User_ID = User.Identity.GetUserId();
                 _trackerService.AddToUser(_event);
-                return RedirectToAction("EventIndex");
+                return RedirectToAction("GetEvents");
                 }
             catch
                 {
-                return View();
+                return View(_trackerService.GetEvents());
                 }
             }
 

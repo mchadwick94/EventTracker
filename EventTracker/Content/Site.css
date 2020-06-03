@@ -48,7 +48,7 @@ textarea {
     color: #898989 !important;
 }
 button {
-    background-color: inherit !important;
+    background-color: #222222 !important;
     border-color: #6d6d6d !important;
     color: #898989 !important;
 }
@@ -86,5 +86,5 @@ a:hover {
 }
 
 a:visited, a:focus {
-    color: #abff94 !important;
+    color: #abff94;
 }

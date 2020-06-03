@@ -390,14 +390,16 @@ td {
 #user-event-card {
     width: 75%;
     height: -webkit-fill-available;
-    padding: 0% 2% 2% 4%;
+    padding: 0% 2% 0% 4%;
     border: none;
     display: inline-grid;
     overflow-y: auto;
+    margin-bottom: 0% !important;
 }
 
 #event-index-details {
-    padding: 2% 5% 5% 0%
+    padding: 2% 5% 2% 0%;
+    margin-bottom: 2% !important;
 }
 
 #event-index-location-pin {
@@ -447,9 +449,14 @@ td {
     padding: 0;
     text-align: left;
     float: left;
-
 }
-
+#event-index-addToUser {
+    height: 5%;
+    width: 95%;
+    background-color: inherit;
+    border: none;
+    margin: 3% 0 1% 5%;
+}
 .event-index-image {
     border-radius: 20px;
     overflow: hidden;
@@ -560,17 +567,28 @@ td {
     background-color: #898989 !important;
     color: #222 !important
 }
-
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+.ui-state-active {
     background: #abff94 !important;
-    color: #222 !important;
+    color: #222222 !important;
     border: 1px solid #68bc51 !important
 }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background: #222222 !important;
+    color: #898989 !important;
+    border: 1px solid #898989 !important
+}
+
+
 
 #user-event-grid {
     grid-template-columns: 33% 33% 33%;
     display: inline-grid;
 }
+
+#event-grid-item {
+    height: 45vh;
+    margin-bottom: 2vh;
+    }
 
 .event-index-body-class {
     height: -webkit-fill-available !important;
@@ -664,3 +682,4 @@ td {
             background-color: #222222 !important;
             border-radius: 5px;
         }
+

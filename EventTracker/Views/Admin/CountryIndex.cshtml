@@ -28,7 +28,7 @@
                         @Html.DisplayFor(modelItem => item.C_Name)
                     </td>
                     <td>
-                        @Html.ActionLink("Select Country", "../Admin/EventCreate", new { Country_ID = item.Country_ID }) |
+                        @Html.ActionLink("Select Country", "../Admin/EventCreate", new { Country_ID = item.C_Iso }) |
                     </td>
                 </tr>
             }

@@ -26,7 +26,7 @@
                                     {
                                     <img class="event-details-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
                                     }
-                                <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.tbl_events.Event_Name</span><br /><span class="overlay-span" id="second-line-span">@item.tbl_events.tbl_venues.V_City, @item.tbl_events.tbl_venues.tbl_countries.C_Name</span></h3>
+                                <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.tbl_events.Event_Name</span><br /><span class="overlay-span" id="second-line-span">@item.tbl_events.tbl_venues.tbl_cities.C_Name, @item.tbl_events.tbl_venues.tbl_cities.tbl_countries.C_Name</span></h3>
                             </div>
                         </a>
                     </li>
@@ -68,7 +68,7 @@ else
                             @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
                         </td>
                         <td id="event-table-col-3">
-                            <b>@Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_countries.C_Iso3)
+                            <b>@Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_Name)</b>, @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_cities.tbl_countries.C_Iso3)
                             @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_events.tbl_venues.Venue_ID })
                         </td>
                         <td id="event-table-col-4">
@@ -108,7 +108,7 @@ else
                             @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
                         </td>
                         <td id="event-table-col-3">
-                            <b>@Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_City), @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_countries.C_Iso3)
+                            <b>@Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.V_Name)</b>, @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_events.tbl_venues.tbl_cities.tbl_countries.C_Iso3)
                             @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_events.tbl_venues.Venue_ID })
                         </td>
                         <td id="event-table-col-4">

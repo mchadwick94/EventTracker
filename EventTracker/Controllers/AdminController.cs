@@ -6,6 +6,9 @@ using Tracker.Data;
 using System.Data.Entity;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
+using EventTracker.Models;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace EventTracker.Controllers
     {
@@ -168,17 +171,18 @@ namespace EventTracker.Controllers
         [HttpGet]
         public ActionResult EventCreate(string C_Iso)
             {
-            List<SelectListItem> VenuesList = new List<SelectListItem>();
-            foreach (var item in _trackerService.GetVenuesByCountry(C_Iso))
+            //Populate Country Viewbag
+            List<SelectListItem> CountriesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetCountries())
                 {
-                VenuesList.Add(
+                CountriesList.Add(
                     new SelectListItem()
                         {
-                        Text = item.tbl_cities.C_Name.ToUpper() + ": " + item.V_Name,
-                        Value = item.Venue_ID.ToString()
+                        Text = item.C_Name,
+                        Value = item.C_Iso
                         });
+                ViewBag.Countries = CountriesList;
                 }
-            ViewBag.Venues = VenuesList;
             return View();
             }
 
@@ -228,39 +232,50 @@ namespace EventTracker.Controllers
             }
 
         [HttpGet] //Retrieves the details of the event being edited
-        public ActionResult EventEdit(int Event_ID, string Country_ID)
+        public ActionResult EventEdit(int Event_ID, string Country_ID, int City_ID)
             {
             List<SelectListItem> VenuesList = new List<SelectListItem>();
 
-            if (string.IsNullOrEmpty(Country_ID))
+            List<SelectListItem> CountriesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetCountries())
                 {
-                foreach (var item in _trackerService.GetVenues())
-                    {
-                    VenuesList.Add(
-                        new SelectListItem()
-                            {
-                            Text = item.tbl_cities.C_Name.ToUpper() + ": " + item.V_Name,
-                            Value = item.Venue_ID.ToString()
-                            });
-                    ViewBag.Venues = VenuesList;
-                    }
+                CountriesList.Add(
+                    new SelectListItem()
+                        {
+                        Text = item.C_Name,
+                        Value = item.C_Iso
+                        });
+                ViewBag.Countries = CountriesList;
                 }
-            else
+            foreach (var item in _trackerService.GetVenuesByCountry(Country_ID).Where(x => x.V_City == City_ID))
                 {
-                foreach (var item in _trackerService.GetVenuesByCountry(Country_ID))
-                    {
-                    VenuesList.Add(
-                        new SelectListItem()
-                            {
-                            Text = item.tbl_cities.C_Name.ToUpper() + ": " + item.V_Name,
-                            Value = item.Venue_ID.ToString()
-                            });
-                    ViewBag.Venues = VenuesList;
-                    }
+                VenuesList.Add(
+                    new SelectListItem()
+                        {
+                        Text = item.V_Name,
+                        Value = item.Venue_ID.ToString()
+                        });
+                ViewBag.Venues = VenuesList.OrderBy(x => x.Text);
                 }
+            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
+            SqlConnection MyConn = new SqlConnection(connString);
+            SqlCommand MySqlCmd = MyConn.CreateCommand();
+            SqlDataReader adapter;
+            MySqlCmd.CommandText = @"EXEC RetrieveCitiesWhereExistingVenues @Country = '" + Country_ID + "';";
+            DataTable dt = new DataTable("citiesTable");
+            MyConn.Open();
+            adapter = MySqlCmd.ExecuteReader();
+            dt.Load(adapter);
+
+            MyConn.Close();
+            List<CityVM> CityList = dt.AsEnumerable().Select(m => new CityVM() //populates var data with venues where the country_ID matches the id value.
+                {
+                Value = m.Field<int>("City_ID"),
+                Text = m.Field<string>("C_NAME"),
+                }).ToList();
+            ViewBag.Cities = CityList.OrderBy(x => x.Text);
 
             return View(_trackerService.GetEventDetails(Event_ID));
-
             }
 
         [HttpPost] //Posts the new variables into the database at the specific event being edited
@@ -305,6 +320,11 @@ namespace EventTracker.Controllers
                 {
                 return RedirectToAction("EventIndex");
                 }
+            }
+
+        public ActionResult VenueIndex()
+            {
+            return View(_trackerService.GetVenues());
             }
         }
     }

@@ -36,12 +36,12 @@
 
                         <li class="dropdown">
                             @Html.ActionLink("Admin Area ▼", "../Admin/AdminHome")
-                        <div class="dropdown-menu">
-                            @Html.ActionLink("Artist Admin", "../Admin/ArtistIndex")
-                            @Html.ActionLink("Event Admin", "../Admin/EventIndex")
-                            @Html.ActionLink("User Admin", "../Admin/GetUsers")
-
-                        </div>
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Artist Admin", "../Admin/ArtistIndex")
+                                @Html.ActionLink("Event Admin", "../Admin/EventIndex")
+                                @Html.ActionLink("User Admin", "../Admin/GetUsers")
+                                @Html.ActionLink("Venue Admin", "../Admin/VenueIndex")
+                            </div>
                     </li> @*Admin Page/Drop Down. On Click redirect to admin home page*@
 
                     @Html.Partial("_LoginPartial")
@@ -63,8 +63,7 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
