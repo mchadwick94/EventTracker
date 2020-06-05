@@ -71,7 +71,7 @@
 }
 
 #myInput {
-    background: url('../../Content/images/search.jpg') no-repeat 10px 10px;
+    background: url(../../Content/images/search.jpg) no-repeat 10px 10px;
     background-size: 15px 15px;
     width: 100%;
     padding: 12px 20px 12px 40px;
@@ -144,7 +144,7 @@
             }
 
 .card {
-    transition: 0.3s;
+    transition: .3s;
     border: 2px solid #222;
     background-color: transparent
 }
@@ -240,7 +240,7 @@ footer {
 }
 
 #index-jumbo.jumbotron {
-    padding: 0% 0% 0% 0% !important;
+    padding: 0 !important;
     width: 100%;
     background: transparent center center;
     overflow: hidden;
@@ -312,7 +312,7 @@ td {
 }
 
 .index-image, h3 {
-    padding: 0% 6% 0% 2%
+    padding: 0 6% 0 2%
 }
 
 #top-line-span {
@@ -367,10 +367,10 @@ td {
 }
 
 .overlay-span {
-    padding: 0% 6% 0% 2%;
+    padding: 0 6% 0 2%;
     letter-spacing: -1px;
     background: #000;
-    opacity: 0.85;
+    opacity: .85;
     width: inherit
 }
 
@@ -390,16 +390,16 @@ td {
 #user-event-card {
     width: 75%;
     height: -webkit-fill-available;
-    padding: 0% 2% 0% 4%;
+    padding: 0 2% 0 4%;
     border: none;
     display: inline-grid;
     overflow-y: auto;
-    margin-bottom: 0% !important;
+    margin-bottom: 0 !important
 }
 
 #event-index-details {
-    padding: 2% 5% 2% 0%;
-    margin-bottom: 2% !important;
+    padding: 2% 5% 2% 0;
+    margin-bottom: 2% !important
 }
 
 #event-index-location-pin {
@@ -414,13 +414,11 @@ td {
 
 .event-index-body {
     display: flex;
-    padding-bottom: 2%;
+    padding-bottom: 2%
 }
 
 #event-tile-card {
-    /*width: 29%;
-    height: 65% !important;*/
-    box-shadow: 0px 0px 10px grey;
+    box-shadow: 0 0 10px grey;
     background-color: #222;
     display: inline-block;
     margin: 2%;
@@ -430,11 +428,11 @@ td {
 #event-index-image {
     width: 100%;
     object-fit: cover;
-    overflow: hidden;
+    overflow: hidden
 }
 
 #event-index-name, #event-index-location {
-    height: 15% !important;
+    height: 15% !important
 }
 
 #event-index-date, #event-index-location, #event-index-name {
@@ -448,15 +446,17 @@ td {
     margin: 3% 0 1% 5%;
     padding: 0;
     text-align: left;
-    float: left;
+    float: left
 }
+
 #event-index-addToUser {
     height: 5%;
     width: 95%;
     background-color: inherit;
     border: none;
-    margin: 3% 0 1% 5%;
+    margin: 3% 0 1% 5%
 }
+
 .event-index-image {
     border-radius: 20px;
     overflow: hidden;
@@ -567,67 +567,67 @@ td {
     background-color: #898989 !important;
     color: #222 !important
 }
+
 .ui-state-active {
     background: #abff94 !important;
-    color: #222222 !important;
+    color: #222 !important;
     border: 1px solid #68bc51 !important
 }
+
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
-    background: #222222 !important;
+    background: #222 !important;
     color: #898989 !important;
     border: 1px solid #898989 !important
 }
 
-
-
 #user-event-grid {
     grid-template-columns: 33% 33% 33%;
-    display: inline-grid;
+    display: inline-grid
 }
 
 #event-grid-item {
     height: 45vh;
-    margin-bottom: 2vh;
-    }
+    margin-bottom: 2vh
+}
 
 .event-index-body-class {
     height: -webkit-fill-available !important;
-    overflow: hidden;
+    overflow: hidden
 }
 
     .event-index-body-class > .body-content, #user-event-card > .body-content {
-        height: -webkit-fill-available !important;
+        height: -webkit-fill-available !important
     }
 
 .event-index-body > #event-index-filter-card {
-    margin: 0 0 0 0 !important;
+    margin: 0 !important;
     width: 25%;
     background-color: #68bc51;
     border: 5px medium grey;
     border-radius: 20px;
-    padding: 0% 2% 2% 2%;
-    box-shadow: 0px 0px 10px grey;
+    padding: 0 2% 2%;
+    box-shadow: 0 0 10px grey;
     color: #222;
-    font-weight: bold
+    font-weight: 700
 }
 
     .event-index-body > #event-index-filter-card > #event-index-filter-header > h3, .event-index-body #event-index-filter-card h4 {
-        font-weight: bold;
-        text-align: center;
+        font-weight: 700;
+        text-align: center
     }
 
     .event-index-body > #event-index-filter-card > #event-index-filter-body {
         height: 90%;
-        width: 100%;
+        width: 100%
     }
 
         .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-index-filter-label {
             height: 5%;
-            grid-template-columns: 100%;
+            grid-template-columns: 100%
         }
 
         .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options, #event-filter-city, #event-filter-venue {
-            width: 100%;
+            width: 100%
         }
 
             .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options > select, .event-index-body >
@@ -636,25 +636,29 @@ td {
             #event-index-filter-card > #event-index-filter-body > #event-filter-city, .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options > select, .event-index-body >
             #event-index-filter-card > #event-index-filter-body > #event-filter-country, #event-filter-venue {
                 width: 100%;
-                background-color: #171616 !important; /*to match background colour of body (Site.css)*/
+                background-color: #171616 !important;
                 border: inset #424242;
-                border-radius: 5px;
+                border-radius: 5px
             }
 
-        .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options-50 > .datepicker {
-            width: 100%;
-            margin-left: 10%;
-        }
+            .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options > .datepicker {
+                width: 100%;
+                margin-left: 10%
+            }
+
+            .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options > .ui-datepicker-trigger {
+                display: none !important
+            }
 
         .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-label-grid {
-            grid-template-columns: 50% 50% !important;
+            grid-template-columns: 50% 50% !important
         }
 
-        .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-index-filter-label-50 {
-            border: 2px solid black;
+        .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-index-filter-label- {
+            border: 2px solid #000;
             height: 5%;
             width: 100%;
-            float: left;
+            float: left
         }
 
         .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options-50 {
@@ -669,17 +673,16 @@ td {
             .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options-50 > .ui-datepicker-trigger {
                 border-top-right-radius: 5px;
                 border-bottom-right-radius: 5px;
-                background-color: #b5b5b5 !important;
+                background-color: #b5b5b5 !important
             }
 
                 .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-options-50 > .ui-datepicker-trigger > #event-filter-date-image {
-                    width: 65%;
+                    width: 65%
                 }
 
         .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-filter-artists {
             width: 100%;
             float: left;
-            background-color: #222222 !important;
-            border-radius: 5px;
+            background-color: #222 !important;
+            border-radius: 5px
         }
-

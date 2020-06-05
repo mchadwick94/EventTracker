@@ -462,7 +462,7 @@ namespace EventTracker.Controllers
             base.Dispose(disposing);
             }
 
-        private byte[] CreateSalt()
+        public byte[] CreateSalt()
             {
             var buffer = new byte[16];
             var rng = new RNGCryptoServiceProvider();
@@ -470,7 +470,7 @@ namespace EventTracker.Controllers
             return buffer;
             }
 
-        private byte[] HashPassword(string passWord, string salt)
+        public byte[] HashPassword(string passWord, string salt)
             {
             var argon2 = new Argon2id(Encoding.UTF8.GetBytes(passWord));
             argon2.Salt = Encoding.UTF8.GetBytes(salt);

@@ -32,7 +32,8 @@
             @*@Html.ActionLink("Details", "Details", new { id = item.User_ID, }) |*@
             @Html.ActionLink("Event History", "../Event/GetUserEvents", new { User_ID = user.Id }) |
             @Html.ActionLink("Edit", "EditUser", new { Id = user.Id }) |
-            @Html.ActionLink("Delete", "DeleteUser", new { Id = user.Id })
+            @Html.ActionLink("Delete", "DeleteUser", new { Id = user.Id }) |
+            @Html.ActionLink("View Roles", "../User/GetRolesForUser", new { UserName = user.UserName })
         </td>
     </tr>
     }

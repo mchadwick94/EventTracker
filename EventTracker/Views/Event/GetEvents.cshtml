@@ -16,7 +16,7 @@
                         <h4>Event Name:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("Event_Name", new { htmlAttributes = new { @class = "form-control", @id = "eventNameFilter", @placeholder ="Enter Event Name...", @onkeyup = "filterByName()" } })
+                        @Html.Editor("Event_Name", new { htmlAttributes = new { @class = "form-control", @id = "eventNameFilter", @placeholder = "Enter Event Name...", @onkeyup = "filterByName()", @autocomplete="new-password" } })
                     </div>
 
                     <div class="header" id="event-index-filter-label">
@@ -42,13 +42,13 @@
                         <h4>Start Date:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("Start Date", new { htmlAttributes = new { @class = "datepicker", @id = "startdatepicker", @style = "width: 60%" , @placeholder ="Search From..."} })
+                        @Html.Editor("Start Date", new { htmlAttributes = new { @class = "form-control", @id = "startdatepicker",  @placeholder = "Search From...", @autocomplete="new-password" } })
                     </div>
                     <div class="container" id="event-filter-options">
                         <h4>End Date:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("End Date", new { htmlAttributes = new { @class = "datepicker", @id = "enddatepicker", @style = "width: 60%" , @placeholder ="Search To..."} })
+                        @Html.Editor("End Date", new { htmlAttributes = new { @class = "form-control", @id = "enddatepicker",  @placeholder = "Search To...", @autocomplete="new-password" } })
                     </div>
                     <br /><br />@*
                         <div class="header" id="event-index-filter-label">
@@ -163,7 +163,8 @@
                 }
             });
             });
-        </script><script>
+    </script>
+    <script>
             $("#event-filter-city").change(function (e) { //On #event-filter-city change.
                 var startDateObject = $('#startdatepicker').datepicker('getDate');
                 var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
@@ -196,23 +197,24 @@
                     }
                 });
             });
-            </script><script>
-            $("#event-filter-venue").change(function (e) { //On #event-filter-venue change.
-                var startDateObject = $('#startdatepicker').datepicker('getDate');
-                var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
-                var endDateObject = $('#enddatepicker').datepicker('getDate');
-                var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
-                var cityval = $("#event-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
+    </script>
+    <script>
+        $("#event-filter-venue").change(function (e) { //On #event-filter-venue change.
+            var startDateObject = $('#startdatepicker').datepicker('getDate');
+            var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+            var endDateObject = $('#enddatepicker').datepicker('getDate');
+            var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+            var cityval = $("#event-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
 
-                var venueval = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
-                 var input = document.getElementById("eventNameFilter");
-                var searchString = input.value;
-                if (venueval != 0) {
-                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_Venue=" + venueval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
-                } else {
-                    $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_City=" + cityval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
-                }
-            });
+            var venueval = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
+            var input = document.getElementById("eventNameFilter");
+            var searchString = input.value;
+            if (venueval != 0) {
+                $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_Venue=" + venueval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+            } else {
+                $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_City=" + cityval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+            }
+        });
 
     </script>
 
@@ -231,6 +233,7 @@
                 //yearRange: "-0:+2",
                 showOn: "both",
                 buttonText: "Select",
+                showButtonPanel: true
 
             });
         })
@@ -241,7 +244,8 @@
                 changeYear: true,
                 //yearRange: "-0:+2",
                 showOn: "both",
-                buttonText: "Select"
+                buttonText: "Select",
+                showButtonPanel: true
             });
         })
     </script>
