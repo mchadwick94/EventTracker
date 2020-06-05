@@ -23,37 +23,39 @@ namespace EventTracker.Controllers
             _AppContext = new EventTracker.Models.ApplicationDbContext();
             _context = new TrackerEntities();
             }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult GetUsers()
             {
             return View(_AppContext.Users.ToList());
             }
-
+        [Authorize(Roles = "Admin")]
         //Index view of Countries
         public ActionResult CountryIndex()
             {
             return View(_trackerService.GetCountries());
             }
-
+        [Authorize(Roles = "Admin")]
         // GET: Admin
         public ActionResult AdminHome()
             {
             return View();
             }
 
+        [Authorize(Roles = "Admin")]
         // GET: Admin/Details/5
         public ActionResult ArtistIndex()
             {
             return View(_trackerService.GetArtists());
             }
 
+        [Authorize(Roles = "Admin")]
         // Inserts a new artist into the database.
         [HttpGet]
         public ActionResult ArtistCreate()
             {
             return View();
             }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult ArtistCreate(tbl_artists _artist, HttpPostedFileBase upload, tbl_artistImages image)
             {
@@ -92,7 +94,7 @@ namespace EventTracker.Controllers
                 return View();
                 }
             }
-
+        [Authorize(Roles = "Admin")]
         //Edit an artists details
         [HttpGet] //Retrieves the details of the event being edited
         public ActionResult ArtistEdit(int Artist_ID)
@@ -104,7 +106,7 @@ namespace EventTracker.Controllers
                 }
             return View(_trackerService.GetArtistDetails(Artist_ID));
             }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost] //Posts the new variables into the database at the specific event being edited
         public ActionResult ArtistEdit(int Artist_ID, tbl_artists _artist, HttpPostedFileBase upload, tbl_artistImages newImage, tbl_artistImages oldImage)
             {
@@ -149,7 +151,7 @@ namespace EventTracker.Controllers
             }
 
         //________________________________________________________________
-
+        [Authorize(Roles = "Admin")]
         // GET: Complete Event List
         public ActionResult EventIndex()
             {
@@ -166,7 +168,7 @@ namespace EventTracker.Controllers
 
             return View(_trackerService.GetEvents());
             }
-
+        [Authorize(Roles = "Admin")]
         //CREATE a new event
         [HttpGet]
         public ActionResult EventCreate(string C_Iso)
@@ -186,6 +188,7 @@ namespace EventTracker.Controllers
             return View();
             }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult EventCreate(tbl_events _event, HttpPostedFileBase upload, tbl_eventImages image)
             {
@@ -231,6 +234,7 @@ namespace EventTracker.Controllers
                 }
             }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet] //Retrieves the details of the event being edited
         public ActionResult EventEdit(int Event_ID, string Country_ID, int City_ID)
             {
@@ -278,6 +282,7 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetEventDetails(Event_ID));
             }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost] //Posts the new variables into the database at the specific event being edited
         public ActionResult EventEdit(int Event_ID, tbl_events _event, HttpPostedFileBase upload, tbl_eventImages newImage, tbl_eventImages oldImage)
             {
@@ -327,6 +332,7 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetVenues());
             }
 
+        [Authorize(Roles = "Admin")]
         //CREATE a new event
         [HttpGet]
         public ActionResult VenueCreate()
@@ -345,6 +351,7 @@ namespace EventTracker.Controllers
             return View();
             }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult VenueCreate(tbl_venues _venue)
             {
@@ -358,7 +365,7 @@ namespace EventTracker.Controllers
                 return View();
                 }
             }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet] //Retrieves the details of the venue being edited
         public ActionResult VenueEdit(int Venue_ID, string selectedCountry)
             {
@@ -375,7 +382,7 @@ namespace EventTracker.Controllers
                 }
             return View(_trackerService.GetVenueDetails(Venue_ID));
             }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost] //Posts the new variables into the database at the specific venue being edited
         public ActionResult VenueEdit(int Venue_ID, tbl_venues _venue)
             {
@@ -389,7 +396,7 @@ namespace EventTracker.Controllers
                 return View(_trackerService.GetVenueDetails(Venue_ID));
                 }
             }
-
+        [Authorize(Roles = "Admin")]
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult VenueDelete(tbl_venues venue)
             {

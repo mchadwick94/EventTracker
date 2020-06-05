@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "GetRolesForUser";
+}
+
+<h2>GetRolesForUser</h2>
+
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    <p>
+        Username: @Html.TextBox("UserName")
+        <input type="Submit" value="Get Users Roles" />
+    </p>
+    }

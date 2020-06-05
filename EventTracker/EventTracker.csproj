@@ -585,6 +585,11 @@
     <Content Include="Views\Admin\VenueCreate.cshtml" />
     <Content Include="Views\Admin\VenueDelete.cshtml" />
     <Content Include="Views\Admin\VenueEdit.cshtml" />
+    <Content Include="Views\User\RoleCreate.cshtml" />
+    <Content Include="Views\User\GetRoles.cshtml" />
+    <Content Include="Views\User\ManageUserRoles.cshtml" />
+    <Content Include="Views\User\GetRolesForUser.cshtml" />
+    <Content Include="Views\User\GetRolesForUserConfirmed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

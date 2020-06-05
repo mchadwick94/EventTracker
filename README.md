@@ -7,5 +7,5 @@ up until 05/06/2020 working.
 
 Credentials to log into the app once the Databases have been set up are:
 
-Username: Test
+Username: Admin
 Password: Test123-

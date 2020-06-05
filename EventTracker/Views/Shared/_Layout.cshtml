@@ -33,7 +33,7 @@
                             <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = User.Identity.GetUserId().ToString() })</li>
                             <li>@Html.ActionLink("Seen Artists", "../Artist/GetSeenArtists", new { User_ID = User.Identity.GetUserId().ToString() })</li>
                             }
-
+                        @if (User.IsInRole("Admin")) { 
                         <li class="dropdown">
                             @Html.ActionLink("Admin Area ▼", "../Admin/AdminHome")
                             <div class="dropdown-menu">
@@ -43,7 +43,7 @@
                                 @Html.ActionLink("Venue Admin", "../Admin/VenueIndex")
                             </div>
                     </li> @*Admin Page/Drop Down. On Click redirect to admin home page*@
-
+                            }
                     @Html.Partial("_LoginPartial")
                 </ul>
             </div>
