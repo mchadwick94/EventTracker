@@ -6,7 +6,7 @@
     ViewBag.Title = "GetEvents";
 }
 <p>
-    @Html.ActionLink("Add New Event", "../Admin/CountryIndex/")
+    @Html.ActionLink("Add New Event", "EventCreate")
 </p>
 <h1>GetEvents</h1>
 <h2 align="center">Upcoming Events</h2>
@@ -37,7 +37,7 @@
                         @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
                     </td>
                     <td id="event-table-col-3" class="event-table-row">
-                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.tbl_countries.C_Iso3)
+                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.tbl_countries.C_Iso)
                         @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
                     </td>
                     <td id="event-table-col-4" class="event-table-row">
@@ -89,7 +89,7 @@
                         @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
                     </td>
                     <td id="event-table-col-3">
-                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.tbl_countries.C_Iso3)
+                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.tbl_countries.C_Iso)
                         @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
                     </td>
                     <td id="event-table-col-4">

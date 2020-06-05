@@ -7,7 +7,7 @@
 <h2>GetVenues</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateVenue")
+    @Html.ActionLink("Create New", "VenueCreate")
 </p>
 <table class="table">
     <tr>
@@ -48,9 +48,9 @@
                 @Html.DisplayFor(modelItem => item.tbl_cities.tbl_countries.C_Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditVenue", new { Venue_ID = item.Venue_ID }) |
-                @Html.ActionLink("Details", "GetVenueDetails", new { Venue_ID = item.Venue_ID }) |
-                @Html.ActionLink("Delete", "DeleteVenue", new { Venue_ID = item.Venue_ID })
+                @Html.ActionLink("Edit", "VenueEdit", new { Venue_ID = item.Venue_ID }) |
+                @Html.ActionLink("Details", "../Venue/GetVenueDetails", new { Venue_ID = item.Venue_ID }) |
+                @Html.ActionLink("Delete", "VenueDelete", new { Venue_ID = item.Venue_ID })
             </td>
         </tr>
         }

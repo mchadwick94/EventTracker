@@ -32,7 +32,12 @@ namespace EventTracker
                 if (searchModel.Search_End_Date.HasValue)
                     result = result.Where(x => x.Event_Date <= searchModel.Search_End_Date);
                 if (!string.IsNullOrEmpty(searchModel.Event_Name))
-                    result = result.Where(x => x.Event_Name.Contains(searchModel.Event_Name));
+                    {
+                    string EventName = searchModel.Event_Name;
+                    string SearchString = EventName.Replace("**", " ");
+                    Console.WriteLine(SearchString);
+                    result = result.Where(x => x.Event_Name.Contains(SearchString));
+                    }
                 }
             return result;
             }

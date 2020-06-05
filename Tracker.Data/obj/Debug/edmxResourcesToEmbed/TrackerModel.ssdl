@@ -32,7 +32,6 @@
       <PropertyRef Name="City_ID" />
     </Key>
     <Property Name="City_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CC_FIPS" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="CC_ISO" Type="char" MaxLength="2" Nullable="false" />
     <Property Name="C_Name" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
@@ -42,7 +41,6 @@
     </Key>
     <Property Name="C_Iso" Type="char" MaxLength="2" Nullable="false" />
     <Property Name="C_Name" Type="varchar" MaxLength="80" Nullable="false" />
-    <Property Name="C_Iso3" Type="char" MaxLength="3" />
   </EntityType>
   <EntityType Name="tbl_eventhistory">
     <Key>

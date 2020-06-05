@@ -30,7 +30,6 @@ using System;
         [Key]
         public int City_ID { get; set; }
 
-    public string CC_FIPS { get; set; }
 
     public string CC_ISO { get; set; }
 

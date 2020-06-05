@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_artisthistory">
           <Key>
             <PropertyRef Name="ArtistHistory_ID" />
@@ -37,7 +37,6 @@
             <PropertyRef Name="City_ID" />
           </Key>
           <Property Name="City_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CC_FIPS" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CC_ISO" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="C_Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -47,7 +46,6 @@
           </Key>
           <Property Name="C_Iso" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="C_Name" Type="varchar" MaxLength="80" Nullable="false" />
-          <Property Name="C_Iso3" Type="char" MaxLength="3" />
         </EntityType>
         <EntityType Name="tbl_eventhistory">
           <Key>
@@ -283,7 +281,8 @@
             <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -524,7 +523,6 @@
             <PropertyRef Name="City_ID" />
           </Key>
           <Property Name="City_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CC_FIPS" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CC_ISO" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="C_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbl_venues" Relationship="TrackerModel.FK_tbl_venues_tbl_cities" FromRole="tbl_cities" ToRole="tbl_venues" />
@@ -536,7 +534,6 @@
           </Key>
           <Property Name="C_Iso" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="C_Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="C_Iso3" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="tbl_cities" Relationship="TrackerModel.PK_tbl_countriesFK_tbl_cities" FromRole="tbl_countries" ToRole="tbl_cities" />
         </EntityType>
         <EntityType Name="tbl_venues">
@@ -587,7 +584,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -668,7 +665,6 @@
               <MappingFragment StoreEntitySet="tbl_cities">
                 <ScalarProperty Name="C_Name" ColumnName="C_Name" />
                 <ScalarProperty Name="CC_ISO" ColumnName="CC_ISO" />
-                <ScalarProperty Name="CC_FIPS" ColumnName="CC_FIPS" />
                 <ScalarProperty Name="City_ID" ColumnName="City_ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -676,7 +672,6 @@
           <EntitySetMapping Name="tbl_countries">
             <EntityTypeMapping TypeName="TrackerModel.tbl_countries">
               <MappingFragment StoreEntitySet="tbl_countries">
-                <ScalarProperty Name="C_Iso3" ColumnName="C_Iso3" />
                 <ScalarProperty Name="C_Name" ColumnName="C_Name" />
                 <ScalarProperty Name="C_Iso" ColumnName="C_Iso" />
               </MappingFragment>

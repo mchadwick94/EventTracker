@@ -326,5 +326,83 @@ namespace EventTracker.Controllers
             {
             return View(_trackerService.GetVenues());
             }
+
+        //CREATE a new event
+        [HttpGet]
+        public ActionResult VenueCreate()
+            {//Populate Country Viewbag
+            List<SelectListItem> CountriesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetCountries())
+                {
+                CountriesList.Add(
+                    new SelectListItem()
+                        {
+                        Text = item.C_Name,
+                        Value = item.C_Iso.ToString()
+                        });
+                ViewBag.Countries = CountriesList;
+                }
+            return View();
+            }
+
+        [HttpPost]
+        public ActionResult VenueCreate(tbl_venues _venue)
+            {
+            try
+                {
+                _trackerService.CreateVenue(_venue);
+                return RedirectToAction("VenueIndex");
+                }
+            catch
+                {
+                return View();
+                }
+            }
+
+        [HttpGet] //Retrieves the details of the venue being edited
+        public ActionResult VenueEdit(int Venue_ID, string selectedCountry)
+            {
+            List<SelectListItem> CountriesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetCountries())
+                {
+                CountriesList.Add(
+                    new SelectListItem()
+                        {
+                        Text = item.C_Name,
+                        Value = item.C_Iso.ToString()
+                        });
+                ViewBag.Countries = CountriesList;
+                }
+            return View(_trackerService.GetVenueDetails(Venue_ID));
+            }
+
+        [HttpPost] //Posts the new variables into the database at the specific venue being edited
+        public ActionResult VenueEdit(int Venue_ID, tbl_venues _venue)
+            {
+            try
+                {
+                _trackerService.EditVenue(_venue);
+                return RedirectToAction("VenueIndex");
+                }
+            catch
+                {
+                return View(_trackerService.GetVenueDetails(Venue_ID));
+                }
+            }
+
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public ActionResult VenueDelete(tbl_venues venue)
+            {
+            try
+                {
+                venue = _trackerService.GetVenueDetails(venue.Venue_ID);
+                _trackerService.DeleteVenue(venue);
+                return RedirectToAction("VenueIndex");
+                }
+            catch
+                {
+                return View();
+                }
+            }
         }
     }

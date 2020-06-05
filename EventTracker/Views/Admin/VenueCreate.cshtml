@@ -1,0 +1,94 @@
+﻿@model Tracker.Data.tbl_venues
+
+@{
+    ViewBag.Title = "VenueCreate";
+}
+
+<h2>VenueCreate</h2>
+
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>tbl_venues</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.V_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.V_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.V_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.V_StreetAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.V_StreetAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.V_StreetAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <h4 class="control-label col-md-2">Select Country:</h4>
+            <div class="col-md-10">
+                @Html.DropDownList("countries", new SelectList(ViewBag.Countries, "Value", "Text"), "- Select A Country -", new { @class = "form-control", @id = "country" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.V_City, "V_City", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.V_City, Enumerable.Empty<SelectListItem>(), "- Select A City -", new { @class = "form-control", @id = "city" })
+                @Html.ValidationMessageFor(model => model.V_City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.V_Postcode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.V_Postcode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.V_Postcode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts { 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $(function () {
+        var cityModel = $('#city'); // cache it
+        $('#country').change(function () { //if #event-filter-country dropdown changes
+            cityModel.empty(); // clear existing options
+            var CityOption = $('<option>- Select A City -</option>').attr('value', 0);
+            cityModel.append(CityOption); //modify the model with the variable 'option' added.
+            var id = $(this).val(); //var id == set to dropdown selected item.
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("../Application/GetAllCities")', //calls ActionResult GetCities form Event Controller
+                dataType: 'json',
+                data: { id: id },
+                success: function (data) {
+
+                    $.each(data, function (val, city) { //on each row of data in the model, carry out a function
+                        var CityOption = $('<option>' + city.Text + '</option>').attr('Value', city.Value); //populate a var named 'option' with the value of country.Country_Name
+                        cityModel.append(CityOption); //modify the model with the variable 'option' added.
+                    });
+                }
+            });
+        });
+    })
+</script>
+}

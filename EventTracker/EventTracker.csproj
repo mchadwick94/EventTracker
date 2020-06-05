@@ -562,9 +562,6 @@
     <Content Include="Views\Artist\GetArtistDetails.cshtml" />
     <Content Include="Views\Venue\GetVenues.cshtml" />
     <Content Include="Views\Venue\GetVenueDetails.cshtml" />
-    <Content Include="Views\Venue\EditVenue.cshtml" />
-    <Content Include="Views\Admin\CountryIndex.cshtml" />
-    <Content Include="Views\Venue\CreateVenue.cshtml" />
     <Content Include="Views\Artist\GetAnArtistsEventHistory.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -582,10 +579,12 @@
     <Content Include="Views\Event\GetEvents.cshtml" />
     <Content Include="Views\Admin\EventCreate.cshtml" />
     <Content Include="Views\Admin\ArtistCreate.cshtml" />
-    <Content Include="Views\Event\GetEventsPartial.cshtml" />
     <Content Include="Views\Event\GetFilteredEvents.cshtml" />
     <Content Include="Views\Admin\EventEdit.cshtml" />
     <Content Include="Views\Admin\VenueIndex.cshtml" />
+    <Content Include="Views\Admin\VenueCreate.cshtml" />
+    <Content Include="Views\Admin\VenueDelete.cshtml" />
+    <Content Include="Views\Admin\VenueEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
