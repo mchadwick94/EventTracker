@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -15,16 +17,43 @@ namespace EventTracker.Controllers
             _context = new TrackerEntities();
             }
 
-        // GET: Venue
-        public ActionResult GetVenues()
+        public ActionResult VenueFilter()
             {
-            return View(_trackerService.GetVenues());
+            List<SelectListItem> CountriesWhereVenuesList = new List<SelectListItem>();
+            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
+            SqlConnection MyConn = new SqlConnection(connString);
+            SqlCommand SelectCountriesWhereVenuesList = MyConn.CreateCommand();
+            SqlDataReader adapter;
+            SelectCountriesWhereVenuesList.CommandText = @"exec SelectCountriesWhereVenues;";
+            DataTable dt = new DataTable("CountriesWhereEventsTable");
+            MyConn.Open();
+            adapter = SelectCountriesWhereVenuesList.ExecuteReader();
+            dt.Load(adapter);
+
+            foreach (DataRow row in dt.Rows)
+                {
+                CountriesWhereVenuesList.Add(
+                    new SelectListItem()
+                        {
+                        Value = row.Field<string>("C_ISO"),
+                        Text = row.Field<string>("C_NAME").ToUpper(),
+                        });
+                }
+            MyConn.Close();
+            ViewBag.CountriesWhereVenues = CountriesWhereVenuesList;
+            return View();
             }
 
         // GET: Venue
-        public ActionResult GetVenuesByCountry(string C_Iso)
+        public ActionResult GetVenues()
             {
-            return View(_trackerService.GetVenuesByCountry(C_Iso));
+            ViewBag.Countries = new ApplicationController().ViewBag.Countries;
+            return View(_trackerService.GetVenues());
+            }
+
+        public ActionResult GetVenuesByCity(int City_ID)
+            {
+            return View(_trackerService.GetVenuesByCity(City_ID));
             }
 
         public ActionResult GetVenueDetails(int Venue_ID)

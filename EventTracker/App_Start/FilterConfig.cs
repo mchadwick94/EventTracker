@@ -1,12 +1,12 @@
 ﻿using System.Web.Mvc;
 
 namespace EventTracker
-{
-    public class FilterConfig
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+    public class FilterConfig
         {
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+            {
             filters.Add(new HandleErrorAttribute());
+            }
         }
     }
-}

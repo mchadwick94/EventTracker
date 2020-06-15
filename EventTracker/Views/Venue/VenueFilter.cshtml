@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "VenueFilter";
+}
+
+<div class="body-content" id="artist-body">
+
+    <div style="display: inline-flex; width: 49%; margin: 0 25% 0 25%;">
+        <div class="container" id="venue-filter-options" style="width: 100%; text-align: center;">
+            @Html.DropDownList("countries", new SelectList(ViewBag.CountriesWhereVenues, "Value", "Text"), "- Select A Country -", new { @class = "venue-drop-down", @id = "venue-filter-country" })
+
+            @Html.DropDownList("cities", Enumerable.Empty<SelectListItem>(), "- Select A City -", new { @palceholder = "-Select A City-", @class = "venue-drop-down", @id = "venue-filter-city", @disabled = "true" })
+        </div>
+    </div>
+</div>
+<div class="card" id="venue-filter-card">
+</div>
+
+<style>
+    #venue-filter-card {
+        width: 95%;
+    }
+</style>
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+
+        $().ready(function () {
+            $("#venue-filter-card").addClass('hidden');
+        })
+
+    var cityModel = $('#venue-filter-city'); // cache it
+        $("#venue-filter-country").change(function (e) { //On #event-filter-change.
+            cityModel.empty(); // clear existing options
+            $('#venue-filter-country').addClass('placeholder');
+            //var input = document.getElementById("eventNameFilter");
+            //var searchString = input.value;
+                            var id = $(this).val(); //var id == set to dropdown selected item.
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("../Event/GetCities")', //calls ActionResult GetCities form Event Controller
+                dataType: 'json',
+                data: { id: id },
+                success: function (data) {
+                    $.each(data, function (val, city) { //on each row of data in the model, carry out a function
+                        var CityOption = $('<option>' + city.Text + '</option>').attr('Value', city.Value); //populate a var named 'option' with the value of country.Country_Name
+                        var listItems = $("#venue-filter-city").children();
+                        var count = listItems.length;
+                        if (count == 0) {
+                            $("#venue-filter-card").removeClass('hidden');
+                            $("#venue-filter-card").load("/Venue/GetVenuesByCity?City_ID=" + city.Value);
+                        }
+                        cityModel.append(CityOption); //modify the model with the variable 'option' added.
+                    });
+                }
+            });                        if (cityModel.empty == true) {
+                            $("#venue-filter-card").addClass('hidden');
+            }
+
+            });
+        function filterVenues() {
+            var cityval = $("#venue-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
+            console.warn(cityval);
+            $("#venue-filter-card").removeClass('hidden');
+            //var input = document.getElementById("eventNameFilter");
+            //var searchString = input.value;
+            if (cityval != 0) {
+                $("#venue-filter-card").load("/Venue/GetVenuesByCity?City_ID=" + cityval);
+            } else {
+            }
+        }
+
+        $("#venue-filter-city").change(function (e) { //On #event-filter-venue change.
+            filterVenues();
+        });
+    </script>
+    <script>
+
+        $().ready(function () {
+            $('#venue-filter-country').change(function () {
+                if ($("#venue-filter-country option:selected").text() != "- Select A Country -") {
+                    $('#venue-filter-city').each(function () {
+                        if ($(this).attr('disabled')) {
+                            $(this).removeAttr('disabled');
+                        }
+
+                    });
+                }
+                else if ($("#venue-filter-country option:selected").text() == "- Select A Country -") {
+                    $('#venue-filter-city').each(function () {
+                        $(this).attr({
+                            'disabled': 'disabled'
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+}
+<style>
+    .venue-drop-down{
+        height: 7vh;
+        text-align: center !important;
+        text-transform:capitalize !important;
+        border-style:inset;
+        width: 20vw;
+        align-items: center;
+                color: black !important;
+                font-size: large;
+                font-weight:600 !important;
+                cursor: pointer;
+                padding: 8px 36px 8px 16px;
+    }
+     .venue-drop-down > select {
+             text-align-last:right;
+    padding-right: 29px;
+    direction: rtl;
+     }
+    #venue-filter-country{
+        background-color: #ffffff !important;
+    }
+
+    #venue-filter-city{
+        background-color: #68bc51 !important;
+
+    }
+</style>

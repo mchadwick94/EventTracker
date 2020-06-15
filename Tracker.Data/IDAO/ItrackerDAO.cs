@@ -101,6 +101,8 @@ namespace Tracker.Data.IDAO
 
         IList<tbl_venues> GetVenuesByCountry(string C_Iso);
 
+        IList<tbl_venues> GetVenuesByCity(int City_ID);
+
         void CreateVenue(tbl_venues _venue);
 
         Tracker.Data.tbl_venues GetVenueDetails(int Venue_ID);

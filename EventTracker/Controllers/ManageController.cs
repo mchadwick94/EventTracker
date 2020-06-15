@@ -3,6 +3,7 @@ using Konscious.Security.Cryptography;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,17 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
-using EventTracker.Models;
-
-using System.Collections.Generic;
-
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web.Mvc;
-
-using System;
 
 namespace EventTracker.Controllers
     {

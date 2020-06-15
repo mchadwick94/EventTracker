@@ -14,20 +14,19 @@
             {
                 if (i < 5)
                 {
-                    <div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" style="border-radius: 20px;">
-                                
-                                <div class="index-image" id="home-top-seen-card">
-                                    <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
-                                        <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
-                                        <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.Artist_Name</span><br /><span class="overlay-span" id="second-line-span">Times Seen: @item.c</span></h3>
-                                    </a>
-                                </div>
-                                
-                            </li>
-                        </ul>
-                    </div>
+<div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" style="border-radius: 20px;">
+
+            <div class="index-image" id="home-top-seen-card">
+                <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                    <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
+                    <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.Artist_Name</span><br /><span class="overlay-span" id="second-line-span">Times Seen: @item.c</span></h3>
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>
                     i++;
                 }
             }
@@ -36,32 +35,32 @@
 else
 {
 
-    <body style="width: 100%">
+<body style="width: 100%">
 
-        <table class="artist-count-table" style="margin-top: 3%">
-            <tr>
-                <th class="count-table-head" width="2%">
+    <table class="artist-count-table" style="margin-top: 3%">
+        <tr>
+            <th class="count-table-head" width="2%">
 
-                    <p>Times Seen</p>
-                </th>
-                <th class="count-table-head">
-                    Artist
-                </th>
-            </tr>
-            @foreach (var item in Model)
+                <p>Times Seen</p>
+            </th>
+            <th class="count-table-head">
+                Artist
+            </th>
+        </tr>
+        @foreach (var item in Model)
             {
-                <tr class="count-table-row">
-                    <td class="count-table-count-col">
-                        @Html.DisplayFor(modelItem => item.c)
-                    </td>
+        <tr class="count-table-row">
+            <td class="count-table-count-col">
+                @Html.DisplayFor(modelItem => item.c)
+            </td>
 
-                    <td class="count-table-artist-col">
-                        @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = User.Identity.GetUserId() }, null)
-                    </td>
-                </tr>
+            <td class="count-table-artist-col">
+                @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = User.Identity.GetUserId() }, null)
+            </td>
+        </tr>
             }
-        </table>
-    </body>
+    </table>
+</body>
 }
 
 <style>
@@ -89,7 +88,6 @@ else
         position: relative;
         width: 100%;
         padding: 0% 0% 0% 0%;
-
     }
 
     #artist-count-image-tile {
@@ -100,14 +98,11 @@ else
         padding: 0% 0% 0% 0%;
     }
 
-
-
     #index-artist-count-body {
         height: 100%;
         width: 100%;
         padding: 0% 0% 0% 0%;
     }
-
 
     span {
         padding: 0% 6% 0% 2%;

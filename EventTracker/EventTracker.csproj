@@ -560,7 +560,6 @@
     <Content Include="Views\Artist\FindSeenArtistEntry.cshtml" />
     <Content Include="Views\Artist\GetSeenArtistHistory.cshtml" />
     <Content Include="Views\Artist\GetArtistDetails.cshtml" />
-    <Content Include="Views\Venue\GetVenues.cshtml" />
     <Content Include="Views\Venue\GetVenueDetails.cshtml" />
     <Content Include="Views\Artist\GetAnArtistsEventHistory.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -590,6 +589,8 @@
     <Content Include="Views\User\ManageUserRoles.cshtml" />
     <Content Include="Views\User\GetRolesForUser.cshtml" />
     <Content Include="Views\User\GetRolesForUserConfirmed.cshtml" />
+    <Content Include="Views\Venue\GetVenuesByCity.cshtml" />
+    <Content Include="Views\Venue\VenueFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,30 +4,42 @@
 @{
     ViewBag.Title = "GetArtistDetails";
 }
-    <h1 align="center">
+
+<div class="container" id="Event-Details-Actions" style="padding: 2vh 0 1vh 0; margin: 0; width: 100%; display: inline-flex">
+    <div class="container" id="event-details-previous-page" style="float:left; padding: 1vh 0 0 0; margin: 0;; width: 25%">
+        @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
+    </div>
+    <h1 align="center" style="width: 50%">
         <b>@Html.DisplayFor(model => model.Artist_Name)</b>
     </h1>
-    <div class="jumbotron" id="profile-jumbotron" align="left" style="display: inline-flex">
-        <div class="card" id="profile-card">
-            @if (Model.tbl_artistImages.Any())
+    <div class="container" id="artist-details-previous-page" style="float:right; padding: 1vh 0 0 0; margin: 0; text-align: right; width: 25%">
+        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                <dd>
-                    <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" />
-                </dd>
+            if (User.IsInRole("Admin"))
+                {
+                @Html.ActionLink("Edit", "../Admin/ArtistEdit", new { Artist_ID = Model.Artist_ID }) <text> | </text>
+                }
             }
-            else
+    </div>
+</div>
+
+<div class="jumbotron" id="profile-jumbotron" align="left" style="display: inline-flex">
+    <div class="card" id="profile-card">
+        @if (Model.tbl_artistImages.Any())
             {
-                <img class="profile-image" src="@Url.Content("~/Content/images/default-profile.jpeg")" />
-            }
-        </div>
-        <div class="card" id="profile-history-card">
-            <div class="body-content" style="background-color: transparent;">
-                @{Html.RenderAction("GetAnArtistsEventHistory", "Artist", new { Artist_ID = Model.Artist_ID }); }
+            <div>
+                <img class="profile-image" src="@Url.Action("Index", "File", new { File_ID = Model.tbl_artistImages.First(f => f.Artist_ID == Model.Artist_ID).File_ID })" />
             </div>
+            }
+        else
+            {
+            <img class="profile-image" src="@Url.Content("~/Content/images/default-profile.jpeg")" />
+            }
+    </div>
+    <div class="card" id="profile-history-card">
+        <div class="body-content" style="background-color: transparent;">
+            @{Html.RenderAction("GetAnArtistsEventHistory", "Artist", new { Artist_ID = Model.Artist_ID }); }
         </div>
     </div>
+</div>
 
-<p>
-    @Html.ActionLink("Edit", "../Admin/ArtistEdit", new { Artist_ID = Model.Artist_ID }) |
-    @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
-</p>

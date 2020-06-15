@@ -1,12 +1,10 @@
 ﻿using EventTracker.Models;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Services;
 using Tracker.Data;
@@ -107,7 +105,7 @@ namespace EventTracker.Controllers
                 _entry = _trackerService.FindSeenArtistEntry(Lineup_ID, Event_ID, Artist_ID, User_ID);
                 _trackerService.DeleteFromSeenArtists(_entry);
                 _lineup = _trackerService.GetLineupDetails(_entry.EventLineup_ID);
-                return RedirectToAction("GetUsersLineup", "Event", new { _lineup.Event_ID, Event_Name });
+                return RedirectToAction("ReturnPreviousPage", new { controller = "Application" });
                 }
             catch
                 {
@@ -124,11 +122,11 @@ namespace EventTracker.Controllers
                 string Event_Name = _event.Event_Name;
                 _lineup = _trackerService.GetLineupDetails(_entry.EventLineup_ID);
                 _trackerService.AddToArtistHistory(_entry);
-                return RedirectToAction("GetUsersLineup", "Event", new { _lineup.Event_ID, Event_Name });
+                return RedirectToAction("ReturnPreviousPage", new { controller = "Application" });
                 }
             catch
                 {
-                return RedirectToAction("GetUsersLineup", "Event", new { _lineup.Event_ID });
+                return RedirectToAction("ReturnPreviousPage", new { controller = "Application" });
                 }
             }
 

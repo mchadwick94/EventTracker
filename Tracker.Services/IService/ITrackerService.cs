@@ -98,6 +98,8 @@ namespace Tracker.Services.IService
         // VENUE RELATED FUNCTIONS
         IList<Tracker.Data.tbl_venues> GetVenues();
 
+        IList<tbl_venues> GetVenuesByCity(int City_ID);
+
         IList<tbl_venues> GetVenuesByCountry(string C_Iso);
 
         Tracker.Data.tbl_venues GetVenueDetails(int Venue_ID);

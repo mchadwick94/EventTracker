@@ -63,7 +63,9 @@
 * {
     box-sizing: border-box
 }
-
+.heading-h2 {
+    color: white;
+}
 #myTable {
     max-height: 300px;
     overflow: scroll;
@@ -107,7 +109,7 @@
     background-color: inherit;
     outline-color: inherit;
     border-collapse: inherit;
-    height: 70vh
+    height: 60vh
 }
 
 #event-table-body {

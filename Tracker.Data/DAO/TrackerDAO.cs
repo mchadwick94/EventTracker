@@ -279,6 +279,13 @@ namespace Tracker.Data.DAO
             return _Venues.OrderBy(i => i.V_City).ThenBy(n => n.V_Name).ToList<tbl_venues>();
             }
 
+        public IList<tbl_venues> GetVenuesByCity(int City_ID)
+            {
+            IQueryable<tbl_venues> _Venues;
+            _Venues = from tbl_venues in _context.tbl_venues where tbl_venues.tbl_cities.City_ID == City_ID select tbl_venues;
+            return _Venues.OrderBy(i => i.V_City).ThenBy(n => n.V_Name).ToList<tbl_venues>();
+            }
+
         public void CreateVenue(tbl_venues _venue)
             {
             _context.tbl_venues.Add(_venue);

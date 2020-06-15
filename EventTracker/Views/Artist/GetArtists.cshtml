@@ -7,14 +7,14 @@
 <div class="body-content" id="artist-body">
     <div class="card" id="artist-index-filter-card">
 
-            @for (char c = 'A'; c <= 'Z'; c++)
+        @for (char c = 'A'; c <= 'Z'; c++)
+            {
+            <a href="#@c"><h3 id="letter-h3" style="padding-right: 5px">@c</h3></a>
+            if (c != 'Z')
                 {
-                <a href="#@c"><h3 id="letter-h3" style="padding-right: 5px">@c</h3></a>
-                if (c != 'Z')
-                    {
-                    <h3> / </h3>
-                    }
+                <h3> / </h3>
                 }
+            }
     </div>
     <div class="artist-index-body">
         @for (char c = 'A'; c <= 'Z'; c++)
@@ -42,7 +42,5 @@
     </div>
 </div>
 
-
 <style>
-
 </style>

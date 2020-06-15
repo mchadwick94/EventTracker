@@ -6,9 +6,9 @@
 
 @using (Html.BeginForm())
     {
-    @Html.AntiForgeryToken()
-    <p>
-        Username: @Html.TextBox("UserName")
-        <input type="Submit" value="Get Users Roles" />
-    </p>
+@Html.AntiForgeryToken()
+<p>
+    Username: @Html.TextBox("UserName")
+    <input type="Submit" value="Get Users Roles" />
+</p>
     }

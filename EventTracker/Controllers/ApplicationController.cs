@@ -15,7 +15,24 @@ namespace EventTracker.Controllers
             {
             _trackerService = new Tracker.Services.Service.TrackerService();
             ViewBag.Artists = _trackerService.GetArtists();
+            List<SelectListItem> CountriesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetCountries())
+                {
+                CountriesList.Add(
+                    new SelectListItem()
+                        {
+                        Text = item.C_Name,
+                        Value = item.C_Iso
+                        });
+                ViewBag.Countries = CountriesList;
+                }
             }
+
+        public ActionResult ReturnPreviousPage()
+            {
+            return Redirect(Request.UrlReferrer.ToString());
+            }
+
         public ActionResult GetAllCities(string id) //--MODIFIED FUNCTION RETRIEVED FROM https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes
             {                            /*This is used to update a dropdown list of cities to only include those which are within the country selected by a primary dropdown list*/
             if (string.IsNullOrEmpty(id))
@@ -41,5 +58,7 @@ namespace EventTracker.Controllers
                 }).OrderBy(x => x.Venue_Names).ToList();
             return Json(CityList); //return data variaible as json.
             }
+
+
         }
     }

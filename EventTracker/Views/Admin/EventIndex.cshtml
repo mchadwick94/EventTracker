@@ -27,9 +27,9 @@
         </tr>
         @foreach (var item in Model.Where(x => x.Event_Date >= System.DateTime.Now).OrderBy(x => x.Event_Date))
             {
-            <tr class="table-row">
-                <td id="event-table-col-1" class="event-table-row">
-                    @if (item.Event_Cancelled == true)
+        <tr class="table-row">
+            <td id="event-table-col-1" class="event-table-row">
+                @if (item.Event_Cancelled == true)
                         {<b style="color: #68bc51">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
                     </td>
 
@@ -52,9 +52,9 @@
                                 { }
                             else
                                 {
-                                @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
+                            @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Event_ID = item.Event_ID })}
                             }
-                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })*@
                     </td>
                 </tr>
 
@@ -80,9 +80,9 @@
         @foreach (var item in Model.Where(x => x.Event_Date < System.DateTime.Now))
             {
 
-            <tr class="table-row">
-                <td id="event-table-col-1">
-                    @if (item.Event_Cancelled == true)
+        <tr class="table-row">
+            <td id="event-table-col-1">
+                @if (item.Event_Cancelled == true)
                         {<b style="color: #68bc51">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
                     </td>
                     <td id="event-table-col-2">

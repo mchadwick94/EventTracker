@@ -18,7 +18,7 @@
     </tr>
 
     @foreach (var item in Model)
-    {
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
@@ -29,11 +29,11 @@
                 @Html.ActionLink("Delete", "../Event/DeleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
             </td>
         </tr>
-    }
+        }
 </table>
 <br />
 
-<button type="button" id="new-artist-btn" onclick="window.open('@Url.Action("ArtistCreate", "Admin")', '_blank')"  >Add New Artist</button>
+<button type="button" id="new-artist-btn" onclick="window.open('@Url.Action("ArtistCreate", "Admin")', '_blank')">Add New Artist</button>
 <br />
 <br />
 <div class="card">
@@ -41,11 +41,11 @@
     <div class="card-body" id="search-card-body">
         <table class="table" id="myTable">
             @foreach (var item2 in ViewBag.Artists)
-            {
-                if ((ViewBag.Lineup.Contains(item2.Artist_ID.ToString())))
-                { }
-                else
                 {
+                if ((ViewBag.Lineup.Contains(item2.Artist_ID.ToString())))
+                    { }
+                else
+                    {
                     <tr>
                         <td>
                             @item2.Artist_Name
@@ -54,8 +54,8 @@
                             @Html.ActionLink("Add To Lineup", "../Event/AddToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
                         </td>
                     </tr>
+                    }
                 }
-            }
         </table>
     </div>
 </div>

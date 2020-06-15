@@ -16,14 +16,14 @@
                         <h4>Event Name:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("Event_Name", new { htmlAttributes = new { @class = "form-control", @id = "eventNameFilter", @placeholder = "Enter Event Name...", @onkeyup = "filterByName()", @autocomplete="new-password" } })
+                        @Html.Editor("Event_Name", new { htmlAttributes = new { @class = "form-control", @id = "eventNameFilter", @placeholder = "Enter Event Name...", @onkeyup = "delayFilter()", @autocomplete = "new-password" } })
                     </div>
 
                     <div class="header" id="event-index-filter-label">
                         <h4>Select Country:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.DropDownList("countries", new SelectList(ViewBag.Countries, "Value", "Text"), "- Select A Country -", new { @class = "container", @id = "event-filter-country" })
+                        @Html.DropDownList("countries", new SelectList(ViewBag.CountriesWhereEvents, "Value", "Text"), "- Select A Country -", new { @class = "container", @id = "event-filter-country" })
                     </div>
                     <div class="header" id="event-index-filter-label">
                         <h4>Select City:</h4>
@@ -42,13 +42,13 @@
                         <h4>Start Date:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("Start Date", new { htmlAttributes = new { @class = "form-control", @id = "startdatepicker",  @placeholder = "Search From...", @autocomplete="new-password" } })
+                        @Html.Editor("Start Date", new { htmlAttributes = new { @class = "form-control", @id = "startdatepicker", @placeholder = "Search From...", @autocomplete = "new-password" } })
                     </div>
                     <div class="container" id="event-filter-options">
                         <h4>End Date:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("End Date", new { htmlAttributes = new { @class = "form-control", @id = "enddatepicker",  @placeholder = "Search To...", @autocomplete="new-password" } })
+                        @Html.Editor("End Date", new { htmlAttributes = new { @class = "form-control", @id = "enddatepicker", @placeholder = "Search To...", @autocomplete = "new-password" } })
                     </div>
                     <br /><br />@*
                         <div class="header" id="event-index-filter-label">
@@ -97,6 +97,20 @@
     @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
 
     <script>
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 400;  //time in ms
+        var $input = document.getElementById("eventNameFilter");
+        function delayFilter() {
+            //setup before functions
+            clearTimeout(typingTimer);
+            if (typingTimer == doneTypingInterval) {
+                typingTimer = setTimeout(filterByName, doneTypingInterval);
+            } else {
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(filterByName, doneTypingInterval);
+            }
+        }
+
         function filterByName() {
             var input = document.getElementById("eventNameFilter");
             var eventName = input.value;
@@ -106,9 +120,7 @@
             var endDateObject = $('#enddatepicker').datepicker('getDate');
             var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
             var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
-
             var cityval = $("#event-filter-city option:selected").val(); //val is set to the text value of the dropdown.;
-
             var venueval = $("#event-filter-venue option:selected").val(); //val is set to the text value of the dropdown.;
             if (countryval == null) {
                 $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_Country=" + countryval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
@@ -132,22 +144,21 @@
     <script>
         var cityModel = $('#event-filter-city'); // cache it
         var venueModel = $('#event-filter-venue'); // cache it
-            $("#event-filter-country").change(function (e) { //On #event-filter-change.
-                            venueModel.empty(); // clear existing options
+        $("#event-filter-country").change(function (e) { //On #event-filter-change.
+            venueModel.empty(); // clear existing options
             cityModel.empty(); // clear existing options
             var CityOption = $('<option>- Select A City -</option>').attr('value', 0);
             var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
             cityModel.append(CityOption); //modify the model with the variable 'option' added.
             venueModel.append(VenueOption); //modify the model with the variable 'option' added.
-                var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
-                var startDateObject = $('#startdatepicker').datepicker('getDate');
-                var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
-                var endDateObject = $('#enddatepicker').datepicker('getDate');
-                var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
-                var input = document.getElementById("eventNameFilter");
-                var searchString = input.value;
-
-                $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_Country=" + countryval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+            var countryval = $("#event-filter-country option:selected").val(); //val is set to the text value of the dropdown.;
+            var startDateObject = $('#startdatepicker').datepicker('getDate');
+            var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+            var endDateObject = $('#enddatepicker').datepicker('getDate');
+            var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+            var input = document.getElementById("eventNameFilter");
+            var searchString = input.value;
+            $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_Country=" + countryval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
                 var id = $(this).val(); //var id == set to dropdown selected item.
             $.ajax({
                 type: 'POST',
@@ -215,10 +226,7 @@
                 $("#user-event-card").load("/Event/GetfilteredEvents?Event_Name=" + searchString + "&Event_City=" + cityval + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
             }
         });
-
     </script>
-
-
 
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@
@@ -280,7 +288,6 @@
                 }
             }
         }
-
 
         $('#startdatepicker').change(function (e) {
             var startDateObject = $('#startdatepicker').datepicker('getDate');

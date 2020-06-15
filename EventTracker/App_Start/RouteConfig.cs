@@ -2,11 +2,11 @@
 using System.Web.Routing;
 
 namespace EventTracker
-{
-    public class RouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+    public class RouteConfig
         {
+        public static void RegisterRoutes(RouteCollection routes)
+            {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
@@ -14,6 +14,6 @@ namespace EventTracker
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            }
         }
     }
-}

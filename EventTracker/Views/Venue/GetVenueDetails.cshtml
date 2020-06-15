@@ -45,7 +45,6 @@
 
         <dt>
             @Html.DisplayNameFor(model => model.tbl_cities.C_Name)
-
         </dt>
         <dd>
             @Html.DisplayFor(model => model.tbl_cities.C_Name)
@@ -63,6 +62,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "EditVenue", new { Venue_ID = Model.Venue_ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "../Admin/VenueEdit", new { Venue_ID = Model.Venue_ID }) |
+    @Html.ActionLink("Back to Venues", null, null, null, new { href = Request.UrlReferrer })
 </p>

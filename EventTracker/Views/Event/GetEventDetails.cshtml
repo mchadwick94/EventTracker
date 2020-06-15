@@ -1,10 +1,36 @@
 ﻿@model Tracker.Data.tbl_events
+@using Microsoft.AspNet.Identity
+
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 <body class="event-lineup-body">
     @{
         ViewBag.Title = "GetEventDetails";
     }
     <div class="body-content">
+        <div class="container" id="Event-Details-Actions" style="padding: 0 0 2vh 0; margin: 0; width: 100%">
+            <div class="container" id="event-details-previous-page" style="float:left; padding: 0; margin: 0;; width: 25%">
+                @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
+            </div>
+            <div class="container" id="event-details-previous-page" style="float:right; padding: 0; margin: 0; text-align: right; width: 25%">
+                @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                    if (User.IsInRole("Admin"))
+                        {@Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = Model.Event_ID, Country_ID = Model.tbl_venues.tbl_cities.tbl_countries.C_Iso, City_ID = Model.tbl_venues.tbl_cities.City_ID }) <text> | </text>}
+
+                        {
+                if (((IList<string>
+                    )ViewBag.MyEvents).Contains(Model.Event_ID.ToString()))
+                    {
+                        @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = Model.tbl_eventhistory.Where(x => x.Event_ID == Model.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                    }
+                else
+                    {
+                        @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = Model.Event_ID })}
+                        }
+                    }
+                </div>
+        </div>
+
         <div class="event-jumbotron" id="event-jumbotron" align="left">
             <div class="card" id="event-card">
                 <div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
@@ -33,11 +59,7 @@
             </div>
         </div>
         <br />
-        <p>
-            @Html.ActionLink("Edit", "../Admin/EventEdit", new { Event_ID = Model.Event_ID, Country_ID = Model.tbl_venues.tbl_cities.tbl_countries.C_Iso, City_ID = Model.tbl_venues.tbl_cities.City_ID }) |
-            @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
-        </p>
-
+        
         <h1 class="center-h1">Lineup:</h1>
 
         <div class="jumbotron" id="index-jumbo" align="center">

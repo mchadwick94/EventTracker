@@ -1,11 +1,9 @@
 ﻿using EventTracker.Models;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Tracker.Data;
 
@@ -20,8 +18,32 @@ namespace EventTracker.Controllers
 
         public EventController()
             {
+            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            List<string> UsersEvents = new List<string>();
+            foreach (var item in _trackerService.GetUserEvents(User_ID))
+                {
+                UsersEvents.Add(item.Event_ID.ToString());
+                }
+            ViewBag.MyEvents = UsersEvents;
+
             ViewBag.Lineup = _trackerService.GetLineUp(_eventID);
+
             _context = new TrackerEntities();
+
+            //Populate Country Viewbag
+            List<SelectListItem> CountriesList = new List<SelectListItem>();
+            foreach (var item in _trackerService.GetCountries())
+                {
+                CountriesList.Add(
+                    new SelectListItem()
+                        {
+                        Text = item.C_Name,
+                        Value = item.C_Iso
+                        });
+                ViewBag.Countries = CountriesList;
+                }
+
+
             }
 
         public ActionResult GetCities(string id) //--MODIFIED FUNCTION RETRIEVED FROM https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes
@@ -69,18 +91,28 @@ namespace EventTracker.Controllers
         // GET: Complete Event List
         public ActionResult GetEvents()
             {
-            //Populate Country Viewbag
-            List<SelectListItem> CountriesList = new List<SelectListItem>();
-            foreach (var item in _trackerService.GetCountries())
+            List<SelectListItem> CountriesWhereEventsList = new List<SelectListItem>();
+            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
+            SqlConnection MyConn = new SqlConnection(connString);
+            SqlCommand SelectCountriesWhereEvents = MyConn.CreateCommand();
+            SqlDataReader adapter;
+            SelectCountriesWhereEvents.CommandText = @"exec SelectCountriesWhereEvents;";
+            DataTable dt = new DataTable("CountriesWhereEventsTable");
+            MyConn.Open();
+            adapter = SelectCountriesWhereEvents.ExecuteReader();
+            dt.Load(adapter);
+
+            foreach (DataRow row in dt.Rows)
                 {
-                CountriesList.Add(
+                CountriesWhereEventsList.Add(
                     new SelectListItem()
                         {
-                        Text = item.C_Name,
-                        Value = item.C_Iso
+                        Value = row.Field<string>("C_ISO"),
+                        Text = row.Field<string>("C_NAME"),
                         });
-                ViewBag.Countries = CountriesList;
                 }
+            MyConn.Close();
+            ViewBag.CountriesWhereEvents = CountriesWhereEventsList;
 
             return View();
             }
@@ -91,13 +123,7 @@ namespace EventTracker.Controllers
             {
             if (HttpContext.User.Identity.IsAuthenticated != false)
                 {
-                User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                List<string> UsersEvents = new List<string>();
-                foreach (var item in _trackerService.GetUserEvents(User_ID))
-                    {
-                    UsersEvents.Add(item.Event_ID.ToString());
-                    }
-                ViewBag.MyEvents = UsersEvents;
+
                 }
             var business = new EventBusinessLogic();
             var model = business.GetFilteredEvents(searchModel);
@@ -120,7 +146,7 @@ namespace EventTracker.Controllers
                 {
                 _event.User_ID = User.Identity.GetUserId();
                 _trackerService.AddToUser(_event);
-                return RedirectToAction("GetEvents");
+                return RedirectToAction("ReturnPreviousPage", new { controller = "Application" });
                 }
             catch
                 {
@@ -147,7 +173,7 @@ namespace EventTracker.Controllers
                 {
                 _event = _trackerService.GetEventHistoryDetails(_event.History_ID);
                 _trackerService.DeleteFromUserHistory(_event);
-                return RedirectToAction("GetUserEvents", new { controller = "Event", User_ID = User.Identity.GetUserId() });
+                return RedirectToAction("ReturnPreviousPage", new { controller = "Application" });
                 }
             catch
                 {

@@ -71,7 +71,7 @@ namespace EventTracker.Controllers
 
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult GetRolesForUser(string UserName)
-            { 
+            {
             if (!string.IsNullOrWhiteSpace(UserName))
                 {
                 ApplicationUser user = _AppContext.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
