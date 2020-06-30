@@ -56,6 +56,11 @@ namespace EventTracker.Controllers
             return View(_trackerService.GetVenuesByCity(City_ID));
             }
 
+        public ActionResult GetVenueHome(int Venue_ID)
+            {
+            return View(_trackerService.GetVenueDetails(Venue_ID));
+            }
+
         public ActionResult GetVenueDetails(int Venue_ID)
             {
             return View(_trackerService.GetVenueDetails(Venue_ID));

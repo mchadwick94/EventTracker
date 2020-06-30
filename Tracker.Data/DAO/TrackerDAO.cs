@@ -318,6 +318,29 @@ namespace Tracker.Data.DAO
             _context.SaveChanges();
             }
 
+        public void AddVenueImage(tbl_venueImages image)
+            {
+            _context.tbl_venueImages.Add(image);
+            _context.SaveChanges();
+            }
+
+        public void EditVenueImage(tbl_venueImages oldImage, tbl_venueImages newImage)
+            {
+            tbl_venueImages imageEntry = _context.tbl_venueImages.FirstOrDefault(s => s.V_FileID == oldImage.V_FileID);
+            _context.tbl_venueImages.Remove(imageEntry);
+            imageEntry.V_Content = newImage.V_Content;
+            imageEntry.V_ContentType = newImage.V_ContentType;
+            imageEntry.V_FileName = newImage.V_FileName;
+            _context.tbl_venueImages.Add(newImage);
+            _context.SaveChanges();
+            }
+
+        public void RemoveVenueImage(tbl_venueImages image)
+            {
+            _context.tbl_venueImages.Remove(image);
+            _context.SaveChanges();
+            }
+
         //-------------------------------------------------------------------------------
         // Country RELATED FUNCTIONS
 
@@ -349,6 +372,13 @@ namespace Tracker.Data.DAO
             {
             IQueryable<tbl_eventImages> _file = from tbl_eventImages in _context.tbl_eventImages where tbl_eventImages.Event_ID == Event_ID select tbl_eventImages;
             return _file.First<tbl_eventImages>();
+            }
+
+        public tbl_venueImages GetVenueImageId(int Venue_ID)
+
+            {
+            IQueryable<tbl_venueImages> _file = from tbl_venueImages in _context.tbl_venueImages where tbl_venueImages.Venue_ID == Venue_ID select tbl_venueImages;
+            return _file.First<tbl_venueImages>();
             }
         }
     }

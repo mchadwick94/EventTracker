@@ -111,6 +111,12 @@ namespace Tracker.Data.IDAO
 
         void DeleteVenue(tbl_venues venue);
 
+        void AddVenueImage(tbl_venueImages image);
+
+        void EditVenueImage(tbl_venueImages oldImage, tbl_venueImages newImage);
+
+        void RemoveVenueImage(tbl_venueImages image);
+
         //-----------------------------------------------------------------------------------------------------------------------
         // Country RELATED FUNCTIONS
         //Gets a list of all the countries within the database.
@@ -124,5 +130,7 @@ namespace Tracker.Data.IDAO
         tbl_artistImages GetImageId(int Artist_ID);
 
         tbl_eventImages GetEventImageId(int Event_ID);
+
+        tbl_venueImages GetVenueImageId(int Venue_ID);
         }
     }

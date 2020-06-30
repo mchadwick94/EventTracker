@@ -6,9 +6,9 @@
 
 <h2>VenueEdit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("VenueEdit", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     <h4>tbl_venues</h4>
@@ -54,6 +54,31 @@
             @Html.ValidationMessageFor(model => model.V_Postcode, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" id="Avatar" name="upload" />
+        </div>
+    </div>
+    @if (Model.tbl_venueImages.Any())
+        {
+        <div class="form-group">
+            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <img src="@Url.Action("VenueImageIndex", "File", new { File_ID = Model.tbl_venueImages.First(f => f.Venue_ID == Model.Venue_ID).V_FileID })" style="width:200px; height:180px" />
+            </div>
+        </div>
+        }
+    else
+        {
+        <div class="form-group">
+            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <img class="profile-image" src="@Url.Content("~/Content/images/default-profile.jpeg")" style="width:200px; height:180px" />
+            </div>
+        </div>
+
+        }
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

@@ -321,6 +321,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\1024px-No_image_available.svg.png" />
     <Content Include="Content\images\calendar-icon-dark.png" />
     <Content Include="Content\images\calendar-icon.png" />
     <Content Include="Content\images\default-profile.jpeg" />
@@ -560,7 +561,7 @@
     <Content Include="Views\Artist\FindSeenArtistEntry.cshtml" />
     <Content Include="Views\Artist\GetSeenArtistHistory.cshtml" />
     <Content Include="Views\Artist\GetArtistDetails.cshtml" />
-    <Content Include="Views\Venue\GetVenueDetails.cshtml" />
+    <Content Include="Views\Venue\GetVenueHome.cshtml" />
     <Content Include="Views\Artist\GetAnArtistsEventHistory.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />

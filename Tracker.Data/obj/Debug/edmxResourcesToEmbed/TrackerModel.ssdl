@@ -32,7 +32,7 @@
       <PropertyRef Name="City_ID" />
     </Key>
     <Property Name="City_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CC_ISO" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="CC_ISO" Type="char" MaxLength="2" />
     <Property Name="C_Name" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_countries">
@@ -73,10 +73,20 @@
       <PropertyRef Name="Event_ID" />
     </Key>
     <Property Name="Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Event_Name" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="Event_Name" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Event_Date" Type="date" Nullable="false" />
     <Property Name="Event_Location" Type="int" Nullable="false" />
     <Property Name="Event_Cancelled" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_venueImages">
+    <Key>
+      <PropertyRef Name="V_FileID" />
+    </Key>
+    <Property Name="V_FileID" Type="int" Nullable="false" />
+    <Property Name="V_FileName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="V_ContentType" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="V_Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Venue_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_venues">
     <Key>
@@ -136,6 +146,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_db_eventtracker_tbl_venueImages_tbl_venues">
+    <End Role="tbl_venues" Type="Self.tbl_venues" Multiplicity="1" />
+    <End Role="tbl_venueImages" Type="Self.tbl_venueImages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_venues">
+        <PropertyRef Name="Venue_ID" />
+      </Principal>
+      <Dependent Role="tbl_venueImages">
+        <PropertyRef Name="Venue_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tbl_eventhistory_tbl_events">
     <End Role="tbl_events" Type="Self.tbl_events" Multiplicity="1" />
     <End Role="tbl_eventhistory" Type="Self.tbl_eventhistory" Multiplicity="*" />
@@ -185,7 +207,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PK_tbl_countriesFK_tbl_cities">
-    <End Role="tbl_countries" Type="Self.tbl_countries" Multiplicity="1" />
+    <End Role="tbl_countries" Type="Self.tbl_countries" Multiplicity="0..1" />
     <End Role="tbl_cities" Type="Self.tbl_cities" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_countries">
@@ -230,6 +252,7 @@
     <EntitySet Name="tbl_eventImages" EntityType="Self.tbl_eventImages" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_eventlineup" EntityType="Self.tbl_eventlineup" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_events" EntityType="Self.tbl_events" Schema="db_eventtracker" store:Type="Tables" />
+    <EntitySet Name="tbl_venueImages" EntityType="Self.tbl_venueImages" Schema="db_eventtracker" store:Type="Tables" />
     <EntitySet Name="tbl_venues" EntityType="Self.tbl_venues" Schema="db_eventtracker" store:Type="Tables" />
     <AssociationSet Name="FK__tbl_artis__Artis__18B6AB08" Association="Self.FK__tbl_artis__Artis__18B6AB08">
       <End Role="tbl_artists" EntitySet="tbl_artists" />
@@ -246,6 +269,10 @@
     <AssociationSet Name="FK__tbl_artis__Event__17C286CF" Association="Self.FK__tbl_artis__Event__17C286CF">
       <End Role="tbl_eventlineup" EntitySet="tbl_eventlineup" />
       <End Role="tbl_artisthistory" EntitySet="tbl_artisthistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_db_eventtracker_tbl_venueImages_tbl_venues" Association="Self.FK_db_eventtracker_tbl_venueImages_tbl_venues">
+      <End Role="tbl_venues" EntitySet="tbl_venues" />
+      <End Role="tbl_venueImages" EntitySet="tbl_venueImages" />
     </AssociationSet>
     <AssociationSet Name="FK_tbl_eventhistory_tbl_events" Association="Self.FK_tbl_eventhistory_tbl_events">
       <End Role="tbl_events" EntitySet="tbl_events" />

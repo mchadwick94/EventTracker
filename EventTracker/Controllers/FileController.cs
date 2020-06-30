@@ -60,5 +60,27 @@ namespace EventTracker.Controllers
             var fileToRetrieve = _context.tbl_eventImages.Find(File_ID);
             return File(fileToRetrieve.Content, fileToRetrieve.Content_Type);
             }
+
+        public ActionResult VenueImageIndex(int File_ID)
+            {
+            var fileToRetrieve = _context.tbl_venueImages.Find(File_ID);
+            return File(fileToRetrieve.V_Content, fileToRetrieve.V_ContentType);
+            }
+
+        public ActionResult GetVenueImageId(int Venue_ID)
+            {
+            int V_FileID;
+            tbl_venueImages _image = _context.tbl_venueImages.SingleOrDefault(s => s.Venue_ID == Venue_ID); //fetches all files associated with the artist regardless of type.
+            if (_image == null)
+                {
+                V_FileID = 1209;
+                }
+            else
+                {
+                V_FileID = _trackerService.GetVenueImageId(Venue_ID).V_FileID;
+                }
+            var fileToRetrieve = _context.tbl_venueImages.Find(V_FileID);
+            return File(fileToRetrieve.V_Content, fileToRetrieve.V_ContentType);
+            }
         }
     }

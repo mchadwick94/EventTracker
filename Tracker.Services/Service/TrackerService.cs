@@ -236,6 +236,21 @@ namespace Tracker.Services.Service
             _TrackerDAO.DeleteVenue(venue);
             }
 
+        public void AddVenueImage(tbl_venueImages image)
+            {
+            _TrackerDAO.AddVenueImage(image);
+            }
+
+        public void EditVenueImage(tbl_venueImages oldImage, tbl_venueImages newImage)
+            {
+            _TrackerDAO.EditVenueImage(oldImage, newImage);
+            }
+
+        public void RemoveVenueImage(tbl_venueImages image)
+            {
+            _TrackerDAO.RemoveVenueImage(image);
+            }
+
         //-----------------------------------------------------------------------------------------------------------------------
         // Country RELATED FUNCTIONS
         //Gets a list of all the countries within the database.
@@ -260,6 +275,11 @@ namespace Tracker.Services.Service
         public tbl_eventImages GetEventImageId(int Event_ID)
             {
             return _TrackerDAO.GetEventImageId(Event_ID);
+            }
+
+        public tbl_venueImages GetVenueImageId(int Venue_ID)
+            {
+            return _TrackerDAO.GetVenueImageId(Venue_ID);
             }
         }
     }

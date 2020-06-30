@@ -368,14 +368,38 @@ namespace EventTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult VenueCreate(tbl_venues _venue)
+        public ActionResult VenueCreate(tbl_venues _venue, HttpPostedFileBase upload, tbl_venueImages image)
             {
-            try
+            if (String.IsNullOrEmpty(_venue.V_Name))//Checks if the field 'Artist_Name' is null, if so, throws an error.
                 {
-                _trackerService.CreateVenue(_venue);
-                return RedirectToAction("VenueIndex");
+                ModelState.AddModelError("V_Name", "Needs a Name");
                 }
-            catch
+            if (ModelState.IsValid)
+                {
+                var venueNameCity = _venue.V_Name.ToString() + _venue.V_City.ToString();
+                var doesVenueExist = _context.tbl_venues.Any(x => x.V_Name.ToString() + x.V_City.ToString() == venueNameCity.ToString());
+                if (doesVenueExist)
+                    {
+                    ModelState.AddModelError("V_Name", "This Venue already exists");
+                    return View();
+                    }
+                _trackerService.CreateVenue(_venue);
+
+                if (upload != null && upload.ContentLength > 0)
+                    {
+                    image.Venue_ID = _venue.Venue_ID;
+                    image.V_FileName = System.IO.Path.GetFileName(upload.FileName);
+                    image.V_ContentType = upload.ContentType;
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                        image.V_Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                    _trackerService.AddVenueImage(image);
+                    }
+
+                return RedirectToAction("VenueCreate");
+                }
+            else
                 {
                 return View();
                 }
@@ -401,10 +425,41 @@ namespace EventTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost] //Posts the new variables into the database at the specific venue being edited
-        public ActionResult VenueEdit(int Venue_ID, tbl_venues _venue)
+        public ActionResult VenueEdit(int Venue_ID, tbl_venues _venue, HttpPostedFileBase upload, tbl_venueImages newImage, tbl_venueImages oldImage)
             {
+            var Model = new TrackerEntities();
+
             try
                 {
+                if (upload != null && upload.ContentLength > 0)
+                    {
+                    var venueNameCity = _venue.V_Name.ToString() + _venue.V_City.ToString();
+                    if (_context.tbl_venueImages.Any(x => x.Venue_ID == Venue_ID))
+                        {
+                        oldImage = _context.tbl_venueImages.FirstOrDefault(s => s.Venue_ID == Venue_ID);
+
+                        newImage.Venue_ID = _venue.Venue_ID;
+                        newImage.V_FileName = System.IO.Path.GetFileName(upload.FileName);
+                        newImage.V_ContentType = upload.ContentType;
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                            {
+                            newImage.V_Content = reader.ReadBytes(upload.ContentLength);
+                            }
+                        _trackerService.EditVenueImage(oldImage, newImage);
+                        }
+                    else
+                        {
+                        newImage.Venue_ID = _venue.Venue_ID;
+                        newImage.V_FileName = System.IO.Path.GetFileName(upload.FileName);
+                        newImage.V_ContentType = upload.ContentType;
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                            {
+                            newImage.V_Content = reader.ReadBytes(upload.ContentLength);
+                            }
+                        _trackerService.AddVenueImage(newImage);
+                        }
+                    _trackerService.EditVenue(_venue);
+                    }
                 _trackerService.EditVenue(_venue);
                 return RedirectToAction("VenueIndex");
                 }
