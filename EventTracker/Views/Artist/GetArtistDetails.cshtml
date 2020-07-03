@@ -6,7 +6,7 @@
 }
 
 <div class="container" id="Event-Details-Actions" style="padding: 2vh 0 1vh 0; margin: 0; width: 100%; display: inline-flex">
-    <div class="container" id="event-details-previous-page" style="float:left; padding: 1vh 0 0 0; margin: 0;; width: 25%">
+    <div class="container" id="event-details-previous-page" style="float:left; padding: 1vh 0 0 0; margin: 0; width: 25%">
         @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
     </div>
     <h1 align="center" style="width: 50%">
@@ -38,8 +38,148 @@
     </div>
     <div class="card" id="profile-history-card">
         <div class="body-content" style="background-color: transparent;">
-            @{Html.RenderAction("GetAnArtistsEventHistory", "Artist", new { Artist_ID = Model.Artist_ID }); }
+            <div class="tab" id="artist-events-tab-bar">
+                <button class="tablinks" id="artist-upcomingevent-tab" onclick="openVenuePage(event, 'artist-upcomingevent-tabcontent')">Upcoming Events</button>
+                <button class="tablinks" id="artist-pastevent-tab" onclick="openVenuePage(event, 'artist-pastevent-tabcontent')">Past Events</button>
+            </div>
+
+            <div class="tabcontent" id="artist-upcomingevent-tabcontent">
+                @if (Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date >= System.DateTime.Now).Count() == 0)
+                    {
+                    <br /> <br />
+                    <h3 id="profile-title">No Upcoming Events</h3>
+                    }
+                else
+                    {
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Event Name
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date >= System.DateTime.Now).OrderBy(x => x.tbl_events.Event_Date))
+                            {
+                            <tr>
+                                <td>
+                                    <a href=@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })>@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)</a>
+                                </td>
+                                <td>
+                                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
+                                </td>
+                            </tr>
+                            }
+                    </table>
+                    }
+            </div>
+            <div class="tabcontent" id="artist-pastevent-tabcontent">
+                @if (Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date < System.DateTime.Now).Count() == 0)
+                    {
+                    <br /> <br />
+                    <h3 id="profile-title">No Past Events</h3>
+                    }
+                else
+                    {
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Event Name
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(x => x.tbl_events.Event_Date))
+                            {
+                            <tr>
+                                <td>
+                                    <a href=@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })>@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)</a>
+                                </td>
+                                <td>
+                                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
+                                </td>
+                            </tr>
+                            }
+                    </table>
+                    }
+            </div>
         </div>
     </div>
 </div>
 
+    <style>
+        /* Style the tab */
+        #artist-events-tab-bar {
+            overflow: hidden;
+            border: 2px solid #171616;
+            background-color: #171616;
+            height: 5%;
+            width: 100%;
+        }
+
+            /* Style the buttons that are used to open the tab content */
+            #artist-events-tab-bar button {
+                background-color: inherit !important;
+                float: left;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 7px 16px;
+                transition: 0.1s;
+                font-size: 18px;
+            }
+
+                /* Change background color of buttons on hover */
+                #artist-events-tab-bar button:hover {
+                    background-color: #333333 !important;
+                }
+
+                /* Create an active/current tablink class */
+                #artist-events-tab-bar button.active {
+                    background-color: #abff94 !important;
+                    color: #171616 !important;
+                }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border-top: none;
+            background-color: #222222;
+            width: 100%;
+            height: 70%;
+        }
+    </style>
+
+    <script>
+        function openVenuePage(evt, pageName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(pageName).style.display = "block";
+            evt.currentTarget.className += " active";
+        };
+
+        document.addEventListener('readystatechange', () => {
+            if (document.readyState == 'complete') loadLanding();
+        });
+
+        function loadLanding() {
+            document.getElementById('artist-upcomingevent-tab').click();
+        };
+    </script>

@@ -420,6 +420,24 @@ namespace EventTracker.Controllers
                         });
                 ViewBag.Countries = CountriesList;
                 }
+            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
+            SqlConnection MyConn = new SqlConnection(connString);
+            SqlCommand MySqlCmd = MyConn.CreateCommand();
+            SqlDataReader adapter;
+            MySqlCmd.CommandText = @"EXEC RetrieveCities @Country = '" + selectedCountry + "';";
+            DataTable dt = new DataTable("citiesTable");
+            MyConn.Open();
+            adapter = MySqlCmd.ExecuteReader();
+            dt.Load(adapter);
+
+            MyConn.Close();
+            List<CityVM> CityList = dt.AsEnumerable().Select(m => new CityVM() //populates var data with venues where the country_ID matches the id value.
+                {
+                Value = m.Field<int>("City_ID"),
+                Text = m.Field<string>("C_NAME"),
+                }).ToList();
+            ViewBag.Cities = CityList.OrderBy(x => x.Text);
+
             return View(_trackerService.GetVenueDetails(Venue_ID));
             }
 

@@ -35,14 +35,14 @@
     <div class="form-group">
         <h4 class="control-label col-md-2">Select Country:</h4>
         <div class="col-md-10">
-            @Html.DropDownList("countries", new SelectList(ViewBag.Countries, "Value", "Text"), "- Select A Country -", new { @class = "form-control", @id = "country" })
+            @Html.DropDownList("countries", new SelectList(ViewBag.Countries, "Value", "Text"), Model.tbl_cities.tbl_countries.C_Name.ToString(), new { @class = "form-control", @id = "country", @value = Model.tbl_cities.tbl_countries.C_Iso })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.V_City, "V_City", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.V_City, Enumerable.Empty<SelectListItem>(), "- Select A City -", new { @class = "form-control", @id = "city" })
+            @Html.DropDownListFor(model => model.V_City, new SelectList(ViewBag.Cities, "Value", "Text"), Model.tbl_cities.C_Name.ToString(), new { @class = "form-control", @id = "city" })
             @Html.ValidationMessageFor(model => model.V_City, "", new { @class = "text-danger" })
         </div>
     </div>
