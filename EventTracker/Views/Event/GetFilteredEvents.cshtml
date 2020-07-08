@@ -2,7 +2,7 @@
 @model IEnumerable<Tracker.Data.tbl_events>
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 <body style="width:100%">
-    <div class="grid-container" id="user-event-grid">
+    <div class="grid-container" id="event-grid">
         @foreach (var item in Model@*.Where(x => x.Event_Date > System.DateTime.Now)*@.OrderBy(x => x.Event_Date))
 {
         <div class="grid-item" id="event-grid-item">

@@ -582,8 +582,13 @@ td {
     border: 1px solid #898989 !important
 }
 
-#user-event-grid {
+#event-grid {
     grid-template-columns: 33% 33% 33%;
+    display: inline-grid
+}
+
+#user-event-grid {
+    grid-template-columns: 25% 25% 25% 25%;
     display: inline-grid
 }
 

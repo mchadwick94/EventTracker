@@ -39,8 +39,8 @@
     <div class="card" id="profile-history-card">
         <div class="body-content" style="background-color: transparent;">
             <div class="tab" id="artist-events-tab-bar">
-                <button class="tablinks" id="artist-upcomingevent-tab" onclick="openVenuePage(event, 'artist-upcomingevent-tabcontent')">Upcoming Events</button>
-                <button class="tablinks" id="artist-pastevent-tab" onclick="openVenuePage(event, 'artist-pastevent-tabcontent')">Past Events</button>
+                <button class="tablinks" id="upcomingevent-tab" onclick="openVenuePage(event, 'artist-upcomingevent-tabcontent')">Upcoming Events</button>
+                <button class="tablinks" id="pastevent-tab" onclick="openVenuePage(event, 'artist-pastevent-tabcontent')">Past Events</button>
             </div>
 
             <div class="tabcontent" id="artist-upcomingevent-tabcontent">
@@ -129,6 +129,7 @@
                 padding: 7px 16px;
                 transition: 0.1s;
                 font-size: 18px;
+                width: 50%;
             }
 
                 /* Change background color of buttons on hover */
@@ -180,6 +181,6 @@
         });
 
         function loadLanding() {
-            document.getElementById('artist-upcomingevent-tab').click();
+            document.getElementById('upcomingevent-tab').click();
         };
     </script>
