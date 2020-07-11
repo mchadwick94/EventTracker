@@ -54,7 +54,6 @@ namespace Tracker.Services.IService
         void DeleteFromUserHistory(tbl_eventhistory _event);
 
         //Returns a list of an events lineup through the user events.
-        IList<Tracker.Data.tbl_eventlineup> GetUsersLineUp(int Event_ID);
 
         void AddToArtistHistory(tbl_artisthistory _entry);
 

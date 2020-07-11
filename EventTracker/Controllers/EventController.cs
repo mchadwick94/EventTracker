@@ -41,8 +41,7 @@ namespace EventTracker.Controllers
                         Value = item.C_Iso
                         });
                 ViewBag.Countries = CountriesList;
-                }
-
+                };
 
             }
 
@@ -133,8 +132,18 @@ namespace EventTracker.Controllers
         //=-------------------------
 
         //Returns the details of a specific event.
-        public ActionResult GetEventDetails(int Event_ID)
+        public ActionResult GetEventDetails(int Event_ID, tbl_events _event)
             {
+            List<string> UsersSeenLineup = new List<string>();
+            _event = _trackerService.GetEventDetails(Event_ID);
+            foreach (var item in _trackerService.GetSeenArtists(User_ID))
+                {
+                if (item.Event_ID == _event.Event_ID)
+                    {
+                    UsersSeenLineup.Add(item.Artist_ID.ToString());
+                    }
+                }
+            ViewBag.UsersSeenOnLineup = UsersSeenLineup;
             return View(_trackerService.GetEventDetails(Event_ID));
             }
 
@@ -181,23 +190,6 @@ namespace EventTracker.Controllers
                 }
             }
 
-        //Get an events Lineup through users events page
-        public ActionResult GetUsersLineUp(int Event_ID, tbl_events _event)
-            {
-            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
-
-            List<string> UsersSeenLineup = new List<string>();
-            _event = _trackerService.GetEventDetails(Event_ID);
-            foreach (var item in _trackerService.GetSeenArtists(User_ID))
-                {
-                if (item.Event_ID == _event.Event_ID)
-                    {
-                    UsersSeenLineup.Add(item.Artist_ID.ToString());
-                    }
-                }
-            ViewBag.UsersSeenOnLineup = UsersSeenLineup;
-            return View(_trackerService.GetUsersLineUp(Event_ID));
-            }
 
         //Get an events Lineup
         public ActionResult GetLineUp(int Event_ID)

@@ -552,7 +552,6 @@
     <Content Include="Views\Admin\GetUsers.cshtml" />
     <Content Include="Views\Event\GetLineupDetails.cshtml" />
     <Content Include="Views\Event\GetEventHistoryDetails.cshtml" />
-    <Content Include="Views\Event\GetUsersLineUp.cshtml" />
     <Content Include="Views\Artist\AddToArtistHistory.cshtml" />
     <Content Include="Views\Artist\GetSeenArtists.cshtml" />
     <Content Include="Views\Artist\GetSeenArtistDetails.cshtml" />

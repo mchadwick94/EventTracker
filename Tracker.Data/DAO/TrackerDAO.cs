@@ -144,12 +144,6 @@ namespace Tracker.Data.DAO
             }
 
         //Returns a list of an events lineup through the users events.
-        public IList<tbl_eventlineup> GetUsersLineUp(int Event_ID)
-            {
-            IQueryable<tbl_eventlineup> _lineup;
-            _lineup = from tbl_eventlineup in _context.tbl_eventlineup where tbl_eventlineup.Event_ID == Event_ID select tbl_eventlineup;
-            return _lineup.ToList<tbl_eventlineup>();
-            }
 
         public void AddToArtistHistory(tbl_artisthistory _entry)
             {
