@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Tracker.Data.tbl_events>
+
+@{
+    ViewBag.Title = "GetEventsForVenue";
+}
+
+<h2>GetEventsForVenue</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Event_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Event_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Event_Cancelled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_venues.V_Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event_Cancelled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_venues.V_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Event_ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })
+            </td>
+        </tr>
+        }
+</table>

@@ -8,7 +8,7 @@
     }
     <div class="body-content">
         <div class="container" id="Event-Details-Actions" style="padding: 0 0 2vh 0; margin: 0; width: 100%">
-            <div class="container" id="event-details-previous-page" style="float:left; padding: 0; margin: 0;; width: 25%">
+            <div class="container" id="event-details-previous-page" style="float:left; padding: 0; margin: 0; width: 25%">
                 @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
             </div>
             <div class="container" id="event-details-previous-page" style="float:right; padding: 0; margin: 0; text-align: right; width: 25%">
@@ -65,7 +65,7 @@
         <div class="jumbotron" id="index-jumbo" align="center">
             @if (Model.tbl_eventlineup.Any())
                 {
-                foreach (var item in Model.tbl_eventlineup.OrderBy(i => i.tbl_artists.Artist_Name).Where(i => i.tbl_artists.Artist_Name == ViewBag.UsersSeenOnLineup.Any()).OrderBy(i => i.tbl_artists.Artist_Name))
+                foreach (var item in Model.tbl_eventlineup.OrderBy(i => i.tbl_artists.Artist_Name))
                     {
                     <div class="col-sm-8 col-md-4 mmt-2" id="lineup-image-tile">
                         <ul class="list-group list-group-flush">
@@ -89,7 +89,7 @@
                                                 if (((IList<string>)ViewBag.UsersSeenOnLineup).Contains(item.Artist_ID.ToString()))
                                                     {<span class="overlay-span" id="second-line-span">
                                                         <text style="font-size:14px; line-height: 22px"> Did you see this artist:</text><input id="toggle-seen-checkbox" type="checkbox" checked="checked" onclick="location.href='@Url.Action("DeleteFromSeenArtists", "Artist", new { Event_ID = item.Event_ID, Lineup_ID = item.Lineup_ID, Artist_ID = item.Artist_ID, User_ID = User.Identity.GetUserId() })'" />
-                                                        </span>}
+                                                    </span>}
                                                 else
                                                     { <span class="overlay-span" id="second-line-span">
                                                         <text style="font-size:14px; line-height: 22px"> Did you see this artist:</text><input id="toggle-seen-checkbox" type="checkbox" onclick="location.href='@Url.Action("AddToArtistHistory", "Artist", new { Event_Name = item.tbl_events.Event_Name, EventLineup_ID = item.Lineup_ID, Artist_ID = item.Artist_ID, User_ID = User.Identity.GetUserId(), Event_ID = Request.QueryString["Event_ID"].ToString() })'" />
@@ -116,8 +116,6 @@
         </div>
     </div>
 </body>
-
-
 
 <style>
     #toggle-seen-checkbox {

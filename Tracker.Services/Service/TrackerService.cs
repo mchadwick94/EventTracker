@@ -79,6 +79,11 @@ namespace Tracker.Services.Service
             _TrackerDAO.RemoveEventImage(image);
             }
 
+        public IList<tbl_events> GetEventsForVenue(int Venue_ID)
+            {
+            return _TrackerDAO.GetEventsForVenue(Venue_ID);
+            }
+
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Displays the full list of events for a specific user.

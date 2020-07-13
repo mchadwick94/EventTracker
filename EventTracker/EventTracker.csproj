@@ -591,6 +591,8 @@
     <Content Include="Views\User\GetRolesForUserConfirmed.cshtml" />
     <Content Include="Views\Venue\GetVenuesByCity.cshtml" />
     <Content Include="Views\Venue\VenueFilter.cshtml" />
+    <Content Include="Views\Venue\VenueEventsFilter.cshtml" />
+    <Content Include="Views\Event\GetEventsForVenue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

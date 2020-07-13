@@ -36,6 +36,8 @@ namespace Tracker.Services.IService
 
         void RemoveEventImage(tbl_eventImages image);
 
+        IList<tbl_events> GetEventsForVenue(int Venue_ID);
+
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         // Returns a list of all the events for a specific user.

@@ -16,7 +16,7 @@
                         <h4>Event Name:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("Event_Name", new { htmlAttributes = new { @class = "form-control", @id = "eventNameFilter", @placeholder = "Enter Event Name...", @onkeyup = "delayFilter()", @autocomplete = "new-password" } })
+                        @Html.Editor("Event_Name", new { htmlAttributes = new { @class = "form-control", @id = "eventNameFilter", @placeholder = "Enter Event Name...", @onkeyup = "delayFilter()", @autocomplete = "off" } })
                     </div>
 
                     <div class="header" id="event-index-filter-label">
@@ -42,13 +42,13 @@
                         <h4>Start Date:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("Start Date", new { htmlAttributes = new { @class = "form-control", @id = "startdatepicker", @placeholder = "Search From...", @autocomplete = "new-password" } })
+                        @Html.Editor("Start Date", new { htmlAttributes = new { @class = "form-control", @id = "startdatepicker", @placeholder = "Search From...", @autocomplete = "off" } })
                     </div>
                     <div class="container" id="event-filter-options">
                         <h4>End Date:</h4>
                     </div>
                     <div class="container" id="event-filter-options">
-                        @Html.Editor("End Date", new { htmlAttributes = new { @class = "form-control", @id = "enddatepicker", @placeholder = "Search To...", @autocomplete = "new-password" } })
+                        @Html.Editor("End Date", new { htmlAttributes = new { @class = "form-control", @id = "enddatepicker", @placeholder = "Search To...", @autocomplete = "off" } })
                     </div>
                     <br /><br />@*
                         <div class="header" id="event-index-filter-label">
@@ -242,7 +242,7 @@
                 showOn: "both",
                 buttonText: "Select",
                 showButtonPanel: true
-
+                
             });
         })
         $(function () {

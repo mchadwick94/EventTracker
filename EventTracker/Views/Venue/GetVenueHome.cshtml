@@ -1,4 +1,5 @@
-﻿@model Tracker.Data.tbl_venues
+﻿@using Microsoft.AspNet.Identity;
+@model Tracker.Data.tbl_venues
 
 @{
     ViewBag.Title = "GetVenueHome";
@@ -40,80 +41,124 @@
             </div>
             <div class="tabcontent" id="venue-upcomingevents-tabcontent">
                 <div class="card-body" id="venue-upcomingevents-card">
-                    <table class="table">
-                        <tr>
-                            <th id="event-table-col-1">
-                                Event Name:
-                            </th>
-                            <th id="event-table-col-2">
-                                Date of Event:
-                            </th>
-                            <th id="event-table-col-3">
-                                Location:
-                            </th>
-                        </tr>
-                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date >= System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderBy(x => x.Event_Date))
-                            {
-                            <tr class="table-row">
-                                <td id="event-table-col-1" class="event-table-row">
-                                    @if (item.Event_Cancelled == true)
-                                        {<b style="color: #68bc51">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
-                                    </td>
+                    Viewing the next 5 events. @Html.ActionLink("View More...", "../Event/GetEventsForVenue", new { @Event_Venue = Model.Venue_ID, @Search_Start_Date = Convert.ToString(string.Format("{0:dd/MM/yyyy}", System.DateTime.Today)) })
 
-                                    <td id="event-table-col-2" class="event-table-row">
-                                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-                                    </td>
-                                    <td id="event-table-col-3" class="event-table-row">
-                                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.tbl_countries.C_Iso)
-                                        @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
-                                    </td>
-                                </tr>
-                                }
-                    </table>
+                    <div class="grid-container" id="venue-events-grid">
+                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date >= System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderBy(x => x.Event_Date).Take(5))
+                            {
+                            <div class="grid-item" id="venue-grid-item">
+                                <div class="card" id="event-tile-card">
+                                    <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                        <div class="card-body">
+                                            <div class="event-index-image" id="home-top-seen-card">
+                                                @if (item.tbl_eventImages.Any())
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                    }
+                                                else
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                    }
+                                            </div>
+                                            <ul class="list-group list-group-flush" id="event-index-details">
+                                                <li class="list-group-item" id="event-index-name"><img id="event-index-location-pin" src="~/Content/images/name-icon.png" /><b>@Html.DisplayFor(modelItem => item.Event_Name)</b></li>
+                                                <li class="list-group-item" id="event-index-location">
+                                                    <span><img id="event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_venues.V_Name,</span><br /><span id="second-line-span">@item.tbl_venues.tbl_cities.C_Name, @item.tbl_venues.tbl_cities.tbl_countries.C_Name</span>
+                                                </li>
+                                                <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date))</span></li>
+                                                <li class="list-group-item" id="event-index-addToUser">
+
+                                                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                        {@*Checks to see if there is a current user*@
+                                                        if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                            {
+                                                            @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                            }
+                                                        else
+                                                            {
+                                                            @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                        }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            }
+                    </div>
+
                 </div>
             </div>
             <div class="tabcontent" id="venue-pastevents-tabcontent">
                 <div class="card-body" id="venue-pastevents-card">
-                    <table class="table">
-                        <tr>
-                            <th id="event-table-col-1">
-                                Event Name:
-                            </th>
-                            <th id="event-table-col-2">
-                                Date of Event:
-                            </th>
-                            <th id="event-table-col-3">
-                                Location:
-                            </th>
-                        </tr>
-                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date < System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderBy(x => x.Event_Date))
-                            {
-                            <tr class="table-row">
-                                <td id="event-table-col-1" class="event-table-row">
-                                    @if (item.Event_Cancelled == true)
-                                        {<b style="color: #68bc51">CANCELLED:</b>} @Html.DisplayFor(modelItem => item.Event_Name)
-                                    </td>
+                    Viewing the last 5 events. @Html.ActionLink("View More...", "../Venue/VenueEventsFilter", new { @Event_Venue = Model.Venue_ID, @Search_End_Date = Convert.ToString(string.Format("{0:dd/MM/yyyy}", System.DateTime.Today)) })
 
-                                    <td id="event-table-col-2" class="event-table-row">
-                                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date)) @*Converts the DateTime data type that ASP.NET uses by default into a string with the format of Date Only (https://stackoverflow.com/a/34990313/12764653)*@
-                                    </td>
-                                    <td id="event-table-col-3" class="event-table-row">
-                                        <b>@Html.DisplayFor(modelItem => item.tbl_venues.V_Name)</b> , @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.C_Name), @Html.DisplayFor(modelItem => item.tbl_venues.tbl_cities.tbl_countries.C_Iso)
-                                        @Html.ActionLink("[View]", "../Venue/GetVenueDetails", new { @Venue_ID = item.tbl_venues.Venue_ID })
-                                    </td>
-                                </tr>
-                                }
-                    </table>
-                </div>
+                    <div class="grid-container" id="venue-events-grid">
+                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date < System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderBy(x => x.Event_Date).Take(5))
+                            {
+                            <div class="grid-item" id="venue-grid-item">
+                                <div class="card" id="event-tile-card">
+                                    <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                        <div class="card-body">
+                                            <div class="event-index-image" id="home-top-seen-card">
+                                                @if (item.tbl_eventImages.Any())
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                    }
+                                                else
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                    }
+                                            </div>
+                                            <ul class="list-group list-group-flush" id="event-index-details">
+                                                <li class="list-group-item" id="event-index-name"><img id="event-index-location-pin" src="~/Content/images/name-icon.png" /><b>@Html.DisplayFor(modelItem => item.Event_Name)</b></li>
+                                                <li class="list-group-item" id="event-index-location">
+                                                    <span><img id="event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_venues.V_Name,</span><br /><span id="second-line-span">@item.tbl_venues.tbl_cities.C_Name, @item.tbl_venues.tbl_cities.tbl_countries.C_Name</span>
+                                                </li>
+                                                <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date))</span></li>
+                                                <li class="list-group-item" id="event-index-addToUser">
+
+                                                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                        {@*Checks to see if there is a current user*@
+                                                        if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                            {
+                                                            @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                            }
+                                                        else
+                                                            {
+                                                            @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                        }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            }
+                    </div>
+                </div>        
             </div>
         </div>
     </div>
+
 </body>
 
 <style>
-    #venue-jumbotron{
+    #venue-grid-item{
+        height: 100%;
+    }
+
+    #venue-events-grid {
+        grid-template-columns: 20% 20% 20% 20% 20%;
+        display: inline-grid;
+        height: 90%;
+    }
+
+    #venue-jumbotron {
         border: 2px solid #222222;
     }
+
     #venue-about-text {
         font-size: 18px;
     }
