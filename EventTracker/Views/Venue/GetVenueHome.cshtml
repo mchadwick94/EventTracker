@@ -41,7 +41,7 @@
             </div>
             <div class="tabcontent" id="venue-upcomingevents-tabcontent">
                 <div class="card-body" id="venue-upcomingevents-card">
-                    Viewing the next 5 events. @Html.ActionLink("View More...", "../Event/GetEventsForVenue", new { @Event_Venue = Model.Venue_ID, @Search_Start_Date = Convert.ToString(string.Format("{0:dd/MM/yyyy}", System.DateTime.Today)) })
+                    Viewing the next 5 events. @Html.ActionLink("View More...", "../Venue/VenueEventsFilter", new { @Event_Venue = Model.Venue_ID, @Search_Start_Date = Convert.ToString(string.Format("{0:dd/MM/yyyy}", System.DateTime.Today)) })
 
                     <div class="grid-container" id="venue-events-grid">
                         @foreach (var item in Model.tbl_events.Where((x => x.Event_Date >= System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderBy(x => x.Event_Date).Take(5))
@@ -95,7 +95,7 @@
                     Viewing the last 5 events. @Html.ActionLink("View More...", "../Venue/VenueEventsFilter", new { @Event_Venue = Model.Venue_ID, @Search_End_Date = Convert.ToString(string.Format("{0:dd/MM/yyyy}", System.DateTime.Today)) })
 
                     <div class="grid-container" id="venue-events-grid">
-                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date < System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderBy(x => x.Event_Date).Take(5))
+                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date < System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderByDescending(x => x.Event_Date).Take(5))
                             {
                             <div class="grid-item" id="venue-grid-item">
                                 <div class="card" id="event-tile-card">
@@ -152,7 +152,7 @@
     #venue-events-grid {
         grid-template-columns: 20% 20% 20% 20% 20%;
         display: inline-grid;
-        height: 90%;
+        height: 95%;
     }
 
     #venue-jumbotron {

@@ -156,7 +156,7 @@
 }
 
 .container {
-    padding: 2% 5%;
+    padding: 0% 5%;
     max-width: auto;
     min-width: fit-content
 }
@@ -452,7 +452,7 @@ td {
 }
 
 #event-index-addToUser {
-    height: 5%;
+    height: 7%;
     width: 95%;
     background-color: inherit;
     border: none;
@@ -594,7 +594,7 @@ td {
 
 #event-grid-item {
     height: 45vh;
-    margin-bottom: 2vh
+    margin-bottom: 10%;
 }
 
 .event-index-body-class {
@@ -603,7 +603,8 @@ td {
 }
 
     .event-index-body-class > .body-content, #user-event-card > .body-content {
-        height: -webkit-fill-available !important
+        height: -webkit-fill-available !important;
+            padding: 0;
     }
 
 .event-index-body > #event-index-filter-card {

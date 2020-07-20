@@ -4,6 +4,8 @@
 
 @{
     ViewBag.Title = Request.QueryString["Event_Name"];
+    ViewBag.RequestController = @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"];
+
 }
 
 @if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Event")
@@ -73,7 +75,6 @@ else
                                                 <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))</span></li>
                                                 <li class="list-group-item" id="event-index-addToUser">
 
-
                                                     @if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
                                                         {
                                                         @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_events.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
@@ -86,7 +87,6 @@ else
                             </div>
                             }
                     </div>
-
                 </div><div class="tabcontent" id="pastevent-tabcontent">
                     <div class="grid-container" id="user-event-grid">
                         @foreach (var item in Model.Where(m => m.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(m => m.tbl_events.Event_Date))
@@ -162,7 +162,11 @@ else
     });
 
     function loadLanding() {
-        document.getElementById('upcomingevent-tab').click();
+        var RequestController = '@ViewBag.RequestController';
+        if (RequestController != "Home")
+        {
+            document.getElementById('upcomingevent-tab').click();
+        }
     };
 </script>
 
@@ -177,6 +181,7 @@ else
         height: 45vh;
         margin-bottom: 10%;
     }
+
     #user-event-body {
         width: 100%;
         height: 100%;

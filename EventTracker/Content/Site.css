@@ -28,7 +28,7 @@
 /* Set padding to keep content from hitting the edges */
 .body-content {
     width: 100%;
-    padding: 1% 5% 1% 5%;
+    padding: 0% 5% 1% 5%;
     min-height: fit-content;
 }
 

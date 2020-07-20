@@ -4,22 +4,35 @@
 @{
     ViewBag.Title = "VenueEventsFilter";
     ViewBag.Venue = Convert.ToInt32(Request.QueryString["Event_Venue"]);
+    ViewBag.StartDate = Request.QueryString["Search_Start_Date"];
+    ViewBag.EndDate = @Convert.ToString(string.Format("{0:/dd/mm/yy}", Request.QueryString["Search_End_Date"]));
 }
 <body>
     <div class="card" id="venue-event-filter-card">
+        <div class="header" id="input-label">
+            Event Name:
+        </div>
         <div class="input-group" id="input-div">
             @Html.Editor("Event_Name", new { htmlAttributes = new { @id = "eventNameFilter", @placeholder = "Enter Event Name...", @onkeyup = "delayFilter()", @autocomplete = "off" } })
         </div>
-        <div class="input-group"id="input-date-div">
-            @Html.Editor("Start Date", new { htmlAttributes = new { @id = "startdatepicker", @placeholder = "Search From...", @autocomplete = "off" } })
+        <div class="header" id="input-label">
+            Start Date:
         </div>
         <div class="input-group" id="input-date-div">
-            @Html.Editor("End Date", new { htmlAttributes = new {  @id = "enddatepicker", @placeholder = "Search To...", @autocomplete = "off" } })
+            @Html.Editor("Start Date", new { htmlAttributes = new { @id = "startdatepicker", @placeholder = "Search From...", @autocomplete = "off" } })
         </div>
+        <div class="header" id="input-label">
+            End Date:
         </div>
+        <div class="input-group" id="input-date-div">
+            @Html.Editor("End Date", new { htmlAttributes = new { @id = "enddatepicker", @placeholder = "Search To...", @autocomplete = "off" } })
+        </div>
+        <button class="ui-button" onclick="clearFilter()">
+            Clear Filter
+        </button>
+    </div>
 
     <div class="card" id="venue-event-card">
-        @{Html.RenderAction("GetEventsforVenue", "Event");} @*TEST FOR EVENT FILTERING*@
     </div>
 </body>
 <style>
@@ -33,6 +46,43 @@
     @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
 
     <script>
+        function clearFilter() {
+                        var venueval = '@ViewBag.Venue';
+
+            $("#venue-event-card").load("/Event/GetEventsforVenue?Event_Venue=" + venueval);
+                $("#enddatepicker").datepicker('setDate', null);
+                $("#startdatepicker").datepicker("option", "maxDate", null);
+                $("#startdatepicker").datepicker('setDate', null);
+                $("#enddatepicker").datepicker("option", "minDate", null);
+            hideDatepickerButtons();
+        }
+
+
+        function loadEvents() {
+            var startDateText = '@ViewBag.StartDate';
+            var endDateText = '@ViewBag.EndDate';
+
+            if (startDateText == "" && endDateText != "") {
+                $("#enddatepicker").datepicker('setDate', new Date(endDateText));
+                $("#startdatepicker").datepicker("option", "maxDate", endDateText);
+            } else {
+                $("#startdatepicker").datepicker('setDate', new Date(startDateText));
+                $("#enddatepicker").datepicker("option", "minDate", startDateText);
+            }
+            var venueval = '@ViewBag.Venue';
+            DateFilter();
+    };
+        function hideDatepickerButtons() {
+                            $(".ui-datepicker-trigger").css("visibility", "hidden");
+
+        };
+
+        document.addEventListener('readystatechange', () => {
+            if (document.readyState == 'complete') loadEvents();
+            hideDatepickerButtons();
+        });
+
+
         var typingTimer;                //timer identifier
         var doneTypingInterval = 400;  //time in ms
         var $input = document.getElementById("eventNameFilter");
@@ -56,7 +106,7 @@
             var endDateObject = $('#enddatepicker').datepicker('getDate');
             var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
             var venueval = '@ViewBag.Venue'; //val is set to the text value of the dropdown.;
-            $("#venue-event-card").load("/Event/GetEventsforVenue?Event_Venue=" + venueval + "&Event_Name=" + searchString + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+            $("#venue-event-card").load("/Event/GetEventsforVenue?Event_Venue=" + venueval + "&Event_Name=" + eventName + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
         }
     </script>
 
@@ -88,7 +138,7 @@
                 //yearRange: "-0:+2",
                 showOn: "both",
                 buttonText: "Select",
-                showButtonPanel: true
+                showButtonPanel: true,
             });
         })
     </script>
@@ -101,35 +151,45 @@
             var input = document.getElementById("eventNameFilter");
             var searchString = input.value;
 
-            var venueval = ViewBag.Venue.value; //val is set to the text value of the dropdown.;
-            $("#user-event-card").load("/Event/GetEventsforVenue?Event_Venue=" + venueval + "&Event_Name=" + searchString + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+            var venueval = '@ViewBag.Venue';
+            $("#venue-event-card").load("/Event/GetEventsforVenue?Event_Venue=" + venueval + "&Event_Name=" + searchString + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
         }
 
         $('#startdatepicker').change(function (e) {
             var startDateObject = $('#startdatepicker').datepicker('getDate');
             DateFilter();
             $("#enddatepicker").datepicker("option", "minDate", startDateObject);
+                        hideDatepickerButtons();
+
         });
 
         $('#enddatepicker').change(function (e) {
             var endDateObject = $('#enddatepicker').datepicker('getDate');
             DateFilter();
             $("#startdatepicker").datepicker("option", "maxDate", endDateObject);
+                        hideDatepickerButtons();
 
-        });</script>
+        });           
+</script>
 
 }
 
 <style>
+    #input-label {
+        margin: 0 0 0 0 !important;
+        font-size: 16px !important;
+        padding: 4px 0 0 0 !important;
+
+    }
     .input-group{
-        margin: 0 5% 0 5%;
+        margin: 0 7% 0 1%;
         display: inline-flex;
     }
     #venue-event-filter-body{
         width: 100%;
     }
     #venue-event-card{
-        height: 85%;
+        border: none !important;
     }
 
     #venue-event-filter-card{
@@ -145,6 +205,7 @@
     height: 8%;
     display: inline-flex;
     position:center;
+    text-align: center;
     }
 
     .venue-event-filter-options{
@@ -153,10 +214,10 @@
     }
 
     #input-div{
-        height: 60% !important;
+        height: 100% !important;
     }   
     
     #input-date-div{
-        height: 60% !important;
+        height: 100% !important;
     }
 </style>
