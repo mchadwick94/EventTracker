@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Tracker.Data.tbl_artists>
+
+@{
+    ViewBag.Title = "GetArtists";
+}
+<h2>Artists</h2>
+<div class="body-content" id="artist-body">
+    <div class="card" id="artist-index-filter-card">
+
+        @for (char c = 'A'; c <= 'Z'; c++)
+            {
+            <a href="#@c"><h3 id="letter-h3" style="padding-right: 5px">@c</h3></a>
+            if (c != 'Z')
+                {
+                <h3> / </h3>
+                }
+            }
+    </div>
+    <div class="artist-index-body">
+        @for (char c = 'A'; c <= 'Z'; c++)
+            {
+            <div class="test-row">
+                <div class="col-1">
+                    <div id="artist-index-letter-wrap">
+                        <a name="@c"><p>@c</p></a>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="grid-container" id="artistgrid">
+                        @foreach (var item in Model.Where(i => i.Artist_Name.StartsWith(c.ToString())))
+                            {
+                            <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                                <div class="grid-item" id="griditem">
+                                    @item.Artist_Name <br />
+                                </div>
+                            </a>
+                            }
+                    </div>
+                </div>
+            </div>
+            }
+    </div>
+</div>
+
+<style>
+</style>

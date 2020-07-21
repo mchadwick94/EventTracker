@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNet.Identity
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Content/StyleSheet.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="nav-container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav" style="float:left; padding-right: 5%; ">
+                    <li style="font-size: 20px !important">
+                        @Html.ActionLink("Event Tracker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style="font-size: 26px !important"})
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" style="float:right; padding-right: 5%;">
+                    <li>@Html.ActionLink("Events", "../Event/GetEvents")</li>
+                    <li>@Html.ActionLink("Venues", "../Venue/VenueFilter")</li>
+                    <li>@Html.ActionLink("Artists", "../Artist/GetArtists")</li>
+                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                        @*Checks to see if there is a current user*@
+                        <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = User.Identity.GetUserId().ToString() })</li>
+                        <li>@Html.ActionLink("Seen Artists", "../Artist/GetSeenArtists", new { User_ID = User.Identity.GetUserId().ToString() })</li>
+                        }
+                    @if (User.IsInRole("Admin"))
+                        {
+                        <li class="dropdown">
+                            @Html.ActionLink("Admin Area ▼", "../Admin/AdminHome")
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Artist Admin", "../Admin/ArtistIndex")
+                                @Html.ActionLink("Event Admin", "../Admin/EventIndex")
+                                @Html.ActionLink("User Admin", "../Admin/GetUsers")
+                                @Html.ActionLink("Venue Admin", "../Admin/VenueIndex")
+                            </div>
+                        </li>
+                        @*Admin Page/Drop Down. On Click redirect to admin home page*@
+                        }
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<style>
+    li {
+        height: 100%;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        border: 4px;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: hotpink;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        width: auto;
+    }
+
+        .dropdown-menu a {
+            color: white !important;
+            padding: 5px 7px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-menu a:hover {
+            color:#abff94 !important;
+        }
+        .navbar-nav li:hover, .dropdown-menu li:hover {
+            background-color: #171616;
+        }
+
+    .navbar a:hover, .dropdown:hover .dropbtn {
+        background-color: #171616;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        background-color: #1f1f1f;
+        color: inherit;
+    }
+
+    .navbar-right {
+        margin-bottom: 0;
+    }
+</style>

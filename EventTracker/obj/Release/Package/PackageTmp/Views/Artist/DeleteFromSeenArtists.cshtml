@@ -1,0 +1,54 @@
+﻿@model Tracker.Data.tbl_artisthistory
+
+@{
+    ViewBag.Title = "DeleteFromSeenArtists";
+}
+
+<h2>DeleteFromSeenArtists</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tbl_artisthistory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_artists.Artist_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_events.Event_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_events.Event_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_eventlineup.Lineup_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_eventlineup.Lineup_ID)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+    </div>
+    }
+</div>

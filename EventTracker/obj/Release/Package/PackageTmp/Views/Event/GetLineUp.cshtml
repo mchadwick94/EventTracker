@@ -1,0 +1,84 @@
+﻿@using Tracker.Data
+
+@model IEnumerable<Tracker.Data.tbl_eventlineup>
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+@{
+    ViewBag.Title = Request.QueryString["Event_Name"];
+}
+<h1>Lineup for @ViewBag.Title</h1>
+@Html.ActionLink("Back To Events", "../Event/GetEvents")
+
+<table class="table" id="LineupTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_artists.Artist_Name)
+        </th>
+        <th>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_artists.Artist_Name)
+            </td>
+
+            <td align="right">
+                @Html.ActionLink("Details", "GetLineupDetails", new { Lineup_ID = item.Lineup_ID }) |
+                @Html.ActionLink("Delete", "../Event/DeleteFromLineup", new { Lineup_ID = item.Lineup_ID })|
+            </td>
+        </tr>
+        }
+</table>
+<br />
+
+<button type="button" id="new-artist-btn" onclick="window.open('@Url.Action("ArtistCreate", "Admin")', '_blank')">Add New Artist</button>
+<br />
+<br />
+<div class="card">
+    <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Artists.." title="Type in an Artist" , name="myInput">
+    <div class="card-body" id="search-card-body">
+        <table class="table" id="myTable">
+            @foreach (var item2 in ViewBag.Artists)
+                {
+                if ((ViewBag.Lineup.Contains(item2.Artist_ID.ToString())))
+                    { }
+                else
+                    {
+                    <tr>
+                        <td>
+                            @item2.Artist_Name
+                        </td>
+                        <td align="right">
+                            @Html.ActionLink("Add To Lineup", "../Event/AddToLineup", new { Event_ID = Request.QueryString["Event_ID"].ToString(), Artist_ID = @item2.Artist_ID }) |
+                        </td>
+                    </tr>
+                    }
+                }
+        </table>
+    </div>
+</div>
+
+<script>
+    function myFunction() { // Script found at https://www.w3schools.com/howto/howto_js_filter_table.asp
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

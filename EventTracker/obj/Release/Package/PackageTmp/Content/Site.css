@@ -1,0 +1,115 @@
+﻿body {
+    padding-top: 4% !important;
+    padding-bottom: 1%;
+    background-color: #171616;
+    color: #b5b5b5;
+    position: sticky;
+    height: fit-content;
+    overflow: auto;
+}
+
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #6d6d6d !important;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    color: #6d6d6d;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+    color: #6d6d6d;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #6d6d6d;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    width: 100%;
+    padding: 0% 5% 1% 5%;
+    min-height: fit-content;
+}
+
+.container body-content {
+    padding: 0 0 0 0;
+    background-color: #171616;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+
+input {
+    max-width: 100% !important;
+    color: #ffffff !important;
+    background-color: #222222 !important;
+    border-color: #6d6d6d !important;
+}
+#index-body {
+    overflow: hidden;
+}
+select,
+textarea {
+    max-width: 280px;
+    background-color: inherit !important;
+    color: #898989 !important;
+}
+button {
+    background-color: #222222 !important;
+    border-color: #6d6d6d !important;
+    color: #898989 !important;
+}
+
+.center-h1 {
+    color: #68bc51;
+    text-transform: uppercase;
+    font-size: 4em;
+    text-align: center;
+}
+
+h1 {
+    color: #68bc51 !important;
+    margin-top: 0;
+}
+.navbar {
+    height: 7vh !important;
+
+}
+.navbar-header {
+    width: 20%;
+}
+.nav-container a, .navbar-inverse .navbar-nav > li {
+    margin: 1px;
+}
+.nav-container a, .navbar-inverse .navbar-nav > li > a {
+    text-decoration: none !important;
+    font-weight: bold;
+    color: #ffffff !important;
+    font-size: 16px;
+    height: 100%;
+    padding: 20px 10px 20px 10px;
+}
+
+    .nav-container a, .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+        color: #abff94 !important;
+        text-decoration: underline;
+    }
+        .body-content a {
+    color: #abff94 !important;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #ffffff !important;
+}
+
+a:visited, a:focus {
+    color: #abff94;
+}

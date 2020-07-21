@@ -1,0 +1,71 @@
+﻿@using System.Globalization
+@using Microsoft.AspNet.Identity
+@model IEnumerable<Tracker.Data.tbl_events>
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "GetEventsForVenue";
+}
+<div class="container" id="back-to-previous">
+    @Html.ActionLink("Back to Venue Home", "../Venue/GetVenueHome", new { Venue_ID = Request.QueryString["Event_Venue"] })
+</div>
+@foreach (var groupYear in Model.GroupBy(item => item.Event_Date.Year).Select(group => new { Key = group.Key, Items = group.ToList() }))
+    {
+    foreach (var groupMonth in groupYear.Items.GroupBy(item => item.Event_Date.Month))
+        {
+
+        <div class="card" id="venue-event-index-card-full">
+            <div class="row" id="venue-event-index-row">
+                <div class="heading-h2" id="venue-event-index-date-header">
+                    <span id="event-index-month-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(groupMonth.Key).ToString()</span>@*Displays Month Grouped*@
+                    <span id="event-index-year-group-header">@groupYear.Key</span> @* Displays Year Grouped*@
+                </div>
+            </div>
+            @foreach (var groupDay in groupMonth.GroupBy(item => item.Event_Date.Day))
+                {
+                <div class="row" id="venue-event-index-full">
+
+                    <div class="col" id="venue-event-index-date-col">
+                        <span id="event-index-month-group-header">@groupDay.Key</span> @* Displays Day*@
+                        <span id="event-index-year-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(groupMonth.Key).ToString()</span> @* Displays Day*@
+                    </div>
+                    <div class="col" id="venue-event-index-details-col">
+                        @foreach (var item in groupMonth.Where(item => item.Event_Date.Day == groupDay.Key))
+                            {<a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                <div class="card" id="venue-event-details-card">
+                                    <div id="venue-event-image-card">
+                                        @if (item.tbl_eventImages.Any())
+                                            {
+                                            <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                            }
+                                        else
+                                            {
+                                            <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                            }
+                                    </div>
+
+                                    <div id="venue-event-index-details-container">
+                                        <ul>
+                                            <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-name-span">@item.Event_Name</span></li>
+                                            <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-date-span" >@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.Event_Date))</span></li>
+                                            @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                {@*Checks to see if there is a current user*@
+                                                if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                    {
+                                                    @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                    }
+                                                else
+                                                    {
+                                                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </a>}
+                    </div>
+                </div>
+                }
+        </div>
+
+        }
+    }

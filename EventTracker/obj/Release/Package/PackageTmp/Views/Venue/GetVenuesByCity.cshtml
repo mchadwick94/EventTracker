@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Tracker.Data.tbl_venues>
+
+<div class="artist-index-body">
+    @for (char c = 'A'; c <= 'Z'; c++)
+        {
+
+        if (Model.Where(co => co.V_Name.StartsWith(c.ToString())).Any())
+            {
+            <div class="test-row">
+                <div class="col-1">
+                    <div id="artist-index-letter-wrap">
+                        <a name="@c"><p>@c</p></a>
+                    </div>
+                </div>
+                <div class="col-2" style=" width: 85%; text-align: left;">
+                    @foreach (var item in Model.Where(co => co.V_Name.StartsWith(c.ToString())))
+                        {
+                        <ul style="height: 30%;width: -webkit-fill-available">
+                            <li style=" display: inline">
+                                <div style="font-size: 20px">
+                                    <a href="@Url.Action("GetVenueHome", "Venue", new { Venue_ID = item.Venue_ID })">
+                                        @item.V_Name
+                                    </a>
+                                </div>
+                                <div>
+                                    @item.V_StreetAddress, @item.V_Postcode
+                                </div>
+                            </li>
+                        </ul>
+
+                        }
+                </div>
+            </div>
+            }
+
+        }
+</div>

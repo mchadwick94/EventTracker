@@ -1,0 +1,174 @@
+﻿@model Tracker.Data.tbl_events
+
+@{
+    ViewBag.Title = "EditEvent";
+}
+
+<h2>EditEvent</h2>
+<body>
+    @using (Html.BeginForm("EventEdit", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Event_ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Event_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Event_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Event_Date, new { htmlAttributes = new { @class = "datepicker", @Value = Model.Event_Date.ToString("yyyy/MM/dd") } })
+                @Html.ValidationMessageFor(model => model.Event_Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h4 class="control-label col-md-2">Select Country:</h4>
+            <div class="col-md-10">
+                @Html.DropDownList("countries", new SelectList(ViewBag.Countries, "Value", "Text"), Model.tbl_venues.tbl_cities.tbl_countries.C_Name.ToString(), new { @class = "form-control", @id = "country", @value = Model.tbl_venues.tbl_cities.tbl_countries.C_Iso })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h4 class="control-label col-md-2">Select City:</h4>
+            <div class="col-md-10">
+                @Html.DropDownList("cities", new SelectList(ViewBag.Cities, "Value", "Text"), Model.tbl_venues.tbl_cities.C_Name.ToString(), new { @class = "form-control", @id = "city" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h4 class="control-label col-md-2">Select Venue:</h4>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Event_Location, new SelectList(ViewBag.Venues, "Value", "Text"), Model.tbl_venues.V_Name.ToString(), new { @class = "form-control", @id = "venue" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event_Cancelled, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => Model.Event_Cancelled, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Event_Cancelled, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="Avatar" name="upload" />
+                </div>
+                @if (Model.tbl_eventImages.Any())
+                        {
+                <div class="form-group">
+                    <span class="control-label col-md-2"><strong>Current Avatar</strong></span>
+                    <div class="col-md-10">
+                        <img src="@Url.Action("EventImageIndex", "File", new { File_ID = Model.tbl_eventImages.First(f => f.Event_ID == Model.Event_ID).File_ID })" style="width:200px; height:180px" />
+                    </div>
+                </div>
+                        }
+                    else
+                        {
+                <img class="event-details-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                        }
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+        }
+    <div>
+        @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
+    </div>
+</body>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+@*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy/mm/dd",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange: "-0:+2",
+                showOn: "both",
+                buttonText: "Select Date"
+            });
+        })
+    </script>
+    <script>
+ @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
+    $(function () {
+        var cityModel = $('#city'); // cache it
+        var venueModel = $('#venue'); // cache it
+
+        $('#country').change(function () { //if #event-filter-country dropdown changes
+            venueModel.empty(); // clear existing options
+            cityModel.empty(); // clear existing options
+            var CityOption = $('<option>- Select A City -</option>').attr('value', 0);
+            var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
+            cityModel.append(CityOption); //modify the model with the variable 'option' added.
+            venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+            var id = $(this).val(); //var id == set to dropdown selected item.
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("../Event/GetCities")', //calls ActionResult GetCities form Event Controller
+                dataType: 'json',
+                data: { id: id },
+                success: function (data) {
+
+                    $.each(data, function (val, city) { //on each row of data in the model, carry out a function
+                        var CityOption = $('<option>' + city.Text + '</option>').attr('Value', city.Value); //populate a var named 'option' with the value of country.Country_Name
+                        cityModel.append(CityOption); //modify the model with the variable 'option' added.
+                    });
+                }
+            });
+        });
+
+ @*Script from https://stackoverflow.com/questions/38511098/refreshing-mvc-partialview-with-new-model-on-dropdownlist-change *@
+        $(function () {
+            $("#city").change(function (e) { //On #event-filter-city change.
+                var str = $("#city option:selected").val(); //val is set to the text value of the dropdown.;
+                var cityval = str.replace(/ /g, '&');
+                var id = $(this).val(); //var id == set to dropdown selected item.
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("../Event/GetVenues")', //calls ActionResult GetCities form Event Controller
+                    dataType: 'json',
+                    data: { id: id },
+                    success: function (data) {
+                        venueModel.empty(); // clear existing options
+                        var VenueOption = $('<option>- Select A Venue -</option>').attr('value', '0');
+                        venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+                        $.each(data, function (val, venue) { //on each row of data in the model, carry out a function
+
+                            var VenueOption = $('<option>' + venue.V_Name + '</option>').attr('value', venue.V_Value).text(venue.text); //populate a var named 'option' with the value of country.Country_Name
+                            venueModel.append(VenueOption); //modify the model with the variable 'option' added.
+
+                            console.warn(cityval);//Fpr testing the value is being selected correctly. Delete once finished.
+
+                        });
+                    }
+                });
+            });
+        });
+    });
+    </script>
+}

@@ -1,0 +1,201 @@
+﻿@using Microsoft.AspNet.Identity
+@using System.Web.Mvc
+
+@using System.Globalization
+
+@model IEnumerable<Tracker.Data.tbl_events>
+
+@{
+    var referrer = Request.UrlReferrer.AbsolutePath.ToString();
+
+}
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+<body style="width:100%">
+    @if (referrer.Contains("/Artist/"))
+        {
+        if (Model.OrderByDescending(x => x.Event_Date).Count() == 0)
+            {
+            <h1 class="center-h1" style="text-align: center"> No Events Found</h1> 
+            }
+        else
+            {
+            foreach (var groupYear in Model.GroupBy(item => item.Event_Date.Year).Select(group => new { Key = group.Key, Items = group.ToList() }))
+                {
+                foreach (var groupMonth in groupYear.Items.GroupBy(item => item.Event_Date.Month))
+                    {
+                    <div class="card" id="venue-event-index-card-full">
+                        <div class="row" id="venue-event-index-row">
+                            <div class="heading-h2" id="venue-event-index-date-header">
+                                <span id="event-index-month-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(groupMonth.Key).ToString()</span>@*Displays Month Grouped*@
+                                <span id="event-index-year-group-header">@groupYear.Key</span> @* Displays Year Grouped*@
+                            </div>
+                        </div>
+                        @foreach (var groupDay in groupMonth.GroupBy(item => item.Event_Date.Day))
+                            {
+                            <div class="row" id="venue-event-index-full">
+                                <div class="col" id="venue-event-index-date-col">
+                                    <span id="event-index-month-group-header">@groupDay.Key</span> @* Displays Day*@
+                                    <span id="event-index-year-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(groupMonth.Key).ToString()</span> @* Displays Day*@
+                                </div>
+                                <div class="col" id="venue-event-index-details-col">
+                                    @foreach (var item in groupMonth.Where(item => item.Event_Date.Day == groupDay.Key))
+                                        {
+                                        <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                            <div class="card" id="venue-event-details-card">
+                                                <div id="venue-event-image-card">
+                                                    @if (item.tbl_eventImages.Any())
+                                                        {
+                                                        <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                        }
+                                                    else
+                                                        {
+                                                        <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                        }
+                                                </div>
+                                                <div id="venue-event-index-details-container">
+                                                    <ul>
+                                                        <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-name-span">@item.Event_Name</span></li>
+                                                        <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-date-span">@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.Event_Date))</span></li>
+                                                        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                            {@*Checks to see if there is a current user*@
+                                                            if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                                {
+                                                                @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                                }
+                                                            else
+                                                                {
+                                                                @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                            }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        }
+                                </div>
+                            </div>
+                            }
+                    </div>
+                    }
+                }
+            }
+        }
+    else if (referrer.Contains("/Venue/"))
+        {
+        if (Model.OrderByDescending(x => x.Event_Date).Count() == 0)
+            {
+            <h1 class="center-h1" style="text-align: center"> No Events Found</h1> 
+            }
+        else
+            {
+            foreach (var groupYear in Model.GroupBy(item => item.Event_Date.Year).Select(group => new { Key = group.Key, Items = group.ToList() }))
+                {
+                foreach (var groupMonth in groupYear.Items.GroupBy(item => item.Event_Date.Month))
+                    {
+                    <div class="card" id="venue-event-index-card-full">
+                        <div class="row" id="venue-event-index-row">
+                            <div class="heading-h2" id="venue-event-index-date-header">
+                                <span id="event-index-month-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(groupMonth.Key).ToString()</span>@*Displays Month Grouped*@
+                                <span id="event-index-year-group-header">@groupYear.Key</span> @* Displays Year Grouped*@
+                            </div>
+                        </div>
+                        @foreach (var groupDay in groupMonth.GroupBy(item => item.Event_Date.Day))
+                            {
+                            <div class="row" id="venue-event-index-full">
+                                <div class="col" id="venue-event-index-date-col">
+                                    <span id="event-index-month-group-header">@groupDay.Key</span> @* Displays Day*@
+                                    <span id="event-index-year-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(groupMonth.Key).ToString()</span> @* Displays Day*@
+                                </div>
+                                <div class="col" id="venue-event-index-details-col">
+                                    @foreach (var item in groupMonth.Where(item => item.Event_Date.Day == groupDay.Key))
+                                        {
+                                        <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                            <div class="card" id="venue-event-details-card">
+                                                <div id="venue-event-image-card">
+                                                    @if (item.tbl_eventImages.Any())
+                                                        {
+                                                        <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                        }
+                                                    else
+                                                        {
+                                                        <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                        }
+                                                </div>
+                                                <div id="venue-event-index-details-container">
+                                                    <ul>
+                                                        <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-name-span">@item.Event_Name</span></li>
+                                                        <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-date-span">@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.Event_Date))</span></li>
+                                                        @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                            {@*Checks to see if there is a current user*@
+                                                            if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                                {
+                                                                @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                                }
+                                                            else
+                                                                {
+                                                                @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                            }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        }
+                                </div>
+                            </div>
+                            }
+                    </div>
+                    }
+                }
+            }
+        }
+    else if (referrer.Contains("/Event/"))
+        {
+        if (Model.OrderByDescending(x => x.Event_Date).Count() == 0)
+            {
+            <h1 class="center-h1" style="text-align: center"> No Events Found</h1> 
+            }
+        else
+            {
+            <div class="grid-container" id="event-grid">
+                @foreach (var item in Model@*.Where(x => x.Event_Date > System.DateTime.Now)*@.OrderBy(x => x.Event_Date))
+                    {
+                    <div class="grid-item" id="event-grid-item">
+                        <div class="card" id="event-tile-card">
+                            <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                <div class="card-body">
+                                    <div class="event-index-image" id="home-top-seen-card">
+                                        @if (item.tbl_eventImages.Any())
+                                            {
+                                            <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                            }
+                                        else
+                                            {
+                                            <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                            }
+                                    </div>
+                                    <ul class="list-group list-group-flush" id="event-index-details">
+                                        <li class="list-group-item" id="event-index-name"><img id="event-index-location-pin" src="~/Content/images/name-icon.png" /><b>@Html.DisplayFor(modelItem => item.Event_Name)</b></li>
+                                        <li class="list-group-item" id="event-index-location">
+                                            <span><img id="event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_venues.V_Name,</span><br /><span id="second-line-span">@item.tbl_venues.tbl_cities.C_Name, @item.tbl_venues.tbl_cities.tbl_countries.C_Name</span></li>
+                                        <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date))</span></li>
+                                        <li class="list-group-item" id="event-index-addToUser">
+                                            @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                {
+                                                if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                    {
+                                                    @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                    }
+                                                else
+                                                    {
+                                                    @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                }
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    }
+            </div>
+            }
+        }
+</body>

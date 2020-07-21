@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Tracker.Data.tbl_artists>
+
+@{
+    ViewBag.Title = "ArtistIndex";
+}
+
+<h2>GetArtistList</h2>
+<body>
+    <p>
+        @Html.ActionLink("Add New Artist", "../Admin/ArtistCreate/")
+    </p>
+
+    <input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for an Artist.." title="Type in an Artist" , name="myInput">
+    <div class="card-body" id="table-card-body">
+        <table class="table" id="artist-table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Artist_Name)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+                {
+
+            <tr class="table-row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist_Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "../Admin/ArtistEdit", new { Artist_ID = item.Artist_ID }) |
+                    @Html.ActionLink("Details", "../Artist/GetArtistDetails", new { Artist_ID = item.Artist_ID }) |
+                    @Html.ActionLink("Delete", "../Artist/Delete", new { id = item.Artist_ID })
+                </td>
+            </tr>
+                }
+        </table>
+    </div>
+</body>
+
+<style>
+    .table-body {
+        overflow-y: scroll;
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        width: 100%;
+    }
+</style>
+
+<script>
+    function myFunction() { // Script found at https://www.w3schools.com/howto/howto_js_filter_table.asp
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("artist-table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

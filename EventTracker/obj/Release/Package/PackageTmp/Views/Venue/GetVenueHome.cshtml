@@ -1,0 +1,180 @@
+﻿@using Microsoft.AspNet.Identity;
+@model Tracker.Data.tbl_venues
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "GetVenueHome";
+}
+
+<body>
+    <div class="container" style="width: 90%; height: 100%">
+        <div class="jumbotron" id="venue-jumbotron" align="center">
+            <div class="container" id="venue-details-header">
+                <h1 id="venue-name-header">@Html.DisplayFor(model => model.V_Name)</h1>
+            </div>
+            <div class="tab" id="venue-details-tab-bar">
+                <button class="tablinks" id="about-tab" onclick="openVenuePage(event, 'venue-about-tabcontent')">About</button>
+                <button class="tablinks" onclick="openVenuePage(event, 'venue-upcomingevents-tabcontent')">Upcoming Events</button>
+                <button class="tablinks" onclick="openVenuePage(event, 'venue-pastevents-tabcontent')">Past Events</button>
+            </div>
+            <div class="tabcontent" id="venue-about-tabcontent">
+                <div class="venue-about-image">
+                    @if (Model.tbl_venueImages.Any())
+                        {
+                        <div>
+                            <img class="venue-image" src="@Url.Action("VenueImageIndex", "File", new { File_ID = Model.tbl_venueImages.First(f => f.Venue_ID == Model.Venue_ID).V_FileID })" />
+                        </div>
+                        }
+                    else
+                        {
+                        <img class="venue-image" src="@Url.Content("~/Content/images/1024px-No_image_available.svg.png")" />
+                        }
+                </div>
+                <div class="card" id="venue-details-card">
+                    <ul class="list-group list-group-flush" id="venue-about-details">
+                        <li class="list-group-item" id="venue-about-item"><p id="venue-about-label">Street Address:</p><p id="venue-about-text">@Html.DisplayFor(Model => Model.V_StreetAddress)</p></li>
+                        <li class="list-group-item" id="venue-about-item"><p id="venue-about-label">City:</p><p id="venue-about-text">@Html.DisplayFor(Model => Model.tbl_cities.C_Name)</p></li>
+                        <li class="list-group-item" id="venue-about-item"><p id="venue-about-label">Post/Zip Code:</p><p id="venue-about-text">@Html.DisplayFor(Model => Model.V_Postcode)</p></li>
+                        <li class="list-group-item" id="venue-about-item"><p id="venue-about-label">Country:</p><p id="venue-about-text">@Html.DisplayFor(Model => Model.tbl_cities.tbl_countries.C_Name)</p></li>
+                        <li class="list-group-item" id="venue-about-item"><p id="venue-about-label">@Html.ActionLink("View on Google Maps", "../Venue/Redirect", new { V_Name = Model.V_Name, V_StreetAddress = Model.V_StreetAddress, V_City = Model.V_City }, new { target = "_blank" })</p></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tabcontent" id="venue-upcomingevents-tabcontent">
+                <div class="card-body" id="venue-upcomingevents-card">
+                    Viewing the next 5 events. @Html.ActionLink("View More...", "../Venue/VenueEventsFilter", new { @Event_Venue = Model.Venue_ID, @Search_Start_Date = Convert.ToString(string.Format("{0:dd/MM/yyyy}", System.DateTime.Today)) })
+
+                    <div class="grid-container" id="venue-events-grid">
+                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date >= System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderBy(x => x.Event_Date).Take(5))
+                            {
+                            <div class="grid-item" id="venue-grid-item">
+                                <div class="card" id="event-tile-card">
+                                    <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                        <div class="card-body">
+                                            <div class="event-index-image" id="home-top-seen-card">
+                                                @if (item.tbl_eventImages.Any())
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                    }
+                                                else
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                    }
+                                            </div>
+                                            <ul class="list-group list-group-flush" id="event-index-details">
+                                                <li class="list-group-item" id="event-index-name"><img id="event-index-location-pin" src="~/Content/images/name-icon.png" /><b>@Html.DisplayFor(modelItem => item.Event_Name)</b></li>
+                                                <li class="list-group-item" id="event-index-location">
+                                                    <span><img id="event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_venues.V_Name,</span><br /><span id="second-line-span">@item.tbl_venues.tbl_cities.C_Name, @item.tbl_venues.tbl_cities.tbl_countries.C_Name</span>
+                                                </li>
+                                                <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date))</span></li>
+                                                <li class="list-group-item" id="event-index-addToUser">
+
+                                                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                        {@*Checks to see if there is a current user*@
+                                                        if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                            {
+                                                            @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                            }
+                                                        else
+                                                            {
+                                                            @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                        }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            }
+                    </div>
+
+                </div>
+            </div>
+            <div class="tabcontent" id="venue-pastevents-tabcontent">
+                <div class="card-body" id="venue-pastevents-card">
+                    Viewing the last 5 events. @Html.ActionLink("View More...", "../Venue/VenueEventsFilter", new { @Event_Venue = Model.Venue_ID, @Search_End_Date = Convert.ToString(string.Format("{0:dd/MM/yyyy}", System.DateTime.Today)) })
+
+                    <div class="grid-container" id="venue-events-grid">
+                        @foreach (var item in Model.tbl_events.Where((x => x.Event_Date < System.DateTime.Now && x.Event_Location == Model.Venue_ID)).OrderByDescending(x => x.Event_Date).Take(5))
+                            {
+                            <div class="grid-item" id="venue-grid-item">
+                                <div class="card" id="event-tile-card">
+                                    <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                        <div class="card-body">
+                                            <div class="event-index-image" id="home-top-seen-card">
+                                                @if (item.tbl_eventImages.Any())
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                    }
+                                                else
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                    }
+                                            </div>
+                                            <ul class="list-group list-group-flush" id="event-index-details">
+                                                <li class="list-group-item" id="event-index-name"><img id="event-index-location-pin" src="~/Content/images/name-icon.png" /><b>@Html.DisplayFor(modelItem => item.Event_Name)</b></li>
+                                                <li class="list-group-item" id="event-index-location">
+                                                    <span><img id="event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_venues.V_Name,</span><br /><span id="second-line-span">@item.tbl_venues.tbl_cities.C_Name, @item.tbl_venues.tbl_cities.tbl_countries.C_Name</span>
+                                                </li>
+                                                <li class="list-group-item" id="event-index-date"> <span><img id="event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Event_Date))</span></li>
+                                                <li class="list-group-item" id="event-index-addToUser">
+
+                                                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                        {@*Checks to see if there is a current user*@
+                                                        if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                            {
+                                                            @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                            }
+                                                        else
+                                                            {
+                                                            @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                        }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<style>
+</style>
+
+<script>
+    function openVenuePage(evt, pageName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(pageName).style.display = "block";
+        evt.currentTarget.className += " active";
+    };
+
+    function loadAbout() {
+        document.getElementById('about-tab').click();
+    };
+
+    document.addEventListener('readystatechange', () => {
+        if (document.readyState == 'complete') loadAbout();
+    });
+</script>

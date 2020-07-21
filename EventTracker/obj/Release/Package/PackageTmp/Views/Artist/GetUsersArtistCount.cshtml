@@ -1,0 +1,148 @@
+﻿@using Microsoft.AspNet.Identity
+@using Tracker.Data
+@model IEnumerable<EventTracker.Models.SeenArtistCount>
+
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "GetSeenArtistsCount";
+}
+@if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Artist")
+{
+            int i = 0;
+            foreach (var item in Model)
+            {
+                if (i < 5)
+                {
+<div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" style="border-radius: 20px;">
+
+            <div class="index-image" id="home-top-seen-card">
+                <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                    <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
+                    <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.Artist_Name</span><br /><span class="overlay-span" id="second-line-span">Times Seen: @item.c</span></h3>
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>
+                    i++;
+                }
+            }
+
+}
+else
+{
+
+<body style="width: 100%">
+
+    <table class="artist-count-table" style="margin-top: 3%">
+        <tr>
+            <th class="count-table-head" width="2%">
+
+                <p>Times Seen</p>
+            </th>
+            <th class="count-table-head">
+                Artist
+            </th>
+        </tr>
+        @foreach (var item in Model)
+            {
+        <tr class="count-table-row">
+            <td class="count-table-count-col">
+                @Html.DisplayFor(modelItem => item.c)
+            </td>
+
+            <td class="count-table-artist-col">
+                @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = User.Identity.GetUserId() }, null)
+            </td>
+        </tr>
+            }
+    </table>
+</body>
+}
+
+<style>
+    .count-artist-image {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 3px solid #1f1f1f;
+        border-radius: 20px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    .list-group-item {
+        padding: 0%;
+        height: 100%;
+        width: inherit;
+    }
+
+    .index-image {
+        height: 100%;
+        position: relative;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    #artist-count-image-tile {
+        height: inherit;
+        display: inline-block;
+        max-width: 20%;
+        min-width: 20%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    #index-artist-count-body {
+        height: 100%;
+        width: 100%;
+        padding: 0% 0% 0% 0%;
+    }
+
+    span {
+        padding: 0% 6% 0% 2%;
+    }
+
+    .list-group-item, span {
+        letter-spacing: -1px;
+        background: #000000; /* fallback color */
+        opacity: 0.8;
+        color: white;
+        height: 100%;
+        width: 100%;
+        position: inherit;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #top-line-span {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
+        overflow: hidden;
+        display: inline-block;
+        margin: 0px;
+        background-position: center center;
+        overflow: hidden;
+        object-fit: cover;
+        background-size: cover;
+    }
+
+    #second-line-span {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        overflow: hidden;
+        display: flex; /*added*/
+        flex-direction: inherit; /*added*/
+    }
+</style>
