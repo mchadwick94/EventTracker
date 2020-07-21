@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Services;
+using System.Web.UI.DataVisualization.Charting;
 using Tracker.Data;
 
 namespace EventTracker.Controllers
@@ -20,7 +21,20 @@ namespace EventTracker.Controllers
 
         public ArtistController()
             {
+            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            List<string> UsersEvents = new List<string>();
+            foreach (var item in _trackerService.GetUserEvents(User_ID))
+                {
+                UsersEvents.Add(item.Event_ID.ToString());
+                }
+            ViewBag.MyEvents = UsersEvents;
+
             _context = new TrackerEntities();
+            }
+
+        public ActionResult FilterArtistEvents()
+            {
+            return View();
             }
 
         // Retrieves a list of all the artists within the database (tbl_artists)
@@ -134,11 +148,6 @@ namespace EventTracker.Controllers
             {
             ViewBag.Artist_Name = _trackerService.GetArtistDetails(Artist_ID).Artist_Name.ToString();
             return View(_trackerService.GetSeenArtistHistory(User_ID, Artist_ID));
-            }
-
-        public ActionResult GetAnArtistsEventHistory(int Artist_ID)
-            {
-            return View(_trackerService.GetAnArtistsEventHistory(Artist_ID));
             }
         }
     }

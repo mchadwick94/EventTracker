@@ -3,9 +3,9 @@
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 @{
     ViewBag.Title = "VenueEventsFilter";
-    ViewBag.Venue = Request.QueryString["Event_Venue"];
-    ViewBag.StartDate = Request.QueryString["Search_Start_Date"];
-    ViewBag.EndDate = @Convert.ToString(string.Format("{0:/dd/mm/yy}", Request.QueryString["Search_End_Date"]));
+    ViewBag.Artist = Convert.ToInt32(Request.QueryString["Artist_ID"]);
+    ViewBag.StartDate = @Convert.ToString(string.Format("{0:yy/MM/dd}", Request.QueryString["Search_Start_Date"]));
+    ViewBag.EndDate = @Convert.ToString(string.Format("{0:yy/MM/dd}", Request.QueryString["Search_End_Date"]));
 }
 <body>
     <div class="card" id="venue-event-filter-card">
@@ -47,19 +47,15 @@
 
     <script>
         function clearFilter() {
-                        var venueval = '@ViewBag.Venue';
+            var artistVal = '@ViewBag.Artist';
 
-            $("#venue-event-card").load("/Event/GetFilteredEvents?Event_Venue=" + venueval);
+            $("#venue-event-card").load("/Event/GetFilteredEvents?Artist_ID=" + artistVal);
                 $("#enddatepicker").datepicker('setDate', null);
                 $("#startdatepicker").datepicker("option", "maxDate", null);
                 $("#startdatepicker").datepicker('setDate', null);
                 $("#enddatepicker").datepicker("option", "minDate", null);
             hideDatepickerButtons();
         }
-        function hideDatepickerButtons() {
-                            $(".ui-datepicker-trigger").css("visibility", "hidden");
-
-        };
 
         function loadEvents() {
             var startDateText = '@ViewBag.StartDate';
@@ -72,9 +68,13 @@
                 $("#startdatepicker").datepicker('setDate', new Date(startDateText));
                 $("#enddatepicker").datepicker("option", "minDate", startDateText);
             }
-            var venueval = '@ViewBag.Venue';
+            var artistVal = '@ViewBag.Artist';
             DateFilter();
     };
+        function hideDatepickerButtons() {
+                            $(".ui-datepicker-trigger").css("visibility", "hidden");
+
+        };
 
         document.addEventListener('readystatechange', () => {
             if (document.readyState == 'complete') loadEvents();
@@ -103,8 +103,8 @@
             var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
             var endDateObject = $('#enddatepicker').datepicker('getDate');
             var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
-            var venueval = '@ViewBag.Venue'; //val is set to the text value of the dropdown.;
-            $("#venue-event-card").load("/Event/GetFilteredEvents?Event_Venue=" + venueval + "&Event_Name=" + eventName + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+            var artistVal = '@ViewBag.Artist';
+            $("#venue-event-card").load("/Event/GetFilteredEvents?Artist_ID=" + artistVal + "&Event_Name=" + eventName + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
         }
     </script>
 
@@ -146,8 +146,8 @@
             var input = document.getElementById("eventNameFilter");
             var searchString = input.value;
 
-            var venueval = '@ViewBag.Venue';
-            $("#venue-event-card").load("/Event/GetFilteredEvents?Event_Venue=" + venueval + "&Event_Name=" + searchString + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+            var artistVal = '@ViewBag.Artist';
+            $("#venue-event-card").load("/Event/GetFilteredEvents?Artist_ID=" + artistVal + "&Event_Name=" + searchString + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
         }
 
         $('#startdatepicker').change(function (e) {

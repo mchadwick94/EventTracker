@@ -103,13 +103,6 @@ namespace Tracker.Data.DAO
             _context.SaveChanges();
             }
 
-        public IList<tbl_events> GetEventsForVenue(int Venue_ID)
-            {
-            IQueryable<tbl_events> _events;
-            _events = from tbl_events in _context.tbl_events where tbl_events.Event_Location == Venue_ID select tbl_events;
-            return _events.ToList<tbl_events>();
-            }
-
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         //Used to select the Event History of a specific user. Selects the Event_ID from tbl_usereventhistory, which is then to be used to display the records from tbl_events.
@@ -241,13 +234,6 @@ namespace Tracker.Data.DAO
             {
             _context.tbl_artistImages.Remove(image);
             _context.SaveChanges();
-            }
-
-        public IList<tbl_eventlineup> GetAnArtistsEventHistory(int Artist_ID)
-            {
-            IQueryable<tbl_eventlineup> _events;
-            _events = from tbl_eventlineup in _context.tbl_eventlineup where tbl_eventlineup.Artist_ID == Artist_ID select tbl_eventlineup;
-            return _events.OrderBy(x => x.tbl_events.Event_Date).ToList<tbl_eventlineup>();
             }
 
         //-------------------------------------------------------------------------------

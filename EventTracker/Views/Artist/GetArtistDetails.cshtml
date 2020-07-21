@@ -1,4 +1,6 @@
-﻿@model Tracker.Data.tbl_artists
+﻿@using System.Globalization
+@using Microsoft.AspNet.Identity
+@model Tracker.Data.tbl_artists
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 
 @{
@@ -23,7 +25,7 @@
     </div>
 </div>
 
-<div class="jumbotron" id="profile-jumbotron" align="left" style="display: inline-flex">
+<div class="jumbotron" id="profile-jumbotron" align="left" style="display: inline-flex; height: 88% !important; overflow:hidden !important;">
     <div class="card" id="profile-card">
         @if (Model.tbl_artistImages.Any())
             {
@@ -44,35 +46,54 @@
             </div>
 
             <div class="tabcontent" id="artist-upcomingevent-tabcontent">
-                @if (Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date >= System.DateTime.Now).Count() == 0)
-                    {
-                    <br /> <br />
-                    <h3 id="profile-title">No Upcoming Events</h3>
-                    }
-                else
-                    {
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Event Name
-                            </th>
-                            <th>
-                                Date
-                            </th>
-                        </tr>
-                        @foreach (var item in Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date >= System.DateTime.Now).OrderBy(x => x.tbl_events.Event_Date))
-                            {
-                            <tr>
-                                <td>
-                                    <a href=@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })>@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)</a>
-                                </td>
-                                <td>
-                                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
-                                </td>
-                            </tr>
-                            }
-                    </table>
-                    }
+                <div class="card-body" id="venue-upcomingevents-card">
+                    Viewing the next 4 events. @Html.ActionLink("View More...", "../Artist/FilterArtistEvents", new { @Artist_ID = Model.Artist_ID, @Search_Start_Date = Convert.ToString(string.Format("{0:yyyy/MM/dd}", System.DateTime.Today)) })
+                    @foreach (var item in Model.tbl_eventlineup.Where((x => x.tbl_events.Event_Date >= System.DateTime.Now && x.Artist_ID == Model.Artist_ID)).OrderBy(x => x.tbl_events.Event_Date).Take(4))
+                        {
+                        <div class="row" style="width: 100%; height: 25% !important; margin: 0 0 2% 0;">
+                            <div class="card" id="artist-event-tile-card">
+                                <div class="card-body" style="display: block">
+                                    <div class="col" style="width: 40%; height: 100%; float: left">
+                                        <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                            <div class="event-index-image" id="" style="height: 100% !important;">
+                                                @if (item.tbl_events.tbl_eventImages.Any())
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_events.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                    }
+                                                else
+                                                    {
+                                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                    }
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col" style="width: 60%; height: 100%; float: left">
+                                        <ul class="list-group list-group-flush" id="artist-event-index-details">
+                                            <li class="list-group-item" id="artist-event-index-name"><img id="event-index-location-pin" src="~/Content/images/name-icon.png" /><b>@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)</b></li>
+                                            <li class="list-group-item" id="artist-event-index-location">
+                                                <span><img id="artist-event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_events.tbl_venues.V_Name, @item.tbl_events.tbl_venues.tbl_cities.C_Name, @item.tbl_events.tbl_venues.tbl_cities.tbl_countries.C_Iso</span>
+                                            </li>
+                                            <li class="list-group-item" id="artist-event-index-date"> <span><img id="artist-event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.tbl_events.Event_Date))</span></li>
+                                            <li class="list-group-item" id="artist-event-index-addToUser">
+
+                                                @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                    {@*Checks to see if there is a current user*@
+                                                    if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                        {
+                                                        @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_events.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                        }
+                                                    else
+                                                        {
+                                                        @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                    }
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                </div>
             </div>
             <div class="tabcontent" id="artist-pastevent-tabcontent">
                 @if (Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date < System.DateTime.Now).Count() == 0)
@@ -82,105 +103,173 @@
                     }
                 else
                     {
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Event Name
-                            </th>
-                            <th>
-                                Date
-                            </th>
-                        </tr>
-                        @foreach (var item in Model.tbl_artisthistory.Where(x => x.Artist_ID == Model.Artist_ID && x.tbl_events.Event_Date < System.DateTime.Now).OrderByDescending(x => x.tbl_events.Event_Date))
+                    <div class="card-body" id="venue-upcomingevents-card">
+                        Viewing the previous 4 events. @Html.ActionLink("View More...", "../Artist/FilterArtistEvents", new { @Artist_ID = Model.Artist_ID, @Search_End_Date = Convert.ToString(string.Format("{0:yyyy/MM/dd}", System.DateTime.Today)) })
+                        @foreach (var item in Model.tbl_eventlineup.Where((x => x.tbl_events.Event_Date < System.DateTime.Now && x.Artist_ID == Model.Artist_ID)).OrderByDescending(x => x.tbl_events.Event_Date).Take(4))
                             {
-                            <tr>
-                                <td>
-                                    <a href=@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })>@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)</a>
-                                </td>
-                                <td>
-                                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
-                                </td>
-                            </tr>
+                            <div class="row" style="width: 100%; height: 25% !important; margin: 0 0 2% 0;">
+                                <div class="card" id="artist-event-tile-card">
+                                    <div class="card-body" style="display: block">
+                                        <div class="col" style="width: 40%; height: 100%; float: left">
+                                            <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                                                <div class="event-index-image" id="" style="height: 100% !important;">
+                                                    @if (item.tbl_events.tbl_eventImages.Any())
+                                                        {
+                                                        <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_events.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                                        }
+                                                    else
+                                                        {
+                                                        <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                                        }
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col" style="width: 60%; height: 100%; float: left">
+                                            <ul class="list-group list-group-flush" id="artist-event-index-details">
+                                                <li class="list-group-item" id="artist-event-index-name"><img id="event-index-location-pin" src="~/Content/images/name-icon.png" /><b>@Html.DisplayFor(modelItem => item.tbl_events.Event_Name)</b></li>
+                                                <li class="list-group-item" id="artist-event-index-location">
+                                                    <span><img id="artist-event-index-location-pin" src="~/Content/images/location-pin.png" />@item.tbl_events.tbl_venues.V_Name, @item.tbl_events.tbl_venues.tbl_cities.C_Name, @item.tbl_events.tbl_venues.tbl_cities.tbl_countries.C_Iso</span>
+                                                </li>
+                                                <li class="list-group-item" id="artist-event-index-date"> <span><img id="artist-event-index-location-pin" src="~/Content/images/calendar-icon.png" />@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.tbl_events.Event_Date))</span></li>
+                                                <li class="list-group-item" id="artist-event-index-addToUser">
+
+                                                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                                        {@*Checks to see if there is a current user*@
+                                                        if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
+                                                            {
+                                                            @Html.ActionLink("Remove from my events", "../Event/DeleteFromUserHistory", new { History_ID = item.tbl_events.tbl_eventhistory.Where(x => x.Event_ID == item.Event_ID && x.User_ID == User.Identity.GetUserId()).Select(x => x.History_ID).FirstOrDefault() })
+                                                            }
+                                                        else
+                                                            {
+                                                            @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
+                                                        }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             }
-                    </table>
+                    </div>
                     }
             </div>
         </div>
     </div>
 </div>
 
-    <style>
-        /* Style the tab */
-        #artist-events-tab-bar {
-            overflow: hidden;
-            border: 2px solid #171616;
-            background-color: #171616;
-            height: 5%;
-            width: 100%;
+<style>
+    #artist-event-tile-card {
+        box-shadow: 0 0 10px grey;
+        background-color: #222;
+        display: inline-block;
+        border-radius: 20px;
+    }
+
+    #artist-event-index-details {
+        padding: 1% 5% 1% 0;
+        margin-bottom: 1% !important;
+    }
+
+    #artist-event-index-date, #artist-event-index-location, #artist-event-index-name {
+        height: 20%;
+        width: 95%;
+        background-color: inherit;
+        border: none;
+        border-bottom: 2px solid #171616;
+        font-size: 14px;
+        color: #b5b5b5 !important;
+        margin: 1% 0 1% 5%;
+        padding: 0;
+        text-align: left;
+        float: left;
+    }
+
+    /* Style the tab */
+    #artist-events-tab-bar {
+        overflow: hidden;
+        border: 2px solid #171616;
+        background-color: #171616;
+        height: 5%;
+        width: 100%;
+    }
+
+        /* Style the buttons that are used to open the tab content */
+        #artist-events-tab-bar button {
+            background-color: inherit !important;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 7px 16px;
+            transition: 0.1s;
+            font-size: 18px;
+            width: 50%;
         }
 
-            /* Style the buttons that are used to open the tab content */
-            #artist-events-tab-bar button {
-                background-color: inherit !important;
-                float: left;
-                border: none;
-                outline: none;
-                cursor: pointer;
-                padding: 7px 16px;
-                transition: 0.1s;
-                font-size: 18px;
-                width: 50%;
+            /* Change background color of buttons on hover */
+            #artist-events-tab-bar button:hover {
+                background-color: #333333 !important;
             }
 
-                /* Change background color of buttons on hover */
-                #artist-events-tab-bar button:hover {
-                    background-color: #333333 !important;
-                }
+            /* Create an active/current tablink class */
+            #artist-events-tab-bar button.active {
+                background-color: #abff94 !important;
+                color: #171616 !important;
+            }
 
-                /* Create an active/current tablink class */
-                #artist-events-tab-bar button.active {
-                    background-color: #abff94 !important;
-                    color: #171616 !important;
-                }
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border-top: none;
+        background-color: #222222;
+        width: 100%;
+        height: 95%;
+    }
 
-        /* Style the tab content */
-        .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            border-top: none;
-            background-color: #222222;
-            width: 100%;
-            height: 70%;
+    #artist-event-index-location-pin {
+        height: auto;
+        width: 6%;
+        margin-right: 2%;
+    }
+
+    #artist-event-index-addToUser {
+        height: 20%;
+        width: 95%;
+        background-color: inherit;
+        border: none;
+        padding: 0% 0 1% 0;
+        margin: 1% 0% 1% 5%;
+    }
+</style>
+
+<script>
+    function openVenuePage(evt, pageName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
-    </style>
 
-    <script>
-        function openVenuePage(evt, pageName) {
-            // Declare all variables
-            var i, tabcontent, tablinks;
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
 
-            // Get all elements with class="tabcontent" and hide them
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(pageName).style.display = "block";
+        evt.currentTarget.className += " active";
+    };
 
-            // Get all elements with class="tablinks" and remove the class "active"
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
+    document.addEventListener('readystatechange', () => {
+        if (document.readyState == 'complete') loadLanding();
+    });
 
-            // Show the current tab, and add an "active" class to the button that opened the tab
-            document.getElementById(pageName).style.display = "block";
-            evt.currentTarget.className += " active";
-        };
-
-        document.addEventListener('readystatechange', () => {
-            if (document.readyState == 'complete') loadLanding();
-        });
-
-        function loadLanding() {
-            document.getElementById('upcomingevent-tab').click();
-        };
-    </script>
+    function loadLanding() {
+        document.getElementById('upcomingevent-tab').click();
+    };
+</script>

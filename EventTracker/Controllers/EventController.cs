@@ -128,15 +128,6 @@ namespace EventTracker.Controllers
             return View(model);
             }
 
-        public ActionResult GetEventsForVenue(SearchEventModel searchModel)
-            {
-            ViewBag.Venue = Convert.ToInt32(Request.QueryString["Venue_ID"]);
-
-            var business = new EventBusinessLogic();
-            var model = business.GetFilteredEvents(searchModel);
-            return View(model);
-            }
-
         //=-------------------------
 
         //Returns the details of a specific event.

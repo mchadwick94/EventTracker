@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "GetEventsForVenue";
 }
-<div class="container" style="float:left; padding: 0; margin: 1% 0 1% 0; width: 100%">
+<div class="container" id="back-to-previous">
     @Html.ActionLink("Back to Venue Home", "../Venue/GetVenueHome", new { Venue_ID = Request.QueryString["Event_Venue"] })
 </div>
 @foreach (var groupYear in Model.GroupBy(item => item.Event_Date.Year).Select(group => new { Key = group.Key, Items = group.ToList() }))
@@ -14,8 +14,8 @@
     foreach (var groupMonth in groupYear.Items.GroupBy(item => item.Event_Date.Month))
         {
 
-        <div class="card" id="venue-event-index-card-full" style="display:block; overflow: hidden; margin: 2% 0 2% 0 !important; padding: 2%; border-radius: 20px; background-color: #222222">
-            <div class="row" style="width:100%;display:block; overflow: hidden; float: left; height:5%;">
+        <div class="card" id="venue-event-index-card-full">
+            <div class="row" id="venue-event-index-row">
                 <div class="heading-h2" id="venue-event-index-date-header">
                     <span id="event-index-month-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(groupMonth.Key).ToString()</span>@*Displays Month Grouped*@
                     <span id="event-index-year-group-header">@groupYear.Key</span> @* Displays Year Grouped*@
@@ -23,16 +23,16 @@
             </div>
             @foreach (var groupDay in groupMonth.GroupBy(item => item.Event_Date.Day))
                 {
-                <div class="row" id="venue-event-index-full" style="width:100%; float:left; overflow:hidden">
+                <div class="row" id="venue-event-index-full">
 
-                    <div class="col" style="width:10%;display:block; overflow: hidden; float: left; text-align:right; height: 60%; margin: 5% 0 5% 0 ">
+                    <div class="col" id="venue-event-index-date-col">
                         <span id="event-index-month-group-header">@groupDay.Key</span> @* Displays Day*@
                         <span id="event-index-year-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(groupMonth.Key).ToString()</span> @* Displays Day*@
                     </div>
-                    <div class="col" style="width:85%;display:block; overflow: hidden; float: right;">
+                    <div class="col" id="venue-event-index-details-col">
                         @foreach (var item in groupMonth.Where(item => item.Event_Date.Day == groupDay.Key))
                             {<a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
-                                <div class="card" id="venue-event-details-card" style="height:100%">
+                                <div class="card" id="venue-event-details-card">
                                     <div id="venue-event-image-card">
                                         @if (item.tbl_eventImages.Any())
                                             {
@@ -44,10 +44,10 @@
                                             }
                                     </div>
 
-                                    <div style="height: 100%; width: 60%;float:right">
-                                        <ul style="">
-                                            <li class="list-group-item" style="height:auto;background-color: transparent !important; border: none !important"><span style="font-size: 28px; font-weight: 800; ">@item.Event_Name</span></li>
-                                            <li class="list-group-item" style="height:auto;background-color: transparent !important; border: none !important"><span style="font-size: 22px; font-weight: 400; color: #b5b5b5">@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.Event_Date))</span></li>
+                                    <div id="venue-event-index-details-container">
+                                        <ul>
+                                            <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-name-span">@item.Event_Name</span></li>
+                                            <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-date-span" >@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.Event_Date))</span></li>
                                             @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                                                 {@*Checks to see if there is a current user*@
                                                 if (((IList<string>)ViewBag.MyEvents).Contains(item.Event_ID.ToString()))
@@ -59,7 +59,6 @@
                                                     @Html.ActionLink("Add to my Events", "../Event/AddToUser", new { Event_ID = item.Event_ID })}
                                                 }
                                         </ul>
-
                                     </div>
                                 </div>
                             </a>}
@@ -70,69 +69,3 @@
 
         }
     }
-<style>
-    #venue-event-details-card {
-        padding: 1% 0 1% 1%;
-        height: 100%;
-    }
-
-        #venue-event-details-card:hover {
-            background-color: #393939;
-            border-radius: 20px;
-        }
-
-    #venue-event-image-card > #event-index-image {
-        border-radius: 20px;
-        object-fit: cover;
-        overflow: hidden
-    }
-
-    #venue-event-image-card {
-        width: 35%;
-        min-height: 100% !important;
-        float: left;
-        border-radius: 20px;
-    }
-
-    #venue-event-index-date-header, #event-index-year-group-header {
-    }
-
-    #venue-event-index-date-header {
-        float: left;
-        height: 5%;
-    }
-
-    #event-index-year-group-header {
-        font-size: 18px;
-        font-weight: 400;
-    }
-
-    #event-index-month-group-header {
-        font-size: 20px;
-        color: #68bc51;
-        font-weight: 600;
-    }
-
-    #venue-event-index-full {
-        width: 85%;
-        height: 30%;
-        background-color: transparent;
-    }
-
-        #venue-event-index-full:first-child {
-            border-bottom: none !important;
-        }
-
-        #venue-event-index-full:not(:first-child) {
-            padding-top: 1%;
-            height: 31% !important;
-        }
-
-        #venue-event-index-full:not(:last-child) {
-            margin-bottom: 1%;
-        }
-
-        #venue-event-index-full:not(:nth-child(2)) {
-            border-top: 1px solid #171616;
-        }
-</style>

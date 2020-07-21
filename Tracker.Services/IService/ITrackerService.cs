@@ -36,8 +36,6 @@ namespace Tracker.Services.IService
 
         void RemoveEventImage(tbl_eventImages image);
 
-        IList<tbl_events> GetEventsForVenue(int Venue_ID);
-
         //-------------------------------------------------------------------------------
         //USER EVENT RELATED FUNCTIONS
         // Returns a list of all the events for a specific user.
@@ -84,8 +82,6 @@ namespace Tracker.Services.IService
         void EditArtistImage(tbl_artistImages oldImage, tbl_artistImages newImage);
 
         void RemoveArtistImage(tbl_artistImages image);
-
-        IList<tbl_eventlineup> GetAnArtistsEventHistory(int Artist_ID);
 
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS

@@ -3,7 +3,9 @@
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 
 @{
-    ViewBag.Title = "GetEvents";
+    string action = Html.ViewContext.RouteData.Values["action"].ToString();
+string controller = Html.ViewContext.RouteData.Values["controller"].ToString();
+string url = "~/" + controller + "/" + action;
 }
 <body class="event-index-body-class">
     <div class="body-content">
@@ -81,7 +83,6 @@
                 </div>
             </div>
             <div class="card" id="user-event-card">
-                @{Html.RenderAction("GetFilteredEvents", "Event");} @*TEST FOR EVENT FILTERING*@
             </div>
         </div>
     </div>
@@ -97,7 +98,15 @@
     @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
 
     <script>
+        function loadEvents() {
+            $("#user-event-card").load("/Event/GetfilteredEvents");
 
+    };
+        
+
+        document.addEventListener('readystatechange', () => {
+            if (document.readyState == 'complete') loadEvents();
+        });
 
         var typingTimer;                //timer identifier
         var doneTypingInterval = 400;  //time in ms
@@ -244,7 +253,7 @@
                 showOn: "both",
                 buttonText: "Select",
                 showButtonPanel: true
-                
+
             });
         })
         $(function () {

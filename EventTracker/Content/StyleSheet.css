@@ -63,9 +63,11 @@
 * {
     box-sizing: border-box
 }
+
 .heading-h2 {
     color: white;
 }
+
 #myTable {
     max-height: 300px;
     overflow: scroll;
@@ -158,7 +160,7 @@
 .container {
     padding: 0% 5%;
     max-width: auto;
-    min-width: fit-content
+    min-width: fit-content;
 }
 
 html {
@@ -604,7 +606,7 @@ td {
 
     .event-index-body-class > .body-content, #user-event-card > .body-content {
         height: -webkit-fill-available !important;
-            padding: 0;
+        padding: 0;
     }
 
 .event-index-body > #event-index-filter-card {
@@ -694,3 +696,280 @@ td {
             background-color: #222 !important;
             border-radius: 5px
         }
+
+#back-to-previous {
+    float: left;
+    padding: 0;
+    margin: 1% 0 1% 0;
+    width: 100%
+}
+
+#venue-event-index-card-full {
+    display: block;
+    overflow: hidden;
+    margin: 2% 0 2% 0 !important;
+    padding: 2%;
+    border-radius: 20px;
+    background-color: #222222;
+}
+
+#venue-event-index-row {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    float: left;
+    height: 5%;
+}
+
+#venue-event-index-full {
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+
+#venue-event-index-date-col {
+    width: 10%;
+    display: block;
+    overflow: hidden;
+    float: left;
+    text-align: right;
+    height: 60%;
+    margin: 5% 0 5% 0;
+}
+
+#venue-event-index-details-col {
+    width: 85%;
+    display: block;
+    overflow: hidden;
+    float: right;
+}
+
+    #venue-event-index-details-col > #venue-event-details-card {
+        height: 100%;
+    }
+
+#venue-event-index-details-container {
+    height: 100%;
+    width: 60%;
+    float: right;
+}
+
+#venue-event-index-list-item {
+    height: auto;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+    #venue-event-index-list-item > #venue-event-index-event-name-span {
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    #venue-event-index-list-item > #venue-event-index-event-date-span {
+        font-size: 22px;
+        font-weight: 400;
+        color: #b5b5b5;
+    }
+
+#venue-event-details-card {
+    padding: 1% 0 1% 1%;
+    height: 100%;
+}
+
+    #venue-event-details-card:hover {
+        background-color: #393939;
+        border-radius: 20px;
+    }
+
+#venue-event-image-card > #event-index-image {
+    border-radius: 20px;
+    object-fit: cover;
+    overflow: hidden
+}
+
+#venue-event-image-card {
+    width: 35%;
+    min-height: 100% !important;
+    float: left;
+    border-radius: 20px;
+}
+
+#venue-event-index-date-header, #event-index-year-group-header {
+}
+
+#venue-event-index-date-header {
+    float: left;
+    height: 5%;
+}
+
+#event-index-year-group-header {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+#event-index-month-group-header {
+    font-size: 20px;
+    color: #68bc51;
+    font-weight: 600;
+}
+
+#venue-event-index-full {
+    width: 85%;
+    height: 30%;
+    background-color: transparent;
+}
+
+    #venue-event-index-full:first-child {
+        border-bottom: none !important;
+    }
+
+    #venue-event-index-full:not(:first-child) {
+        padding-top: 1%;
+        height: 31% !important;
+    }
+
+    #venue-event-index-full:not(:last-child) {
+        margin-bottom: 1%;
+    }
+
+    #venue-event-index-full:not(:nth-child(2)) {
+        border-top: 1px solid #171616;
+    }
+
+#venue-grid-item {
+    height: 100%;
+}
+
+#venue-events-grid {
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    display: inline-grid;
+    height: 95%;
+}
+
+#venue-jumbotron {
+    border: 2px solid #222222;
+}
+
+#venue-about-text {
+    font-size: 18px;
+}
+
+#venue-about-label {
+    color: #68bc51;
+}
+
+#venue-about-item {
+    height: 20%;
+    width: 100%;
+    float: left;
+    background-color: inherit !important;
+    border: none !important;
+    border-bottom: 2px solid #171616 !important;
+}
+
+#venue-about-details {
+    padding: 2% 5% 2% 5%;
+    margin-bottom: 2% !important;
+    height: 100%;
+    display: table;
+}
+
+#venue-details-card {
+    height: 100%;
+    width: 50%;
+    border-radius: 20px;
+    float: right;
+    text-align: left;
+}
+
+.venue-about-image {
+    border-radius: 20px;
+    overflow: hidden;
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+
+.venue-image {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 3px solid #1f1f1f;
+    border-radius: 20px;
+    background-size: cover;
+    object-fit: none;
+    overflow: hidden;
+}
+
+#venue-jumbotron {
+    max-height: 90%;
+    min-height: 95%;
+    width: 100% !important;
+    padding: 0;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+#venue-details-header {
+    width: 100%;
+    background-color: #68bc51;
+    height: 20%;
+}
+
+#venue-name-header {
+    font-size: 6em;
+    margin-top: 4%;
+    color: #171616 !important;
+}
+
+/* Style the tab */
+#venue-details-tab-bar {
+    overflow: hidden;
+    border: 2px solid #171616;
+    background-color: #171616;
+    height: 5%;
+    width: 100%;
+}
+
+    /* Style the buttons that are used to open the tab content */
+    #venue-details-tab-bar button {
+        background-color: inherit !important;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 7px 16px;
+        transition: 0.1s;
+        font-size: 18px;
+    }
+
+        /* Change background color of buttons on hover */
+        #venue-details-tab-bar button:hover {
+            background-color: #333333 !important;
+        }
+
+        /* Create an active/current tablink class */
+        #venue-details-tab-bar button.active {
+            background-color: #abff94 !important;
+            color: #171616 !important;
+        }
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+    background-color: #222222;
+    width: 100%;
+    height: 70%;
+}
+
+#venue-about-tabcontent {
+}
+
+#venue-pastevents-tabcontent {
+}
+
+#venue-upcomingevents-tabcontent {
+}

@@ -46,6 +46,7 @@ namespace EventTracker.Models
         public int? Event_City { get; set; }
         public int? Event_Venue { get; set; }
         public string Event_Country { get; set; }
+        public int? Artist_ID { get; set; }
         public virtual ICollection<tbl_eventImages> tbl_eventImages { get; set; }
         }
 
