@@ -236,13 +236,6 @@ namespace Tracker.Data.DAO
             _context.SaveChanges();
             }
 
-        public IList<tbl_eventlineup> GetAnArtistsEventHistory(int Artist_ID)
-            {
-            IQueryable<tbl_eventlineup> _events;
-            _events = from tbl_eventlineup in _context.tbl_eventlineup where tbl_eventlineup.Artist_ID == Artist_ID select tbl_eventlineup;
-            return _events.OrderBy(x => x.tbl_events.Event_Date).ToList<tbl_eventlineup>();
-            }
-
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         public IList<tbl_artisthistory> GetSeenArtistHistory(string User_ID, int Artist_ID)

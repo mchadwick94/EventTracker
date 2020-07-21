@@ -1,0 +1,220 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<Tracker.Data.tbl_events>
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "VenueEventsFilter";
+    ViewBag.Artist = Convert.ToInt32(Request.QueryString["Artist_ID"]);
+    ViewBag.StartDate = @Convert.ToString(string.Format("{0:yy/MM/dd}", Request.QueryString["Search_Start_Date"]));
+    ViewBag.EndDate = @Convert.ToString(string.Format("{0:yy/MM/dd}", Request.QueryString["Search_End_Date"]));
+}
+<body>
+    <div class="card" id="venue-event-filter-card">
+        <div class="header" id="input-label">
+            Event Name:
+        </div>
+        <div class="input-group" id="input-div">
+            @Html.Editor("Event_Name", new { htmlAttributes = new { @id = "eventNameFilter", @placeholder = "Enter Event Name...", @onkeyup = "delayFilter()", @autocomplete = "off" } })
+        </div>
+        <div class="header" id="input-label">
+            Start Date:
+        </div>
+        <div class="input-group" id="input-date-div">
+            @Html.Editor("Start Date", new { htmlAttributes = new { @id = "startdatepicker", @placeholder = "Search From...", @autocomplete = "off" } })
+        </div>
+        <div class="header" id="input-label">
+            End Date:
+        </div>
+        <div class="input-group" id="input-date-div">
+            @Html.Editor("End Date", new { htmlAttributes = new { @id = "enddatepicker", @placeholder = "Search To...", @autocomplete = "off" } })
+        </div>
+        <button class="ui-button" onclick="clearFilter()">
+            Clear Filter
+        </button>
+    </div>
+
+    <div class="card" id="venue-event-card">
+    </div>
+</body>
+<style>
+</style>
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
+
+    <script>
+        function clearFilter() {
+            var artistVal = '@ViewBag.Artist';
+
+            $("#venue-event-card").load("/Event/GetFilteredEvents?Artist_ID=" + artistVal);
+                $("#enddatepicker").datepicker('setDate', null);
+                $("#startdatepicker").datepicker("option", "maxDate", null);
+                $("#startdatepicker").datepicker('setDate', null);
+                $("#enddatepicker").datepicker("option", "minDate", null);
+            hideDatepickerButtons();
+        }
+
+        function loadEvents() {
+            var startDateText = '@ViewBag.StartDate';
+            var endDateText = '@ViewBag.EndDate';
+
+            if (startDateText == "" && endDateText != "") {
+                $("#enddatepicker").datepicker('setDate', new Date(endDateText));
+                $("#startdatepicker").datepicker("option", "maxDate", endDateText);
+            } else {
+                $("#startdatepicker").datepicker('setDate', new Date(startDateText));
+                $("#enddatepicker").datepicker("option", "minDate", startDateText);
+            }
+            var artistVal = '@ViewBag.Artist';
+            DateFilter();
+    };
+        function hideDatepickerButtons() {
+                            $(".ui-datepicker-trigger").css("visibility", "hidden");
+
+        };
+
+        document.addEventListener('readystatechange', () => {
+            if (document.readyState == 'complete') loadEvents();
+            hideDatepickerButtons();
+        });
+
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 400;  //time in ms
+        var $input = document.getElementById("eventNameFilter");
+        function delayFilter() {
+            //setup before functions
+            clearTimeout(typingTimer);
+            if (typingTimer == doneTypingInterval) {
+                typingTimer = setTimeout(filterByName, doneTypingInterval);
+            } else {
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(filterByName, doneTypingInterval);
+            }
+        }
+
+        function filterByName() {
+            var input = document.getElementById("eventNameFilter");
+            var eventName = input.value;
+            var searchString = eventName.replace(/ /g, '**');
+            var startDateObject = $('#startdatepicker').datepicker('getDate');
+            var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+            var endDateObject = $('#enddatepicker').datepicker('getDate');
+            var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+            var artistVal = '@ViewBag.Artist';
+            $("#venue-event-card").load("/Event/GetFilteredEvents?Artist_ID=" + artistVal + "&Event_Name=" + eventName + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+        }
+    </script>
+
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    @*Script below for the datepicker was found here: https://www.youtube.com/watch?v=Yuo2XX5_rYo*@
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#startdatepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange: "-0:+2",
+                showOn: "both",
+                buttonText: "Select",
+                showButtonPanel: true
+
+            });
+        })
+        $(function () {
+            $("#enddatepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange: "-0:+2",
+                showOn: "both",
+                buttonText: "Select",
+                showButtonPanel: true,
+            });
+        })
+    </script>
+    <script>
+        function DateFilter() {
+            var startDateObject = $('#startdatepicker').datepicker('getDate');
+            var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+            var endDateObject = $('#enddatepicker').datepicker('getDate');
+            var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+            var input = document.getElementById("eventNameFilter");
+            var searchString = input.value;
+
+            var artistVal = '@ViewBag.Artist';
+            $("#venue-event-card").load("/Event/GetFilteredEvents?Artist_ID=" + artistVal + "&Event_Name=" + searchString + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
+        }
+
+        $('#startdatepicker').change(function (e) {
+            var startDateObject = $('#startdatepicker').datepicker('getDate');
+            DateFilter();
+            $("#enddatepicker").datepicker("option", "minDate", startDateObject);
+                        hideDatepickerButtons();
+
+        });
+
+        $('#enddatepicker').change(function (e) {
+            var endDateObject = $('#enddatepicker').datepicker('getDate');
+            DateFilter();
+            $("#startdatepicker").datepicker("option", "maxDate", endDateObject);
+                        hideDatepickerButtons();
+
+        });
+    </script>
+
+}
+
+<style>
+    #input-label {
+        margin: 0 0 0 0 !important;
+        font-size: 16px !important;
+        padding: 4px 0 0 0 !important;
+    }
+
+    .input-group {
+        margin: 0 7% 0 1%;
+        display: inline-flex;
+    }
+
+    #venue-event-filter-body {
+        width: 100%;
+    }
+
+    #venue-event-card {
+        border: none !important;
+    }
+
+    #venue-event-filter-card {
+        margin: 0 !important;
+        width: 100%;
+        background-color: #68bc51;
+        border: 5px medium grey;
+        border-radius: 20px;
+        padding: 1% 5% 1% 5%;
+        box-shadow: 0 0 10px grey;
+        color: #222;
+        font-weight: 700;
+        height: 8%;
+        display: inline-flex;
+        position: center;
+        text-align: center;
+    }
+
+    .venue-event-filter-options {
+        width: 100%;
+        padding: 5% 0 5% 0;
+    }
+
+    #input-div {
+        height: 100% !important;
+    }
+
+    #input-date-div {
+        height: 100% !important;
+    }
+</style>

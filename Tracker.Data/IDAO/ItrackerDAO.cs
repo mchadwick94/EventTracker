@@ -84,8 +84,6 @@ namespace Tracker.Data.IDAO
 
         void RemoveArtistImage(tbl_artistImages image);
 
-        IList<tbl_eventlineup> GetAnArtistsEventHistory(int Artist_ID);
-
         //-------------------------------------------------------------------------------
         // USER/ARTIST RELATED FUNCTIONS
         IList<Tracker.Data.tbl_artisthistory> GetSeenArtistHistory(string User_ID, int Artist_ID);

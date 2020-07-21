@@ -56,8 +56,9 @@
                         cityModel.append(CityOption); //modify the model with the variable 'option' added.
                     });
                 }
-            });                        if (cityModel.empty == true) {
-                            $("#venue-filter-card").addClass('hidden');
+            });
+            if (cityModel.empty == true) {
+                $("#venue-filter-card").addClass('hidden');
             }
 
             });
@@ -101,30 +102,31 @@
     </script>
 }
 <style>
-    .venue-drop-down{
+    .venue-drop-down {
         height: 7vh;
         text-align: center !important;
-        text-transform:capitalize !important;
-        border-style:inset;
+        text-transform: capitalize !important;
+        border-style: inset;
         width: 20vw;
         align-items: center;
-                color: black !important;
-                font-size: large;
-                font-weight:600 !important;
-                cursor: pointer;
-                padding: 8px 36px 8px 16px;
+        color: black !important;
+        font-size: large;
+        font-weight: 600 !important;
+        cursor: pointer;
+        padding: 8px 36px 8px 16px;
     }
-     .venue-drop-down > select {
-             text-align-last:right;
-    padding-right: 29px;
-    direction: rtl;
-     }
-    #venue-filter-country{
+
+        .venue-drop-down > select {
+            text-align-last: right;
+            padding-right: 29px;
+            direction: rtl;
+        }
+
+    #venue-filter-country {
         background-color: #ffffff !important;
     }
 
-    #venue-filter-city{
+    #venue-filter-city {
         background-color: #68bc51 !important;
-
     }
 </style>

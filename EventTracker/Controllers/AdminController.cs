@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -85,7 +86,7 @@ namespace EventTracker.Controllers
                 if (upload != null && upload.ContentLength > 0)
                     {
                     image.Artist_ID = _artist.Artist_ID;
-                    image.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                    image.File_Name = string.Format(DateTime.Now.Ticks.ToString() + "_" + _artist.Artist_Name.Replace(" ", "_"));
                     image.Content_Type = upload.ContentType;
                     using (var reader = new System.IO.BinaryReader(upload.InputStream))
                         {
@@ -126,28 +127,20 @@ namespace EventTracker.Controllers
                 {
                 if (upload != null && upload.ContentLength > 0)
                     {
+                    newImage.Artist_ID = _artist.Artist_ID;
+                    newImage.File_Name = string.Format(DateTime.Now.Ticks.ToString() + "_" + _artist.Artist_Name.Replace(" ", "_"));
+                    newImage.Content_Type = upload.ContentType;
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                        newImage.Content = reader.ReadBytes(upload.ContentLength);
+                        }
                     if (_context.tbl_artistImages.Any(f => f.Artist_ID == _artist.Artist_ID))
                         {
                         oldImage = _context.tbl_artistImages.FirstOrDefault(s => s.Artist_ID == Artist_ID);
-
-                        newImage.Artist_ID = _artist.Artist_ID;
-                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
-                        newImage.Content_Type = upload.ContentType;
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                            {
-                            newImage.Content = reader.ReadBytes(upload.ContentLength);
-                            }
                         _trackerService.EditArtistImage(oldImage, newImage);
                         }
                     else
                         {
-                        newImage.Artist_ID = _artist.Artist_ID;
-                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
-                        newImage.Content_Type = upload.ContentType;
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                            {
-                            newImage.Content = reader.ReadBytes(upload.ContentLength);
-                            }
                         _trackerService.AddArtistImage(newImage);
                         }
                     }
@@ -229,7 +222,7 @@ namespace EventTracker.Controllers
                 if (upload != null && upload.ContentLength > 0)
                     {
                     image.Event_ID = _event.Event_ID;
-                    image.File_Name = System.IO.Path.GetFileName(upload.FileName);
+                    image.File_Name = string.Format(DateTime.Now.Ticks.ToString() + "_" + _event.Event_Name.Replace(" ", "_"));
                     image.Content_Type = upload.ContentType;
                     using (var reader = new System.IO.BinaryReader(upload.InputStream))
                         {
@@ -306,28 +299,20 @@ namespace EventTracker.Controllers
                 {
                 if (upload != null && upload.ContentLength > 0)
                     {
+                    newImage.Event_ID = _event.Event_ID;
+                    newImage.File_Name = string.Format(DateTime.Now.Ticks.ToString() + "_" + _event.Event_Name.Replace(" ", "_"));
+                    newImage.Content_Type = upload.ContentType;
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                        newImage.Content = reader.ReadBytes(upload.ContentLength);
+                        }
                     if (_context.tbl_eventImages.Any(f => f.Event_ID == _event.Event_ID))
                         {
                         oldImage = _context.tbl_eventImages.FirstOrDefault(s => s.Event_ID == Event_ID);
-
-                        newImage.Event_ID = _event.Event_ID;
-                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
-                        newImage.Content_Type = upload.ContentType;
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                            {
-                            newImage.Content = reader.ReadBytes(upload.ContentLength);
-                            }
                         _trackerService.EditEventImage(oldImage, newImage);
                         }
                     else
                         {
-                        newImage.Event_ID = _event.Event_ID;
-                        newImage.File_Name = System.IO.Path.GetFileName(upload.FileName);
-                        newImage.Content_Type = upload.ContentType;
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                            {
-                            newImage.Content = reader.ReadBytes(upload.ContentLength);
-                            }
                         _trackerService.AddEventImage(newImage);
                         }
                     _trackerService.EditEvent(_event);
@@ -388,7 +373,7 @@ namespace EventTracker.Controllers
                 if (upload != null && upload.ContentLength > 0)
                     {
                     image.Venue_ID = _venue.Venue_ID;
-                    image.V_FileName = System.IO.Path.GetFileName(upload.FileName);
+                    image.V_FileName = string.Format(DateTime.Now.Ticks.ToString() + "_" + _venue.V_Name.Replace(" ", "_"));
                     image.V_ContentType = upload.ContentType;
                     using (var reader = new System.IO.BinaryReader(upload.InputStream))
                         {
@@ -433,8 +418,8 @@ namespace EventTracker.Controllers
             MyConn.Close();
             List<CityVM> CityList = dt.AsEnumerable().Select(m => new CityVM() //populates var data with venues where the country_ID matches the id value.
                 {
-                Value = m.Field<int>("City_ID"),
                 Text = m.Field<string>("C_NAME"),
+                Value = m.Field<int>("City_ID"),
                 }).ToList();
             ViewBag.Cities = CityList.OrderBy(x => x.Text);
 
@@ -452,32 +437,25 @@ namespace EventTracker.Controllers
                 if (upload != null && upload.ContentLength > 0)
                     {
                     var venueNameCity = _venue.V_Name.ToString() + _venue.V_City.ToString();
+                    newImage.Venue_ID = _venue.Venue_ID;
+                    newImage.V_FileName = string.Format(DateTime.Now.Ticks.ToString() + "_" + _venue.V_Name.Replace(" ", "_"));
+                    newImage.V_ContentType = upload.ContentType;
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                        newImage.V_Content = reader.ReadBytes(upload.ContentLength);
+                        }
                     if (_context.tbl_venueImages.Any(x => x.Venue_ID == Venue_ID))
                         {
                         oldImage = _context.tbl_venueImages.FirstOrDefault(s => s.Venue_ID == Venue_ID);
-
-                        newImage.Venue_ID = _venue.Venue_ID;
-                        newImage.V_FileName = System.IO.Path.GetFileName(upload.FileName);
-                        newImage.V_ContentType = upload.ContentType;
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                            {
-                            newImage.V_Content = reader.ReadBytes(upload.ContentLength);
-                            }
                         _trackerService.EditVenueImage(oldImage, newImage);
                         }
                     else
                         {
-                        newImage.Venue_ID = _venue.Venue_ID;
-                        newImage.V_FileName = System.IO.Path.GetFileName(upload.FileName);
-                        newImage.V_ContentType = upload.ContentType;
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                            {
-                            newImage.V_Content = reader.ReadBytes(upload.ContentLength);
-                            }
                         _trackerService.AddVenueImage(newImage);
                         }
                     _trackerService.EditVenue(_venue);
                     }
+
                 _trackerService.EditVenue(_venue);
                 return RedirectToAction("VenueIndex");
                 }

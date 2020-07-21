@@ -39,10 +39,11 @@
         </div>
     </div>
 
+
     <div class="form-group">
         @Html.LabelFor(model => model.V_City, "V_City", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.V_City, new SelectList(ViewBag.Cities, "Value", "Text"), Model.tbl_cities.C_Name.ToString(), new { @class = "form-control", @id = "city" })
+            @Html.DropDownListFor(model => model.V_City, new SelectList(ViewBag.Cities, "Value", "Text", 1), Model.tbl_cities.C_Name.ToString(), new { @class = "form-control", @id = "city"  })
             @Html.ValidationMessageFor(model => model.V_City, "", new { @class = "text-danger" })
         </div>
     </div>

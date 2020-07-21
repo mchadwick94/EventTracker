@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Mvc;
@@ -14,6 +15,14 @@ namespace EventTracker.Controllers
 
         public VenueController()
             {
+            User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            List<string> UsersEvents = new List<string>();
+            foreach (var item in _trackerService.GetUserEvents(User_ID))
+                {
+                UsersEvents.Add(item.Event_ID.ToString());
+                }
+            ViewBag.MyEvents = UsersEvents;
+
             _context = new TrackerEntities();
             }
 
@@ -72,6 +81,11 @@ namespace EventTracker.Controllers
             ViewBag.UrlMapString = "https://google.com/maps/search/" + SearchName;
 
             Response.Redirect(ViewBag.UrlMapString);
+            }
+
+        public ActionResult VenueEventsFilter()
+            {
+            return View();
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using EventTracker.Models;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -42,7 +43,6 @@ namespace EventTracker.Controllers
                         });
                 ViewBag.Countries = CountriesList;
                 };
-
             }
 
         public ActionResult GetCities(string id) //--MODIFIED FUNCTION RETRIEVED FROM https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes
@@ -122,7 +122,6 @@ namespace EventTracker.Controllers
             {
             if (HttpContext.User.Identity.IsAuthenticated != false)
                 {
-
                 }
             var business = new EventBusinessLogic();
             var model = business.GetFilteredEvents(searchModel);
@@ -189,7 +188,6 @@ namespace EventTracker.Controllers
                 return View(_trackerService.GetEventHistoryDetails(History_ID));
                 }
             }
-
 
         //Get an events Lineup
         public ActionResult GetLineUp(int Event_ID)

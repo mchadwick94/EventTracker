@@ -19,8 +19,12 @@ namespace EventTracker
         public IQueryable<tbl_events> GetFilteredEvents(SearchEventModel searchModel) //https://stackoverflow.com/questions/33153932/filter-search-using-multiple-fields-asp-net-mvc/33154580
             {
             var result = _context.tbl_events.AsQueryable();
+            var events = _context.tbl_eventlineup.AsQueryable();
+
             if (searchModel != null)
                 {
+                if (searchModel.Artist_ID.HasValue)
+                    result = result.Where(x => x.tbl_eventlineup.Any(y => y.Artist_ID == searchModel.Artist_ID));
                 if (!string.IsNullOrEmpty(searchModel.Event_Country))
                     result = result.Where(x => x.tbl_venues.tbl_cities.CC_ISO == searchModel.Event_Country);
                 if (searchModel.Event_City.HasValue)
