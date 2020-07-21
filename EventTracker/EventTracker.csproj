@@ -593,7 +593,6 @@
     <Content Include="Views\Venue\VenueFilter.cshtml" />
     <Content Include="Views\Venue\VenueEventsFilter.cshtml" />
     <Content Include="Views\Artist\FilterArtistEvents.cshtml" />
-    <Content Include="Views\Artist\GetAnArtistsEventHistory.cshtml" />
     <Content Include="Views\Event\GetEventsForVenue.cshtml" />
   </ItemGroup>
   <ItemGroup>

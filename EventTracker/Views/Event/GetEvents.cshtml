@@ -4,8 +4,8 @@
 
 @{
     string action = Html.ViewContext.RouteData.Values["action"].ToString();
-string controller = Html.ViewContext.RouteData.Values["controller"].ToString();
-string url = "~/" + controller + "/" + action;
+    string controller = Html.ViewContext.RouteData.Values["controller"].ToString();
+    string url = "~/" + controller + "/" + action;
 }
 <body class="event-index-body-class">
     <div class="body-content">
@@ -80,6 +80,9 @@ string url = "~/" + controller + "/" + action;
                                 </tr>
                                 </table>
                             </div>*@
+                    <button class="ui-button" onclick="clearFilter()">
+                        Clear Filter
+                    </button>
                 </div>
             </div>
             <div class="card" id="user-event-card">
@@ -98,11 +101,28 @@ string url = "~/" + controller + "/" + action;
     @*Script modified from: https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes*@
 
     <script>
+
+        function clearFilter() {
+
+            $("#user-event-card").load("/Event/GetFilteredEvents");
+            $("#enddatepicker").datepicker('setDate', null);
+            $("#startdatepicker").datepicker("option", "maxDate", null);
+            $("#startdatepicker").datepicker('setDate', null);
+            $("#enddatepicker").datepicker("option", "minDate", null);
+            $("#event-filter-country").get(0).selectedIndex = 0;
+            $("#event-filter-city").get(0).selectedIndex = 0;
+            $("#event-filter-venue").get(0).selectedIndex = 0;
+            DisableDropDowns();
+            hideDatepickerButtons();
+        }
+        function hideDatepickerButtons() {
+            $(".ui-datepicker-trigger").css("visibility", "hidden");
+        };
+
         function loadEvents() {
             $("#user-event-card").load("/Event/GetfilteredEvents");
+        };
 
-    };
-        
 
         document.addEventListener('readystatechange', () => {
             if (document.readyState == 'complete') loadEvents();
@@ -314,6 +334,7 @@ string url = "~/" + controller + "/" + action;
         });</script>
 
     <script>
+
         $().ready(function () {
             $('#event-filter-country').change(function () {
                 if ($("#event-filter-country option:selected").text() != "- Select A Country -") {
@@ -339,23 +360,39 @@ string url = "~/" + controller + "/" + action;
         });
 
         $().ready(function () {
-            $('#event-filter-city').change(function () {
-                if ($("#event-filter-city option:selected").val() != 0) {
-                    $('#event-filter-venue').each(function () {
-                        if ($(this).attr('disabled')) {
-                            $(this).removeAttr('disabled');
-                        }
-                    });
-                }
-                else if ($("#event-filter-city option:selected").val() == 0) {
-                    $('#event-filter-venue').each(function () {
-                        $(this).attr({
-                            'disabled': 'disabled'
-                        });
-                    });
-                }
-            });
+            DisableDropDowns();
         });
+        function DisableDropDowns() {
+            $('#event-filter-venue').each(function () {
+                $(this).attr({
+                    'disabled': 'disabled'
+                });
+            }); $('#event-filter-city').each(function () {
+                $(this).attr({
+                    'disabled': 'disabled'
+                });
+            });
+        };
+
+        $('#event-filter-city').change(function () {
+            if ($("#event-filter-city option:selected").val() != 0) {
+                $('#event-filter-venue').each(function () {
+                    if ($(this).attr('disabled')) {
+                        $(this).removeAttr('disabled');
+                    }
+                });
+            }
+            else if ($("#event-filter-city option:selected").val() == 0) {
+                $('#event-filter-venue').each(function () {
+                    $(this).attr({
+                        'disabled': 'disabled'
+                    });
+                });
+            }
+        });
+
+
+
     </script>
 
 }
