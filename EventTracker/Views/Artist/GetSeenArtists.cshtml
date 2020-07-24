@@ -6,9 +6,7 @@
     ViewBag.Title = "GetSeenArtists";
 }
 
-<div class="artist-count-sidebar" style="overflow-x:hidden">
-    @{Html.RenderAction("GetUsersArtistCount", "Artist", new { User_ID = User.Identity.GetUserId() }); }
-</div>
+
 <h2>GetSeenArtists</h2>
 <body class="seen-artists-body">
     <p>

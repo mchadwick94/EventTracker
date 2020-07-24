@@ -17,6 +17,8 @@ namespace EventTracker.Controllers
         protected string User_ID;
         private TrackerEntities _context;
 
+
+
         public EventController()
             {
             User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -43,6 +45,9 @@ namespace EventTracker.Controllers
                         });
                 ViewBag.Countries = CountriesList;
                 };
+
+
+            
             }
 
         public ActionResult GetCities(string id) //--MODIFIED FUNCTION RETRIEVED FROM https://stackoverflow.com/questions/41564427/how-to-refresh-html-dropdowngrouplist-after-another-dropdown-changes
@@ -51,9 +56,7 @@ namespace EventTracker.Controllers
                 {
                 return Json(null);
                 }
-
-            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
-            SqlConnection MyConn = new SqlConnection(connString);
+            SqlConnection MyConn = new SqlConnection(new ApplicationController().GetConnString().Content.ToString());
             SqlCommand MySqlCmd = MyConn.CreateCommand();
             SqlDataReader adapter;
             MySqlCmd.CommandText = @"EXEC RetrieveCitiesWhereExistingVenues @Country = '" + id + "';";
@@ -91,8 +94,8 @@ namespace EventTracker.Controllers
         public ActionResult GetEvents()
             {
             List<SelectListItem> CountriesWhereEventsList = new List<SelectListItem>();
-            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
-            SqlConnection MyConn = new SqlConnection(connString);
+            SqlConnection MyConn = new SqlConnection(new ApplicationController().GetConnString().Content.ToString());
+
             SqlCommand SelectCountriesWhereEvents = MyConn.CreateCommand();
             SqlDataReader adapter;
             SelectCountriesWhereEvents.CommandText = @"exec SelectCountriesWhereEvents;";

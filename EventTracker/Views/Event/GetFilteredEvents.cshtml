@@ -45,7 +45,6 @@
                                                 <div id="venue-event-image-card">
                                                     @if (item.tbl_eventImages.Any())
                                                         {
-                                                        <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
                                                         }
                                                     else
                                                         {

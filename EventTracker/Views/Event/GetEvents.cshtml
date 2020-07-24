@@ -5,12 +5,13 @@
 @{
     string action = Html.ViewContext.RouteData.Values["action"].ToString();
     string controller = Html.ViewContext.RouteData.Values["controller"].ToString();
-    string url = "~/" + controller + "/" + action;
+    string urlToRedirect = Request.Url.Host + ":" + Request.Url.Port;
+
+
 }
 <body class="event-index-body-class">
     <div class="body-content">
         <div class="event-index-body" id="events-body-content">
-
             <div class="card" id="event-index-filter-card">
                 <header class="filter-header" id="event-index-filter-header"><h3>Filter Options</h3></header>
                 <div class="container" id="event-index-filter-body">
@@ -91,6 +92,7 @@
     </div>
 </body>
 <style>
+
 </style>
 @section Scripts {
 

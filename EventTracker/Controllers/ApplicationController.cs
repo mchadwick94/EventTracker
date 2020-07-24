@@ -28,6 +28,23 @@ namespace EventTracker.Controllers
                 }
             }
 
+
+        public ContentResult GetConnString()
+            {
+            string connString = System.Configuration.ConfigurationManager.ConnectionStrings["TrackerEntities"].ToString();
+            if (connString.ToLower().StartsWith("metadata="))
+                {
+                System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder efBuilder = new System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder(connString);
+                connString = efBuilder.ProviderConnectionString;
+                }
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connString);
+            string DatabaseServer = builder.DataSource;
+            string DatabaseName = builder.InitialCatalog;
+            string builtString = builder.DataSource + builder.InitialCatalog + builder.IntegratedSecurity + builder.MultipleActiveResultSets;
+            return Content(connString);
+            }
+
+
         public ActionResult ReturnPreviousPage()
             {
             return Redirect(Request.UrlReferrer.ToString());
@@ -40,8 +57,8 @@ namespace EventTracker.Controllers
                 return Json(null);
                 }
 
-            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
-            SqlConnection MyConn = new SqlConnection(connString);
+            SqlConnection MyConn = new SqlConnection(new ApplicationController().GetConnString().Content.ToString());
+
             SqlCommand MySqlCmd = MyConn.CreateCommand();
             SqlDataReader adapter;
             MySqlCmd.CommandText = @"EXEC RetrieveCities @Country = '" + id + "';";

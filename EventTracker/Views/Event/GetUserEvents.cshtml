@@ -11,7 +11,7 @@
 @if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Event")
     {
     int i = 0;
-    foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now && m.tbl_events.Event_Cancelled == false).OrderBy(m => m.tbl_events.Event_Date))
+    foreach (var item in Model.Where(m => m.tbl_events.Event_Date >= System.DateTime.Now && m.tbl_events.Event_Cancelled == false ).OrderBy(m => m.tbl_events.Event_Date))
         {
         if (i < 4)
             {

@@ -64,18 +64,20 @@ namespace EventTracker.Controllers
         [WebMethod]
         public ActionResult GetUsersArtistCount(string User_ID)
             {
-            string connString = "Data Source=DESKTOP-DI24F6A\\SQLDEVELOPER;Initial Catalog=EventTracker;Integrated Security=True";
             User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
-            SqlConnection sqlConnection = new SqlConnection(connString);
-            SqlCommand MySqlCmd = sqlConnection.CreateCommand();
+            SqlConnection MyConn = new SqlConnection(new ApplicationController().GetConnString().Content.ToString());
+            SqlCommand MySqlCmd = MyConn.CreateCommand();
             SqlDataReader adapter;
-            MySqlCmd.CommandText = @"	USE [EventTracker] select [db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name], count(*) AS c from[db_eventtracker].[tbl_artists] left join[db_eventtracker].[tbl_artisthistory] on[db_eventtracker].[tbl_artists].Artist_ID = [db_eventtracker].[tbl_artisthistory].[Artist_ID] where[db_eventtracker].[tbl_artisthistory].[User_ID] = '" + User_ID + "' group by[db_eventtracker].[tbl_artists].[Artist_ID], [db_eventtracker].[tbl_artists].[Artist_Name] order by C DESC;";
-            sqlConnection.Open();
+            MySqlCmd.CommandText = @"	select [db_eventtracker].[tbl_artists].[Artist_ID],[db_eventtracker].[tbl_artists].[Artist_Name],[File_ID], count(*) as c from [db_eventtracker].[tbl_artisthistory] 
+left join [db_eventtracker].[tbl_artistImages] on [db_eventtracker].[tbl_artisthistory].Artist_ID = [db_eventtracker].[tbl_artistImages].Artist_ID 
+right join [db_eventtracker].[tbl_artists] on [db_eventtracker].[tbl_artisthistory].Artist_ID = [db_eventtracker].[tbl_artists].Artist_ID
+where [db_eventtracker].[tbl_artisthistory].[User_ID] = '"+ User_ID + "'group by [db_eventtracker].[tbl_artists].[Artist_ID],[db_eventtracker].[tbl_artists].Artist_Name, [db_eventtracker].[tbl_artistImages].[File_ID]  order by C DESC;";
+            MyConn.Open();
             DataTable dt = new DataTable("countTable");
             adapter = MySqlCmd.ExecuteReader();
             dt.Load(adapter);
-            sqlConnection.Close();
+            MyConn.Close();
 
             //Convert DataTable to List
             List<SeenArtistCount> artistCountList = dt.AsEnumerable().Select(m => new SeenArtistCount()
@@ -83,6 +85,7 @@ namespace EventTracker.Controllers
                 Artist_ID = m.Field<int>("Artist_ID"),
                 Artist_Name = m.Field<string>("Artist_Name"),
                 c = m.Field<int>("c"),
+                File_ID = m.Field<int?>("File_ID"),
                 }).ToList();
 
             return View(artistCountList);

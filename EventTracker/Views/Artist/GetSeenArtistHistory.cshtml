@@ -1,36 +1,63 @@
 ﻿@using Microsoft.AspNet.Identity
+@using System.Globalization
+
 @model IEnumerable<Tracker.Data.tbl_artisthistory>
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
-<div class="artist-count-sidebar">
-    @{Html.RenderAction("GetUsersArtistCount", "Artist", new { User_ID = User.Identity.GetUserId() }); }
-</div>
-<br />
 
 <h2>Events you have seen <b>@ViewBag.Artist_Name.ToUpper()</b> at:</h2>
-<table class="table">
-    <tr>
-        <th>
-            Event Name:
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tbl_events.Event_Date)
-        </th>
-        <th></th>
-    </tr>
+@if (Model.OrderByDescending(x => x.tbl_events.Event_Date).Count() == 0)
+            {
+<h1 class="center-h1" style="text-align: center"> No Events Found</h1>
+            }
+        else
+            {
+            foreach (var groupYear in Model.GroupBy(item => item.tbl_events.Event_Date.Year).Select(group => new { Key = group.Key, Items = group.ToList() }))
+                {
+                foreach (var groupMonth in groupYear.Items.GroupBy(item => item.tbl_events.Event_Date.Month))
+                    {
+<div class="card" id="venue-event-index-card-full">
+    <div class="row" id="venue-event-index-row">
+        <div class="heading-h2" id="venue-event-index-date-header">
+            <span id="event-index-month-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(groupMonth.Key).ToString()</span>@*Displays Month Grouped*@
+            <span id="event-index-year-group-header">@groupYear.Key</span> @* Displays Year Grouped*@
+        </div>
+    </div>
+    @foreach (var groupDay in groupMonth.GroupBy(item => item.tbl_events.Event_Date.Day))
+        {
+        <div class="row" id="venue-event-index-full">
+            <div class="col" id="venue-event-index-date-col">
+                <span id="event-index-month-group-header">@groupDay.Key</span> @* Displays Day*@
+                <span id="event-index-year-group-header">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(groupMonth.Key).ToString()</span> @* Displays Day*@
+            </div>
+            <div class="col" id="venue-event-index-details-col">
+                @foreach (var item in groupMonth.Where(item => item.tbl_events.Event_Date.Day == groupDay.Key))
+                    {
+                    <a href="@Url.Action("GetEventDetails", "Event", new { Event_ID = item.Event_ID })">
+                        <div class="card" id="venue-event-details-card">
+                            <div id="venue-event-image-card">
+                                @if (item.tbl_events.tbl_eventImages.Any())
+                                    {
+                                    <img class="event-details-image" id="event-index-image" src="@Url.Action("EventImageIndex", "File", new { File_ID = item.tbl_events.tbl_eventImages.First(f => f.Event_ID == item.Event_ID).File_ID })" />
+                                    }
+                                else
+                                    {
+                                    <img class="event-details-image" id="event-index-image" src="@Url.Content("~/Content/images/default_image.jpg")" />
+                                    }
+                            </div>
+                            <div id="venue-event-index-details-container">
+                                <ul>
+                                    <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-name-span">@item.tbl_events.Event_Name</span></li>
+                                    <li class="list-group-item" id="venue-event-index-list-item"><span id="venue-event-index-event-date-span">@Convert.ToString(string.Format("{0:dddd dd MMMM yyyy}", item.tbl_events.Event_Date))</span></li>
 
-    @foreach (var item in Model.OrderByDescending(x => x.tbl_events.Event_Date))
-    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbl_events.Event_Name)
-        </td>
-        <td>
-            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tbl_events.Event_Date))
-        </td>
-        <td>
-            @Html.ActionLink("Details", "../Event/GetEventDetails", new { Event_ID = item.Event_ID }) |
-            @Html.ActionLink("Lineup", "../Event/GetLineup", new { Event_ID = item.Event_ID, Event_Name = item.tbl_events.Event_Name }) |
-        </td>
-    </tr>
-    }
-</table>
+                                </ul>
+                            </div>
+                        </div>
+                    </a>
+                    }
+            </div>
+        </div>
+        }
+</div>
+                    }
+                }
+            }

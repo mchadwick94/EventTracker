@@ -28,10 +28,12 @@ namespace EventTracker.Models
 
         public string Artist_Name { get; set; }
         public int c { get; set; }
-        public virtual tbl_artists tbl_artists { get; set; }
-        public virtual tbl_eventlineup tbl_artisthistory { get; set; }
 
-        public virtual tbl_artistImages tbl_artistImages { get; set; }
+        public int? File_ID { get; set; }
+        public virtual tbl_artists tbl_artists { get; set; }
+        public virtual ICollection<tbl_eventlineup> tbl_artisthistory { get; set; }
+
+        public virtual ICollection<tbl_artistImages> tbl_artistImages { get; set; }
         }
 
     public class SearchEventModel

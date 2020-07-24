@@ -2,68 +2,227 @@
 @using Tracker.Data
 @model IEnumerable<EventTracker.Models.SeenArtistCount>
 
+
 <link href="~/Content/StyleSheet.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "GetSeenArtistsCount";
 }
 @if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Artist")
-{
-            int i = 0;
-            foreach (var item in Model)
-            {
-                if (i < 5)
-                {
-<div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item" style="border-radius: 20px;">
+    {
 
-            <div class="index-image" id="home-top-seen-card">
-                <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
-                    <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
-                    <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.Artist_Name</span><br /><span class="overlay-span" id="second-line-span">Times Seen: @item.c</span></h3>
-                </a>
+    int i = 0;
+    foreach (var item in Model)
+        {
+        if (i < 5)
+            {
+            <div class="col-sm-8 col-md-4 mmt-2" id="artist-count-image-tile">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="border-radius: 20px;">
+                        <div class="index-image" id="home-top-seen-card">
+                            <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                                @if (item.File_ID != null)
+                                    {
+                                    <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
+                                    }
+                                else
+                                    {
+                                    <img class="count-artist-image" src="@Url.Content("~/Content/images/default-profile.jpeg")" />
+                                    }
+                                <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.Artist_Name</span><br /><span class="overlay-span" id="second-line-span">Times Seen: @item.c</span></h3>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </li>
-    </ul>
-</div>
+            i++;
+            }
+        }
+    }
+else
+    {
+    int Rank = 0;
+    int timesSeenCheck = 0;
+    int i = 1;
+<body>
+    <div class="heading-h1" id="artist-count-header" style="text-align: center"><h1>Your most seen Artists...</h1></div>
+    <div class="container" id="artist-count-top3-container">
+        @foreach (var groupC in Model.GroupBy(item => item.c).Select(group => new { Key = group.Key, Items = group.ToList() }))
+            {
+            foreach (var item in groupC.Items.Take(3))
+                {
+                if (i <= 3)
+                    {
+                    if (timesSeenCheck != item.c)
+                        {
+                        Rank++;
+                        }
+        <div class="artist-count-top3 card" id="artist-card-@Rank" style="">
+            <div style="width: 100%; height: 80%; display:flex;">
+                <div style="height: 100%; width: 10%; font-size: 48px; color: black; margin: 15% 0 15% 0; text-align: center;">
+                    @Rank
+                </div>
+                <div class="index-image" id="home-top-seen-card" style="height: 100%;width: 90% !important; display: flex">
+                    <a href="@Url.Action("GetARtistDetails", "Artist", new { Artist_ID = item.Artist_ID})">
+                        @if (item.File_ID != null)
+                            {
+                            <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
+                            }
+                        else
+                            {
+                            <img class="count-artist-image" src="@Url.Content("~/Content/images/default-profile.jpeg")" />
+
+                            }
+                        <h3 class="artist-count-text"><span class="overlay-span" id="top-line-span">@item.Artist_Name</span><br /><span class="overlay-span" id="second-line-span">Times Seen: @item.c </span></h3>
+                    </a>
+                </div>
+            </div>
+            
+
+            <div style="width: 100%; height: 10%; text-align: center; font-size: 18px; margin-top: 8px;">
+                @Html.ActionLink("View History", "../Artist/GetSeenArtistHistory", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Artist_ID = item.Artist_ID })
+            </div>
+        </div>
+
+                    timesSeenCheck = item.c;
                     i++;
+                    }
                 }
             }
+    </div>
+    <div class="card artist-count-row" id="artist-card-header" style="display: inline-flex; width: 100%; text-align: left; ">
 
-}
-else
-{
+        <div style="height: 100%; width: 4%;margin-left: 1%;text-align:center">
+            Rank
+        </div>
+        <div style="width: 30%;">
 
-<body style="width: 100%">
-
-    <table class="artist-count-table" style="margin-top: 3%">
-        <tr>
-            <th class="count-table-head" width="2%">
-
-                <p>Times Seen</p>
-            </th>
-            <th class="count-table-head">
-                Artist
-            </th>
-        </tr>
-        @foreach (var item in Model)
+        </div>
+        <div style="width: 35%;">
+            Artist
+        </div>
+        <div style="width: 10%; text-align:center">
+            Times Seen
+        </div>
+        <div style="width: 20%; text-align:center">
+            View History
+        </div>
+        </div>
+        @foreach (var groupC in Model.Skip(3).GroupBy(item => item.c).Select(group => new { Key = group.Key, Items = group.ToList() }))
             {
-        <tr class="count-table-row">
-            <td class="count-table-count-col">
-                @Html.DisplayFor(modelItem => item.c)
-            </td>
+            foreach (var item in groupC.Items)
+                {
+                if (timesSeenCheck != item.c)
+                    {
+                    Rank++;
+                    }
 
-            <td class="count-table-artist-col">
-                @Html.ActionLink(item.Artist_Name, "GetSeenArtistHistory", "Artist", new { Artist_ID = item.Artist_ID, User_ID = User.Identity.GetUserId() }, null)
-            </td>
-        </tr>
+                <div class="card artist-count-row" id="artist-card-@Rank" style="display: inline-flex; width: 100%;">
+                    <div style="height: 100%; width: 5%; text-align: center; margin: 2% 0 2% 0">
+                            @Rank
+                    </div>
+                    <div style="width: 30%;">
+                        <div class="index-image" id="count-table-image">
+                            <a href="@Url.Action("GetArtistDetails", "Artist", new { Artist_ID = item.Artist_ID })">
+                                @if (item.File_ID != null)
+                                    {
+                                    <img class="count-artist-image" src="@Url.Action("GetImageId", "File", new { Artist_ID = item.Artist_ID })" title="@item.Artist_Name" />
+                                    }
+                                else
+                                    {
+                                    <img class="count-artist-image" src="@Url.Content("~/Content/images/default-profile.jpeg")" />
+                                    }
+                            </a>
+                        </div>
+                    </div>
+                    <div style="width: 35%;margin: 2% 0 2% 0">
+                        @item.Artist_Name
+                    </div>
+                    <div style="width: 10%;margin: 2% 0 2% 0;text-align:center">
+                        @item.c
+                    </div>
+                    <div style="width: 20%;margin: 2% 0 2% 0; text-align:center">
+                        @Html.ActionLink("View", "../Artist/GetSeenArtistHistory", new { User_ID = System.Web.HttpContext.Current.User.Identity.GetUserId(), Artist_ID = item.Artist_ID })
+                    </div>
+                </div>
+                timesSeenCheck = item.c;
+                }
+
             }
-    </table>
 </body>
-}
+    }
+
+
 
 <style>
+
+    #count-table-image {
+        width: 200px;
+        height: 100% !important;
+        overflow: hidden;
+        object-fit: scale-down;
+        background-size: cover;
+    }
+
+    #artist-count-top3-container {
+        width: 100%;
+        height: 32%;
+        background-color: #222222;
+        border-radius: 20px;
+        border: none !important;
+        padding: 1% 0 1% 2% !important;
+    }
+
+    .artist-count-top3{
+        width: 32%;
+        height: 100%;
+        float: left;
+        border-radius: 30px;
+        color: black;
+        font-weight: 600;
+    }
+
+    #artist-card-1 a, #artist-card-2 a, #artist-card-3 a {
+        color: black !important;
+    }
+
+.artist-count-row{
+    border-radius: 20px;
+    margin: 10px 0 0 0 !important;
+    font-size: 24px;
+    background-color: #222222;
+    padding: 0 !important;
+
+}
+
+    #artist-card-1 {
+                color: black;
+        font-weight: 600;
+        background-color: #54A23F !important;
+        border: double 8px #222222 ;
+
+    }
+
+    #artist-card-2 {
+                color: black;
+        font-weight: 600;
+        background-color: #80C66C !important;
+                border: double 8px #222222;
+
+    }
+
+    #artist-card-3 {
+                color: black;
+        font-weight: 600;
+        background-color: #B3DDA7 !important;
+        margin-left: 1%;
+            border: double 8px #222222;
+            
+}
+
+
+
+
     .count-artist-image {
         display: inline-block;
         width: 100%;

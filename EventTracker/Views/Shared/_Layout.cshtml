@@ -31,7 +31,7 @@
                         {
                         @*Checks to see if there is a current user*@
                         <li>@Html.ActionLink("My Events", "../Event/GetUserEvents", new { User_ID = User.Identity.GetUserId().ToString() })</li>
-                        <li>@Html.ActionLink("Seen Artists", "../Artist/GetSeenArtists", new { User_ID = User.Identity.GetUserId().ToString() })</li>
+                        <li>@Html.ActionLink("Seen Artists", "../Artist/GetUsersArtistCount", new { User_ID = User.Identity.GetUserId().ToString() })</li>
                         }
                     @if (User.IsInRole("Admin"))
                         {
