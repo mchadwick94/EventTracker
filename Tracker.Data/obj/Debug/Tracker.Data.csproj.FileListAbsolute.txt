@@ -23,3 +23,28 @@ D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.D
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.dll
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.pdb
 D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\EventTracker\Tracker.Data\obj\Debug\Tracker.Data.csprojAssemblyReference.cache
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Tracker.Data.dll.config
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Tracker.Data.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Tracker.Data.pdb
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\EntityFramework.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Argon2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Blake2.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\System.Numerics.Vectors.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Xamarin.Forms.Core.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Xamarin.Forms.Platform.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Xamarin.Forms.Xaml.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\EntityFramework.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Argon2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Konscious.Security.Cryptography.Blake2.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\System.Numerics.Vectors.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Xamarin.Forms.Core.pdb
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Xamarin.Forms.Core.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Xamarin.Forms.Xaml.pdb
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\bin\Debug\Xamarin.Forms.Xaml.xml
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\obj\Debug\Tracker.Data.csprojAssemblyReference.cache
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\obj\Debug\XamlC.stamp
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\obj\Debug\Tracker.Data.csproj.CopyComplete
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\obj\Debug\Tracker.Data.dll
+D:\Michael\Documents\3. Projects\c# Event Tracker\Tracker\ET from Github\EventTracker-master\Tracker.Data\obj\Debug\Tracker.Data.pdb
