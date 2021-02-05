@@ -597,6 +597,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Custom Scripts\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\Application\" />
     <Folder Include="Views\File\" />

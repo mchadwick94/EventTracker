@@ -138,32 +138,28 @@
         })
     </script>
     <script>
-        function DateFilter() {
-            var startDateObject = $('#startdatepicker').datepicker('getDate');
-            var startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
-            var endDateObject = $('#enddatepicker').datepicker('getDate');
-            var endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
-            var input = document.getElementById("eventNameFilter");
-            var searchString = input.value;
+        const startDateObject = $('#startdatepicker').datepicker('getDate');
+        const startDate = $.datepicker.formatDate('yy/mm/dd', startDateObject);
+        const endDateObject = $('#enddatepicker').datepicker('getDate');
+        const endDate = $.datepicker.formatDate('yy/mm/dd', endDateObject);
+        let input = document.getElementById("eventNameFilter");
+        const searchString = input.value;
+        const artistVal = '@ViewBag.Artist';
 
-            var artistVal = '@ViewBag.Artist';
+        function DateFilter(artistVal, searchString, startDate, endDate) {
             $("#venue-event-card").load("/Event/GetFilteredEvents?Artist_ID=" + artistVal + "&Event_Name=" + searchString + "&Search_Start_Date=" + startDate + "&Search_End_Date=" + endDate);
         }
 
         $('#startdatepicker').change(function (e) {
-            var startDateObject = $('#startdatepicker').datepicker('getDate');
-            DateFilter();
+            DateFilter(artistVal, searchString, startDate, endDate);
             $("#enddatepicker").datepicker("option", "minDate", startDateObject);
-                        hideDatepickerButtons();
-
+            hideDatepickerButtons();
         });
 
         $('#enddatepicker').change(function (e) {
-            var endDateObject = $('#enddatepicker').datepicker('getDate');
-            DateFilter();
+            DateFilter(artistVal, searchString, startDate, endDate);
             $("#startdatepicker").datepicker("option", "maxDate", endDateObject);
                         hideDatepickerButtons();
-
         });
     </script>
 

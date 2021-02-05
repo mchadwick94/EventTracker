@@ -632,7 +632,7 @@ td {
     }
 
         .event-index-body > #event-index-filter-card > #event-index-filter-body > #event-index-filter-label {
-            height: 5%;
+            /*height: 5%;*/
             grid-template-columns: 100%
         }
 
